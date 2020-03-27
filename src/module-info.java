@@ -6,4 +6,5 @@
  *
  */
 module flechombre {
+	requires java.desktop;
 }
