@@ -7,7 +7,7 @@ public class GameContainer implements Runnable{
 	private Window window;
 	
 	private boolean running = false;
-	private final double UPDATE_CAP = 1.0/60.0;
+	private final double UPDATE_CAP = 1.0/60.0; //Tasa de refresco, podriamos subir un poco mas maybe
 	private int width = 320, height = 240;
 	private float scale = 3.5f;
 	private String title = "PruebaEngine v1.0";
