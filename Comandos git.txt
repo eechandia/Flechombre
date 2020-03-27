@@ -17,3 +17,16 @@ git pull  //Si push sirve para subir un archivo, pull sirve para bajarlo y no te
 git add . //el . Agrega todo lo de directorio, tambien se puede usar git add -A
 
 siempre que hacemos un git add, hay que hacer el git commit -m "ACA VA UN MENSAJE QUE DIGA QUE CAMBIAMOS"
+
+para crear una branch
+𝒈𝒊𝒕 𝒄𝒉𝒆𝒄𝒌𝒐𝒖𝒕 −𝒃 𝒑𝒓𝒐𝒃𝒍𝒆𝒎𝒂𝟎𝟏
+𝒈𝒊𝒕 𝒄𝒉𝒆𝒄𝒌𝒐𝒖𝒕 𝒑𝒓𝒐𝒃𝒍𝒆𝒎𝒂𝟎𝟏
+para añadir a la branch
+𝒈𝒊𝒕 𝒂𝒅𝒅. 
+𝒈𝒊𝒕 𝒄𝒐𝒎𝒎𝒊𝒕 −𝒎 "𝑹𝒆𝒔𝒐𝒍𝒗𝒊𝒆𝒍𝒆𝒋𝒆𝒓𝒄𝒊𝒄𝒊𝒐𝟏" 
+𝒈𝒊𝒕 𝒑𝒖𝒔𝒉 𝒐𝒓𝒊𝒈𝒊𝒏 𝒑𝒓𝒐𝒃𝒍𝒆𝒎𝒂𝟎𝟏
+
+𝒈𝒊𝒕 𝒄𝒉𝒆𝒄𝒌𝒐𝒖𝒕 𝒎𝒂𝒔𝒕𝒆𝒓
+𝒈𝒊𝒕 𝒎𝒆𝒓𝒈𝒆𝒑𝒓𝒐𝒃𝒍𝒆𝒎𝒂𝟎𝟏 
+𝒈𝒊𝒕 𝒑𝒖𝒔𝒉 𝒐𝒓𝒊𝒈𝒊𝒏 𝒎𝒂𝒔𝒕𝒆𝒓
+
