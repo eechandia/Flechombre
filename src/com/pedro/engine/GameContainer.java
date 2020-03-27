@@ -3,8 +3,8 @@ package com.pedro.engine;
 public class GameContainer implements Runnable{
 	
 	private Thread thread;
-	
 	private Window window;
+	private Renderer renderer;
 	
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0/60.0;
@@ -18,6 +18,7 @@ public class GameContainer implements Runnable{
 	
 	public void start() {
 		window = new Window(this);
+		renderer = new Renderer(this);
 		
 		thread = new Thread(this);
 		thread.run(); // .run para ser la main thread// .start para q sea secundaria (side thread)
@@ -35,11 +36,11 @@ public class GameContainer implements Runnable{
 		double last_time = System.nanoTime()/1000000000.0;
 		double passed_time = 0;
 		double unprocessed_time = 0;
-		
+		//=
 		double frame_time = 0;
 		int frames = 0;
 		int fps = 0;
-		
+		//=
 		while(running) {
 			
 			render = false;
@@ -49,7 +50,9 @@ public class GameContainer implements Runnable{
 			last_time = first_time; 
 			
 			unprocessed_time += passed_time;
+			//=
 			frame_time += passed_time;
+			//=
 			
 			while(unprocessed_time >= UPDATE_CAP) {
 				
@@ -57,19 +60,26 @@ public class GameContainer implements Runnable{
 				render = true;
 				
 				//To do: Update game
+				
+				//=
 				if(frame_time >= 1.0) {
 					frame_time = 0;
 					fps = frames;
 					frames = 0;
 					
 					System.out.println("FPS: "+fps); 
+				//=
 				}
 			}
 			
 			if(render) {
+				renderer.clear();
 				//To do: Render game
 				window.update();
+				
+				//=
 				frames++;
+				//=
 			}
 			else {
 				try {
@@ -125,5 +135,9 @@ public class GameContainer implements Runnable{
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Window getWindow() {
+		return window;
 	}
 }
