@@ -1,15 +1,18 @@
 package com.pedro.engine;
 
+import java.awt.event.MouseEvent;
+
 public class GameContainer implements Runnable{
 	
 	private Thread thread;
 	private Window window;
 	private Renderer renderer;
+	private Input input;
 	
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0/60.0;
 	private int width = 320, height = 240;
-	private float scale = 3.5f;
+	private float scale = 1f;
 	private String title = "PruebaEngine v1.0";
 	
 	public GameContainer() {
@@ -19,6 +22,7 @@ public class GameContainer implements Runnable{
 	public void start() {
 		window = new Window(this);
 		renderer = new Renderer(this);
+		input = new Input(this);
 		
 		thread = new Thread(this);
 		thread.run(); // .run para ser la main thread// .start para q sea secundaria (side thread)
@@ -61,6 +65,12 @@ public class GameContainer implements Runnable{
 				
 				//To do: Update game
 				
+				//=
+
+				System.out.println("X:" + input.getMouseX() + "Y: " + input.getMouseY());
+
+				//=
+				input.update();
 				//=
 				if(frame_time >= 1.0) {
 					frame_time = 0;
