@@ -1,0 +1,19 @@
+comandos git SOLO FUNCIONAN SI ESTAMOS EN LA CARPETA DEL REPOSITORIO (LOCAL)
+
+git clone <URL>  /Agarra el repositorio y lo copia en una carpeta con el nombre del projecto en esta carpeta que tiene el repositorio, podemos agregar archivos y mas cosas blabla.
+
+git status //nos muestra la diferencia entre nuestra carpeta local y la que esta guardada en github
+
+git add  <Archivo> // con esto agregamos el archivo que creamos de manera local al repositorio (todavia no esta sincronizado ocn github)
+
+git commit -m "Mensaje"  //Esto lo bloquea en nuestra computadora y le da un mensaje
+
+git push //Esto lo sincroniza con github
+
+Aca si vamos a github/Nombreproyecto deberia aparecer el archivo que subimos
+
+git pull  //Si push sirve para subir un archivo, pull sirve para bajarlo y no tener que clonar todo el repo devuelta (ponele que yo subo un archivo, ustedes lo bajan con esto). Esto hay que hacerlo siempre antes de arrancar a trabajar, ya que sincroniza con lo que hicieron los otros.
+
+git add . //el . Agrega todo lo de directorio, tambien se puede usar git add -A
+
+siempre que hacemos un git add, hay que hacer el git commit -m "ACA VA UN MENSAJE QUE DIGA QUE CAMBIAMOS"
