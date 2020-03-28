@@ -18,21 +18,29 @@ public class Font {
 	public Font(String path) {
 		
 		fontImage = new Image(path);
+		//System.out.println(fontImage.getWidth());
 		
-		offsets = new int[305]; // poner los numeros, la longitud de la imagen?
-		widths = new int[305];
+		offsets = new int[59]; // poner los numeros, la longitud de la imagen?
+		widths = new int[59];
 		
 		int unicode = 0; 
 		
-		for(int i=0; i< fontImage.getWidth(); i++) {
+		for(int i=0; i < fontImage.getWidth(); i++) {
+			
+			
 			if(fontImage.getPixel()[i] == 0xff0000ff) {
 				offsets[unicode] = i; 
+				//System.out.println(offsets[unicode]);
 			}
 			
 			if(fontImage.getPixel()[i] == 0xffffff00) {
 				widths[unicode] = i - offsets[unicode];
+				unicode++;
+				
 			}
-			unicode++;
+
+			
+			
 		}
 	}
 
