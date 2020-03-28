@@ -31,17 +31,18 @@ public class Renderer {
 	
 	public void drawImage(Image image, int offsetX, int offsetY) {
 		
+		
+		//no renderiza 
+		if(offsetX < -image.getWidth()) return;
+		if(offsetY < -image.getHeight()) return; 
+		
+		if(offsetX >= pixelW)return;
+		if(offsetY >= pixelH)return;
+		
 		int newX = 0;
 		int newY = 0;
 		int newWidth = image.getWidth();
 		int newHeight = image.getHeight();
-		
-		//no renderiza 
-		if(offsetX < -newWidth) return;
-		if(offsetY < -newHeight) return; 
-		
-		if(offsetX >= pixelW)return;
-		if(offsetY >= pixelH)return;
 		
 		//renderiza solo lo que no esta clipeado
 		
