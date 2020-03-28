@@ -9,7 +9,7 @@ package com.team.engine.gfx;
  */
 public class Font {
 	
-	public static final Font STANDARD = new Font("/standarFont.png");
+	public static final Font STANDARD = new Font("/Font/standarFont.png");
 	
 	private Image fontImage;
 	private int[] offsets;
