@@ -10,8 +10,8 @@ public class GameContainer implements Runnable {
 
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0 / 60.0;
-	private int width = 320, height = 240;
-	private float scale = 4f;
+	private int width = 320, height = 200;
+	private float scale = 3f;
 	private String title = "PruebaEngine v1.0";
 
 	public GameContainer(AbstractGame game) {

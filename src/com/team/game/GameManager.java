@@ -19,7 +19,7 @@ public class GameManager extends AbstractGame {
 
 	public GameManager() {
 		
-		image = new Image ("/test1.png");
+		image = new Image ("/test.png");
 		
 	}
 
@@ -33,7 +33,7 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void render(GameContainer gc, Renderer r) {
-		r.drawImage(image, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+		r.drawImage(image, gc.getInput().getMouseX()-40, gc.getInput().getMouseY()-40);
 
 	}
 
