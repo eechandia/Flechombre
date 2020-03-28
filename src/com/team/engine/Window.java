@@ -1,4 +1,4 @@
-package com.pedro.engine;
+package com.team.engine;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;

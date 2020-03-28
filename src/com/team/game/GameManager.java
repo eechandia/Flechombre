@@ -1,11 +1,12 @@
 /**
  * 
  */
-package com.pedro.game;
+package com.team.game;
 
-import com.pedro.engine.AbstractGame;
-import com.pedro.engine.GameContainer;
-import com.pedro.engine.Renderer;
+import com.team.engine.AbstractGame;
+import com.team.engine.GameContainer;
+import com.team.engine.Renderer;
+import com.team.engine.gfx.Image;
 
 /**
  * @author Pedro
@@ -13,7 +14,12 @@ import com.pedro.engine.Renderer;
  */
 public class GameManager extends AbstractGame {
 	
+	private Image image;
+	
+
 	public GameManager() {
+		
+		image = new Image ("/test1.png");
 		
 	}
 
@@ -27,6 +33,7 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void render(GameContainer gc, Renderer r) {
+		r.drawImage(image, gc.getInput().getMouseX(), gc.getInput().getMouseY());
 
 	}
 
