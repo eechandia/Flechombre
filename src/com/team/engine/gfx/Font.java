@@ -9,7 +9,7 @@ package com.team.engine.gfx;
  */
 public class Font {
 	
-	public static final Font STANDAR = new Font("/Fonts/standarFont.png");
+	public static final Font STANDARD = new Font("/standarFont.png");
 	
 	private Image fontImage;
 	private int[] offsets;
@@ -19,8 +19,8 @@ public class Font {
 		
 		fontImage = new Image(path);
 		
-		offsets = new int[58]; // poner los numeros, la longitud de la imagen?
-		widths = new int[58];
+		offsets = new int[305]; // poner los numeros, la longitud de la imagen?
+		widths = new int[305];
 		
 		int unicode = 0; 
 		
