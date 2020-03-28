@@ -2,7 +2,6 @@ package com.team.engine;
 
 import java.awt.image.DataBufferInt;
 
-import com.team.engine.gfx.Font;
 import com.team.engine.gfx.Image;
 import com.team.engine.gfx.ImageTile;
 
@@ -10,8 +9,6 @@ public class Renderer {
 
 	private int pixelW, pixelH; // esto no lo usa en el tercer video, solo lo hace
 	private int[] pixels;
-	
-	private Font font = Font.STANDAR;
 
 	public Renderer(GameContainer gc) {
 		pixelW = gc.getWidth();
@@ -31,26 +28,6 @@ public class Renderer {
 			return;
 		}
 		pixels[x + y * pixelW]=value;
-	}
-	
-	public void drawText(String text, int offsetX, int offsetY, int color) {
-		
-		text = text.toUpperCase(); // si tenemos solo mayusculas hechas
-		int offset = 0;
-		
-		for(int i=0; i < text.length(); i++) {
-			int unicode = text.codePointAt(i) - 32;
-			
-			for(int y=0; y < font.getFontImage().getHeight(); y++) {
-				for(int x=0; x < font.getWidths()[unicode]; x++) {
-					if(font.getFontImage().getPixel()[(x + font.getOffsets()[unicode]) + y * font.getFontImage().getWidth()] == 0xffffffff) {
-						setPixel(x + offsetX + offset, y + offsetY, color);
-					}
-				}
-			}
-			
-			offset += font.getWidths()[unicode];
-		}
 	}
 	
 	public void drawImage(Image image, int offsetX, int offsetY) {

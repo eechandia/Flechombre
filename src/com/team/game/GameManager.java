@@ -19,7 +19,7 @@ public class GameManager extends AbstractGame {
 
 	public GameManager() {
 		
-		image = new ImageTile ("/test.png", 16,16);
+		image = new ImageTile("/Fonts/standarFont.png", 16,16);
 		
 	}
 
