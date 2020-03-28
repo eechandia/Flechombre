@@ -6,7 +6,7 @@ package com.team.game;
 import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
-import com.team.engine.gfx.Image;
+import com.team.engine.gfx.ImageTile;
 
 /**
  * @author Pedro
@@ -14,12 +14,12 @@ import com.team.engine.gfx.Image;
  */
 public class GameManager extends AbstractGame {
 	
-	private Image image;
+	private ImageTile image;
 	
 
 	public GameManager() {
 		
-		image = new Image ("/test.png");
+		image = new ImageTile ("/test.png", 16,16);
 		
 	}
 
@@ -27,13 +27,17 @@ public class GameManager extends AbstractGame {
 	public void update(GameContainer gc, float dt) {
 		//aca iria el codigo del juego
 		
-		
-
+		temp += dt;
+		if(temp > 3) temp = 0;
 	}
-
+	
+	float temp = 0;
+	
+	
 	@Override
 	public void render(GameContainer gc, Renderer r) {
-		r.drawImage(image, gc.getInput().getMouseX()-40, gc.getInput().getMouseY()-40);
+		
+		r.drawImageTile(image, gc.getInput().getMouseX()-8, gc.getInput().getMouseY()-8, (int)temp , 0);
 
 	}
 

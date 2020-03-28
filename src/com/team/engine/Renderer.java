@@ -3,6 +3,7 @@ package com.team.engine;
 import java.awt.image.DataBufferInt;
 
 import com.team.engine.gfx.Image;
+import com.team.engine.gfx.ImageTile;
 
 public class Renderer {
 
@@ -60,4 +61,39 @@ public class Renderer {
 			}
 		}
 	}
+	
+	public void drawImageTile(ImageTile image, int offsetX, int offsetY, int tileX, int tileY) {
+
+		//no renderiza 
+		if(offsetX < -image.getTileW()) return;
+		if(offsetY < -image.getTileH()) return; 
+		
+		if(offsetX >= pixelW)return;
+		if(offsetY >= pixelH)return;
+		
+		int newX = 0;
+		int newY = 0;
+		int newWidth = image.getTileW();
+		int newHeight = image.getTileH();
+		
+		//renderiza solo lo que no esta clipeado
+		
+		if(offsetX < 0) newX -= offsetX;
+		if(offsetY < 0) newY -= offsetY;
+			
+		if(newWidth + offsetX > pixelW) newWidth -= newWidth + offsetX - pixelW; 		
+		if(newHeight + offsetY > pixelH) newHeight -= newHeight + offsetY - pixelH; 
+		
+		
+		
+		for(int y= newY; y<newHeight; y++) {
+			for(int x = newX; x<newWidth;x++) {
+				setPixel( x+offsetX, y+offsetY, image.getPixel()[(x + tileX * image.getTileW()) + (y + tileY * image.getTileH()) *image.getWidth() ]);
+			}
+		}
+		
+		
+	}
 }
+
+	
