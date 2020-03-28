@@ -35,12 +35,12 @@ public class GameContainer implements Runnable{
 		running = true;
 		
 		boolean render = false;
-		double first_time = 0;
-		double last_time = System.nanoTime()/1000000000.0;
-		double passed_time = 0;
-		double unprocessed_time = 0;
+		double firstTime = 0;
+		double lastTime = System.nanoTime()/1000000000.0;//lo pasamos a ms
+		double passedTime = 0;
+		double unprocessedTime = 0;
 		//=
-		double frame_time = 0;
+		double frameTime = 0;
 		int frames = 0;
 		int fps = 0;
 		//=
@@ -48,29 +48,28 @@ public class GameContainer implements Runnable{
 			
 			render = false;
 			
-			first_time = System.nanoTime()/1000000000.0;
-			passed_time = first_time - last_time;
-			last_time = first_time; 
+			firstTime = System.nanoTime()/1000000000.0;
+			passedTime = firstTime - lastTime; 
+			lastTime = firstTime; 
 			
-			unprocessed_time += passed_time;
+			unprocessedTime += passedTime;
 			//=
-			frame_time += passed_time;
+			frameTime += passedTime;
 			//=
 			
-			while(unprocessed_time >= UPDATE_CAP) {
+			while(unprocessedTime >= UPDATE_CAP) {
 				
-				unprocessed_time -= UPDATE_CAP;
+				unprocessedTime -= UPDATE_CAP;
 				render = true;
 				
 				game.update(this, (float)UPDATE_CAP);
 				
 				input.update();
 				//=
-				if(frame_time >= 1.0) {
-					frame_time = 0;
+				if(frameTime >= 1.0) {
+					frameTime = 0;
 					fps = frames;
 					frames = 0;
-					
 					System.out.println("FPS: "+fps); 
 				//=
 				}

@@ -19,6 +19,9 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void update(GameContainer gc, float dt) {
+		//aca iria el codigo del juego
+		
+		
 
 	}
 

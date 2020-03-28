@@ -20,7 +20,7 @@ public class Window {
 	public Window(GameContainer gc) { //gc = width, height, scale, input...
 		 
 		 image = new BufferedImage(gc.getWidth(), gc.getHeight(), BufferedImage.TYPE_INT_RGB);
-		 canvas = new Canvas();
+		 canvas = new Canvas(); 
 		 Dimension s = new Dimension((int)(gc.getWidth()*gc.getScale()), (int)(gc.getHeight()*gc.getScale())); 
 		 canvas.setPreferredSize(s);
 		 canvas.setMaximumSize(s);
