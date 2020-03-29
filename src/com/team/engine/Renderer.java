@@ -8,7 +8,7 @@ import com.team.engine.gfx.ImageTile;
 
 public class Renderer {
 
-	private int pixelW, pixelH; // esto no lo usa en el tercer video, solo lo hace
+	private int pixelW, pixelH;
 	private int[] pixels;
 	private Font font = Font.STANDARD;
 
@@ -28,7 +28,7 @@ public class Renderer {
 	}
 	
 	public void setPixel(int x, int y, int value) {
-		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| value == 0xffff00ff) { //esto es el color que no va a dibujar
+		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| ((value >> 24) & 0xff) == 0) { //esto es el color que no va a dibujar
 			return;
 		}
 		pixels[x + y * pixelW]=value;
@@ -120,8 +120,47 @@ public class Renderer {
 				setPixel( x+offsetX, y+offsetY, image.getPixel()[(x + tileX * image.getTileW()) + (y + tileY * image.getTileH()) *image.getWidth() ]);
 			}
 		}
+	}
+	
+	public void drawRect(int offsetX, int offsetY, int width, int height, int color) {
 		
+		for(int y = 0; y <= height; y++) {
+			setPixel(offsetX, y + offsetY, color);
+			setPixel(offsetX + width, y + offsetY, color);
+		}
 		
+		for(int x = 0; x <= width; x++) {
+			setPixel(x + offsetX, offsetY, color);
+			setPixel(x + offsetX, offsetY + height, color);	
+		}
+	}
+	
+	public void drawFillRect(int offsetX, int offsetY, int width, int height, int color) {
+		//no renderiza 
+		if(offsetX < -width) return;
+		if(offsetY < -height) return; 
+		
+		if(offsetX >= pixelW)return;
+		if(offsetY >= pixelH)return;
+				
+		int newX = 0;
+		int newY = 0;
+		int newWidth = width;
+		int newHeight = height;
+				
+		//renderiza solo lo que no esta clipeado
+				
+		if(offsetX < 0) newX -= offsetX;
+		if(offsetY < 0) newY -= offsetY;
+					
+		if(newWidth + offsetX > pixelW) newWidth -= newWidth + offsetX - pixelW; 		
+		if(newHeight + offsetY > pixelH) newHeight -= newHeight + offsetY - pixelH; 
+		
+		for(int y = newY; y <= newWidth; y++) {
+			for(int x = newX; x <= newHeight; x++) {
+				setPixel(x + offsetX, y + offsetY, color);
+			}
+		}
 	}
 }
 

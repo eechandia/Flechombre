@@ -24,7 +24,7 @@ public class GameManager extends AbstractGame {
 
 	public GameManager() {
 		
-		image = new ImageTile("/test.png", 16,16);
+		image = new ImageTile("/test3.png", 16,16);
 		clip = new SoundClip("/Audio/Mario-coin-sound.wav");
 		clip.setVolume(-20f);
 	}
@@ -47,12 +47,19 @@ public class GameManager extends AbstractGame {
 	@Override
 	public void render(GameContainer gc, Renderer r) {
 		
-		r.drawImageTile(image, gc.getInput().getMouseX()-8, gc.getInput().getMouseY()-8, (int)temp , 0);
+		r.drawImage(image, gc.getInput().getMouseX()-16, gc.getInput().getMouseY()-16);
+		//r.drawImageTile(image, gc.getInput().getMouseX()-8, gc.getInput().getMouseY()-8, (int)temp , 0);
+		//r.drawFillRect(gc.getInput().getMouseX()-4, gc.getInput().getMouseY()-4, 8, 8, 0xffffccff);
 
 	}
 
 	public static void main(String[] args) {
 		GameContainer gc = new GameContainer(new GameManager());
+		/*
+		 * gc.setWidth(320);
+		 * gc.setHeight(240);
+		 * gc.setScale(1f); 
+		 */
 		gc.start();
 	}
 }
