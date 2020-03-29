@@ -34,6 +34,14 @@ public class Image {
 		
 		
 	}
+	
+	
+	public Image(int[] pixel, int width, int height) {
+		this.width = width;
+		this.height = height;
+		this.pixel = pixel;
+	}
+
 
 	public int getWidth() {
 		return width;

@@ -18,6 +18,16 @@ public class ImageTile extends Image{
 		this.tileH=tileH;
 	}
 
+	public Image getTileImage(int tileX, int tileY) {
+		int[] pixel = new int[tileW*tileH];
+		for (int y = 0;y< tileH; y++) {
+			for(int x = 0; x<tileW;x++) {
+				pixel[x+y*tileW] = this.getPixel()[(x+tileX*tileW)+(y+tileY+tileH)*this.getTileW()];
+				}			
+			}	
+		
+		return new Image(pixel,tileW,tileH);
+	}
 
 	public int getTileW() {
 		return tileW;
