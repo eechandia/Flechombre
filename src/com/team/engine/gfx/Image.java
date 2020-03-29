@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 public class Image {
 	private int width,height;
 	private int[] pixel;
+	private boolean alpha = false;
 	
 	public Image(String path) {
 		BufferedImage image = null;
@@ -56,6 +57,14 @@ public class Image {
 
 	public void setPixel(int[] pixel) {
 		this.pixel = pixel;
+	}
+
+	public boolean isAlpha() {
+		return alpha;
+	}
+
+	public void setAlpha(boolean alpha) {
+		this.alpha = alpha;
 	}
 	
 	

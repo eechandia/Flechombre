@@ -1,37 +1,76 @@
 package com.team.engine;
 
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
 
 import com.team.engine.gfx.Font;
 import com.team.engine.gfx.Image;
+import com.team.engine.gfx.ImageRequest;
 import com.team.engine.gfx.ImageTile;
 
 public class Renderer {
+	
+	private Font font = Font.STANDARD;
+	private ArrayList<ImageRequest> imageRequest = new ArrayList<ImageRequest>();
 
 	private int pixelW, pixelH;
 	private int[] pixels;
-	private Font font = Font.STANDARD;
+	private int[] zBuffer;
+	
+	private int zDepth = 0;
+	private boolean processing = false;
 
 	public Renderer(GameContainer gc) {
-		
 		
 		pixelW = gc.getWidth();
 		pixelH = gc.getHeight();
 		pixels = ((DataBufferInt) gc.getWindow().getImage().getRaster().getDataBuffer()).getData();
+		zBuffer = new int[pixels.length];
 	}
 
 	public void clear() {
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0xff000000;
+			zBuffer[i] = 0;
 		}
 	}
 	
+	public void process() {
+		processing = true;
+		
+		for(int i = 0; i < imageRequest.size(); i++) {
+			
+			ImageRequest ir = imageRequest.get(i);
+			setzDepth(ir.zDepth);
+			drawImage(ir.image, ir.offsetX, ir.offsetY);	
+		}
+		
+		imageRequest.clear();
+		processing = false;
+	}
+	
 	public void setPixel(int x, int y, int value) {
-		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| ((value >> 24) & 0xff) == 0) { //esto es el color que no va a dibujar
+		int alpha = ((value >> 24) & 0xff);
+		
+		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| alpha == 0) { //esto es el color que no va a dibujar
 			return;
 		}
-		pixels[x + y * pixelW]=value;
+		
+		if(zBuffer[x + y * pixelW] > zDepth)
+			return;
+		
+		if(alpha == 255) {
+			pixels[x + y * pixelW] = value;
+		}else {
+			int pixelColor = pixels[x + y * pixelW];
+			
+			int newRed = ((pixelColor >> 16) & 0xff) - (int)((((pixelColor >> 16) & 0xff) - ((value >> 16) & 0xff)) * (alpha / 255f));
+			int newGreen = ((pixelColor >> 8) & 0xff) - (int)((((pixelColor >> 8) & 0xff) - ((value >> 8) & 0xff)) * (alpha / 255f));
+			int newBlue = (pixelColor & 0xff) - (int)(((pixelColor & 0xff) - (value & 0xff)) * (alpha / 255f));
+			
+			pixels[x + y * pixelW] = (255 << 24 | newRed << 16 | newGreen << 8 | newBlue);	
+		}
 	}
 	
 	
@@ -61,6 +100,12 @@ public class Renderer {
 	
 	public void drawImage(Image image, int offsetX, int offsetY) {
 		
+		if(image.isAlpha() && !processing) {
+			
+			imageRequest.add(new ImageRequest(image, zDepth, offsetX, offsetY));
+			return;
+			
+		}
 		
 		//no renderiza 
 		if(offsetX < -image.getWidth()) return;
@@ -161,6 +206,14 @@ public class Renderer {
 				setPixel(x + offsetX, y + offsetY, color);
 			}
 		}
+	}
+
+	public int getzDepth() {
+		return zDepth;
+	}
+
+	public void setzDepth(int zDepth) {
+		this.zDepth = zDepth;
 	}
 }
 

@@ -9,7 +9,7 @@ import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.audio.SoundClip;
-import com.team.engine.gfx.ImageTile;
+import com.team.engine.gfx.Image;
 
 /**
  * @author Pedro
@@ -17,14 +17,17 @@ import com.team.engine.gfx.ImageTile;
  */
 public class GameManager extends AbstractGame {
 	
-	private ImageTile image;
+	private Image image;
+	private Image image2;
 	private SoundClip clip;
 
 	
 
 	public GameManager() {
 		
-		image = new ImageTile("/test3.png", 16,16);
+		image = new Image("/alphatest.png");
+		image2 = new Image("/alphatest2.png");
+		image2.setAlpha(true);
 		clip = new SoundClip("/Audio/Mario-coin-sound.wav");
 		clip.setVolume(-20f);
 	}
@@ -47,7 +50,8 @@ public class GameManager extends AbstractGame {
 	@Override
 	public void render(GameContainer gc, Renderer r) {
 		
-		r.drawImage(image, gc.getInput().getMouseX()-16, gc.getInput().getMouseY()-16);
+		r.drawImage(image2, gc.getInput().getMouseX()-32, gc.getInput().getMouseY()-32);
+		r.drawImage(image, 10, 10);
 		//r.drawImageTile(image, gc.getInput().getMouseX()-8, gc.getInput().getMouseY()-8, (int)temp , 0);
 		//r.drawFillRect(gc.getInput().getMouseX()-4, gc.getInput().getMouseY()-4, 8, 8, 0xffffccff);
 
