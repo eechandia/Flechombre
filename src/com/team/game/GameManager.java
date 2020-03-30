@@ -26,9 +26,15 @@ public class GameManager extends AbstractGame {
 
 	public GameManager() {
 		
-		image = new Image("/alphatest.png");
-		image2 = new ImageTile("/alphatest2.png",16,16);
-		image2.setAlpha(true);
+		//image = new Image("/alphatest.png");
+		//image2 = new ImageTile("/alphatest2.png",16,16);
+		//image2.setAlpha(true);
+		
+		image = new Image("/testLight.png");
+		image.setAlpha(true);
+		image2= new ImageTile("/testLight2.png",16,16);
+		image2.setAlpha(false);
+		
 		clip = new SoundClip("/Audio/Mario-coin-sound.wav");
 		clip.setVolume(-20f);
 	}
@@ -51,12 +57,19 @@ public class GameManager extends AbstractGame {
 	@Override
 	public void render(GameContainer gc, Renderer r) {
 		
+		for (int x = 0; x<image.getWidth(); x++) {
+			for(int y = 0; y<image.getHeight();y++) {
+				r.setLightMap(x,  y, image.getPixel()[x+y*image.getWidth()]);
+			}
+		}
+		
 		r.setzDepth(1);
-		r.drawImageTile(image2, gc.getInput().getMouseX()-32, gc.getInput().getMouseY()-32,1,1);
-		r.setzDepth(0);
-		r.drawImage(image, 10, 10);
+		r.drawImage(image2, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+		
+		//r.setzDepth(0);
+		//r.drawImage(image, 10, 10);
 		//r.drawImageTile(image, gc.getInput().getMouseX()-8, gc.getInput().getMouseY()-8, (int)temp , 0);
-		//r.drawFillRect(gc.getInput().getMouseX()-4, gc.getInput().getMouseY()-4, 8, 8, 0xffffccff);
+		//r.drawFillRect(gc.getInput().getMouseX()-4, gc.getI	nput().getMouseY()-4, 8, 8, 0xffffccff);
 
 	}
 
