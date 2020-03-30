@@ -11,6 +11,7 @@ import com.team.engine.Renderer;
 import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.Image;
 import com.team.engine.gfx.ImageTile;
+import com.team.engine.gfx.Light;
 
 /**
  * @author Pedro
@@ -19,24 +20,30 @@ import com.team.engine.gfx.ImageTile;
 public class GameManager extends AbstractGame {
 	
 	private Image image;
-	private ImageTile image2;
+	//private ImageTile image2;
+	private Image image3;
 	private SoundClip clip;
+	private Light light;
 
 	
 
 	public GameManager() {
 		
-		//image = new Image("/alphatest.png");
+		image = new Image("/testLight4.png");
+		image.setLightBlock(Light.FULL);
 		//image2 = new ImageTile("/alphatest2.png",16,16);
 		//image2.setAlpha(true);
 		
-		image = new Image("/testLight.png");
-		image.setAlpha(true);
-		image2= new ImageTile("/testLight2.png",16,16);
-		image2.setAlpha(false);
+		//image = new Image("/testLight.png");
+		//image.setAlpha(true);
+		//image2= new ImageTile("/testLight2.png",16,16);
+		//image2.setAlpha(false);
+		image3 = new Image("/testLight3.png");
+		
+		light = new Light(100, 0xff00ffff);
 		
 		clip = new SoundClip("/Audio/Mario-coin-sound.wav");
-		clip.setVolume(-20f);
+		clip.setVolume(-30f);
 	}
 
 	@Override
@@ -57,14 +64,12 @@ public class GameManager extends AbstractGame {
 	@Override
 	public void render(GameContainer gc, Renderer r) {
 		
-		for (int x = 0; x<image.getWidth(); x++) {
-			for(int y = 0; y<image.getHeight();y++) {
-				r.setLightMap(x,  y, image.getPixel()[x+y*image.getWidth()]);
-			}
-		}
+		r.drawImage(image3, 0, 0);
+		r.drawImage(image, 100, 100);
+		r.drawLight(light, gc.getInput().getMouseX(), gc.getInput().getMouseY());
 		
-		r.setzDepth(1);
-		r.drawImage(image2, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+		//r.setzDepth(1);
+		//r.drawImage(image2, gc.getInput().getMouseX(), gc.getInput().getMouseY());
 		
 		//r.setzDepth(0);
 		//r.drawImage(image, 10, 10);
