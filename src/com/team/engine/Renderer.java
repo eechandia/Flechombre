@@ -10,12 +10,14 @@ import com.team.engine.gfx.Image;
 import com.team.engine.gfx.ImageRequest;
 import com.team.engine.gfx.ImageTile;
 import com.team.engine.gfx.Light;
+import com.team.engine.gfx.LightRequest;
 
 public class Renderer {
 	
 	private Font font = Font.STANDARD;
 	private ArrayList<ImageRequest> imageRequest = new ArrayList<ImageRequest>();
-
+	private ArrayList<LightRequest> lightRequest = new ArrayList<LightRequest>();
+	
 	private int pixelW, pixelH;
 	private int[] pixels;
 	private int[] zBuffer;
@@ -27,7 +29,6 @@ public class Renderer {
 	private int ambientColor = 0xff232323;
 
 	public Renderer(GameContainer gc) {
-		
 		pixelW = gc.getWidth();
 		pixelH = gc.getHeight();
 		pixels = ((DataBufferInt) gc.getWindow().getImage().getRaster().getDataBuffer()).getData();
@@ -36,21 +37,19 @@ public class Renderer {
 		lightBlock = new int[pixels.length];
 	}
 
+	
 	public void clear() {
-
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0;
 			zBuffer[i] = 0;
 			lightMap[i] = ambientColor;
-			lightBlock[i] = 0;
-			
-			
+			lightBlock[i] = 0;		
 		}
 	}
 	
+	
 	public void process() {
 		processing = true;
-		
 		Collections.sort(imageRequest, new Comparator<ImageRequest>() {
 			@Override
 			public int compare(ImageRequest i1, ImageRequest i2) {
@@ -71,31 +70,35 @@ public class Renderer {
 			drawImage(ir.image, ir.offsetX, ir.offsetY);	
 		}
 		
+		//dibujar ilumiaciom
+		
+		for(int i = 0; i < lightRequest.size(); i++) {
+			LightRequest l = lightRequest.get(i);
+			drawLightRequest(l.light, l.locX, l.locY);
+			
+		}
+		
+	
 		//merge pixel map y light map
 		for(int i = 0; i<pixels.length; i++) {
-			
 			float r = ((lightMap[i] >> 16) & 0xff)/255f;
 			float g = ((lightMap[i] >> 8) & 0xff)/255f; 
 			float b = (lightMap[i] & 0xff)/255f;
-			
 			pixels[i] = ((int)(((pixels[i]>>16) & 0xff)*r) << 16 | (int)(((pixels[i]>>8) & 0xff)*g)  << 8 | (int)((pixels[i]& 0xff)*b));
-
 		}
-		
 		imageRequest.clear();
+		lightRequest.clear();
 		processing = false;
 	}
 	
 	
 	public void setPixel(int x, int y, int value) {
 		int alpha = ((value >> 24) & 0xff);
-		
 		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| alpha == 0) { //esto es el color que no va a dibujar
 			return;
 		}
 		
 		int index = x+y*pixelW;
-		
 		if(zBuffer[index] > zDepth)
 			return;
 		
@@ -121,7 +124,6 @@ public class Renderer {
 		}
 		
 		int baseColor = lightMap[x+y*pixelW];
-		int finalColor = 0;
 		
 		int maxRed = Math.max((baseColor >> 16) & 0xff, (value >> 16) & 0xff);
 		int maxGreen  = Math.max((baseColor >> 8) & 0xff, (value >> 8) & 0xff);
@@ -281,7 +283,13 @@ public class Renderer {
 		}
 	}
 	
-	public void drawLight(Light light, int offsetX, int offsetY) {
+	public void drawLight(Light l, int offsetX, int offsetY) {
+		
+		lightRequest.add(new LightRequest(l,offsetX,offsetY));
+		
+	}
+	
+	private void drawLightRequest(Light light, int offsetX, int offsetY) {
 		
 		for(int i=0; i <= light.getDiameter(); i++) {
 			drawLightLine(light, light.getRadius(), light.getRadius(), i, 0, offsetX, offsetY);
@@ -290,6 +298,8 @@ public class Renderer {
 			drawLightLine(light, light.getRadius(), light.getRadius(), light.getDiameter(), i, offsetX, offsetY);
 		}
 	}
+	
+	//Bresenham's line algorithm
 	
 	private void drawLightLine(Light light, int startX, int startY, int endX, int endY, int offsetX, int offsetY) {
 		
@@ -317,7 +327,7 @@ public class Renderer {
 			if(lightBlock[screenX+screenY*pixelW] == Light.FULL) 
 				return; 
 			
-			setLightMap(screenX, screenY, lightColor);
+			setLightMap(screenX, screenY, lightColor); 
 			
 			if(startX == endX && startY == endY)
 				break;

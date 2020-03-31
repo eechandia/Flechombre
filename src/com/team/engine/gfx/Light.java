@@ -21,7 +21,7 @@ public class Light {
 		this.color = color;
 		lightMap = new int[diameter*diameter];
 		
-		for(int y=0; y < diameter; y++) {
+		for(int y=0; y < diameter; y++) { 
 			for(int x=0; x < diameter; x++) {
 				
 				double distance = Math.sqrt((x - radius)*(x - radius) + (y - radius)*(y - radius));

@@ -32,7 +32,7 @@ public class GameManager extends AbstractGame {
 		image = new Image("/testLight4.png");
 		image.setLightBlock(Light.FULL);
 		//image2 = new ImageTile("/alphatest2.png",16,16);
-		//image2.setAlpha(true);
+		//image.setAlpha(true);
 		
 		//image = new Image("/testLight.png");
 		//image.setAlpha(true);
@@ -65,7 +65,7 @@ public class GameManager extends AbstractGame {
 	public void render(GameContainer gc, Renderer r) {
 		
 		r.drawImage(image3, 0, 0);
-		r.drawImage(image, 100, 100);
+		r.drawImage(image, 130, 80);
 		r.drawLight(light, gc.getInput().getMouseX(), gc.getInput().getMouseY());
 		
 		//r.setzDepth(1);
