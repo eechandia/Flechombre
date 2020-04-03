@@ -351,6 +351,16 @@ public class Renderer {
 	public void setzDepth(int zDepth) {
 		this.zDepth = zDepth;
 	}
+
+
+	public int getAmbientColor() {
+		return ambientColor;
+	}
+
+
+	public void setAmbientColor(int ambientColor) {
+		this.ambientColor = ambientColor;
+	}
 }
 
 	
