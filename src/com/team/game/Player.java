@@ -16,7 +16,7 @@ import com.team.engine.gfx.Image;
 public class Player extends GameObject{
 	
 	private float speed = 100;
-	Image image = new Image("/test.png");//prueba1
+	//Image image = new Image("/test.png");//prueba1
 	
 	public Player(int posX, int posY) {
 		this.tag = "player";
@@ -45,7 +45,8 @@ public class Player extends GameObject{
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
 		
-		renderer.drawImage(image, (int)posX, (int)posY);
+		//renderer.drawImage(image, (int)posX, (int)posY);
+		renderer.drawFillRect((int)posX, (int)posY, 16, 16, 0xff107a2a);
 	}
 
 }
