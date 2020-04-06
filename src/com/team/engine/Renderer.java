@@ -276,8 +276,8 @@ public class Renderer {
 		if(newWidth + offsetX > pixelW) newWidth -= newWidth + offsetX - pixelW; 		
 		if(newHeight + offsetY > pixelH) newHeight -= newHeight + offsetY - pixelH; 
 		
-		for(int y = newY; y < newWidth; y++) {
-			for(int x = newX; x < newHeight; x++) {
+		for(int y = newY; y < newHeight; y++) {
+			for(int x = newX; x < newWidth; x++) {
 				setPixel(x + offsetX, y + offsetY, color);
 			}
 		}

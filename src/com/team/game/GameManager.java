@@ -16,13 +16,15 @@ import com.team.engine.gfx.Image;
  */
 public class GameManager extends AbstractGame {
 	
-	private int[] collision;
+	public static final int TILE_SIZE = 16;
+	
+	private boolean[] collision;
 	private int levelWidth, levelHeight;
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 
 	public GameManager() {
 
-		objects.add(new Player(1, 13));
+		objects.add(new Player(1, 5));
 		loadLevel("/level0.png");
 	}
 	
@@ -35,7 +37,7 @@ public class GameManager extends AbstractGame {
 	public void update(GameContainer gc, float dt) {
 		
 		for(int i=0; i<objects.size(); i++) {
-			objects.get(i).update(gc, dt);
+			objects.get(i).update(gc, this, dt);
 			if(objects.get(i).isDead()) {
 				objects.remove(i);
 				i--;
@@ -48,10 +50,10 @@ public class GameManager extends AbstractGame {
 		
 		for(int y=0; y<levelHeight; y++) {
 			for(int x=0; x<levelWidth; x++) {
-				if(collision[x+y*levelWidth] == 1) {
-					renderer.drawFillRect(x*16, y*16, 16, 16, 0xff0f0f0f);
+				if(collision[x+y*levelWidth]) {
+					renderer.drawFillRect(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, 0xff0f0f0f);
 				}else {
-					renderer.drawFillRect(x*16, y*16, 16, 16, 0xfff9f9f9);
+					renderer.drawFillRect(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, 0xfff9f9f9);
 				}
 			}
 		}
@@ -66,18 +68,24 @@ public class GameManager extends AbstractGame {
 		Image levelImage = new Image(path);
 		levelWidth = levelImage.getWidth();
 		levelHeight = levelImage.getHeight();
-		collision = new int[levelWidth * levelHeight];
+		collision = new boolean[levelWidth * levelHeight];
 		
 		for(int y=0; y<levelImage.getHeight(); y++) {
 			for(int x=0; x<levelImage.getWidth(); x++) {
 				
 				if(levelImage.getPixel()[x+y*levelImage.getWidth()] == 0xff000000) {
-					collision[x+y*levelImage.getWidth()] = 1;
+					collision[x+y*levelImage.getWidth()] = true;
 				}else {
-					collision[x+y*levelImage.getWidth()] = 0;
+					collision[x+y*levelImage.getWidth()] = false;
 				}
 			}
 		}
+	}
+	
+	public boolean getCollision(int x, int y) {
+		if(x<0 || x>levelWidth || y<0 || y>levelHeight)
+			return true;
+		return collision[x+y*levelWidth];
 	}
 
 	public static void main(String[] args) {
