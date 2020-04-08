@@ -19,7 +19,7 @@ public class Player extends GameObject{
 	private float offsetX, offsetY;
 	
 	private float speed = 100;
-	private float fallSpeed = 10;
+	private float fallSpeed = 1;
 	private float jump = -1f;
 	private boolean ground = false;
 	//Image image = new Image("/test.png");//prueba1
@@ -71,7 +71,7 @@ public class Player extends GameObject{
 		//End of Left and Right
 		
 		//Beginning of Jump and Gravity
-		fallDistance += dt*fallSpeed;
+		fallDistance += dt*fallSpeed-0.005;
 		
 		if(gc.getInput().isKeyDown(KeyEvent.VK_W) && ground){
 			fallDistance = jump;
@@ -115,8 +115,25 @@ public class Player extends GameObject{
 			tileX--;
 			offsetX += GameManager.TILE_SIZE;
 		}
+		
 		posX = tileX*GameManager.TILE_SIZE + offsetX;
 		posY = tileY*GameManager.TILE_SIZE + offsetY;
+		
+		//Disparando
+		if(gc.getInput().isKeyDown(KeyEvent.VK_UP)) {
+			gm.addObject(new Flecha(tileX, tileY, offsetX + width/2, offsetY + height/2, 0));
+		}
+		if(gc.getInput().isKeyDown(KeyEvent.VK_RIGHT)) {
+			gm.addObject(new Flecha(tileX, tileY, offsetX + width/2, offsetY + height/2, 1));
+		}
+		if(gc.getInput().isKeyDown(KeyEvent.VK_DOWN)) {
+			gm.addObject(new Flecha(tileX, tileY, offsetX+ width/2, offsetY + height/2, 2));
+		}
+		if(gc.getInput().isKeyDown(KeyEvent.VK_LEFT)) {
+			gm.addObject(new Flecha(tileX, tileY, offsetX+ width/2, offsetY + height/2, 3));
+		}
+
+		
 	}
 
 	@Override

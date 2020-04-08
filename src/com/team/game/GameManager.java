@@ -28,6 +28,10 @@ public class GameManager extends AbstractGame {
 		loadLevel("/level0.png");
 	}
 	
+	public void addObject(GameObject object) {
+		objects.add(object);
+	}
+	
 	@Override
 	public void init(GameContainer gc) {
 		gc.getRenderer().setAmbientColor(-1);
