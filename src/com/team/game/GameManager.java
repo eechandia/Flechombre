@@ -18,18 +18,31 @@ public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 16;
 	
+	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+	private Camara camara;
+	
 	private boolean[] collision;
 	private int levelWidth, levelHeight;
-	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+	
 
 	public GameManager() {
 
 		objects.add(new Player(1, 5));
-		loadLevel("/level0.png");
+		loadLevel("/level1.png");
+		camara = new Camara("player");
 	}
 	
 	public void addObject(GameObject object) {
 		objects.add(object);
+	}
+	
+	public GameObject getObject(String tag) {
+		for(GameObject object: objects) {
+			if(object.getTag().equals(tag)) {
+				return object;
+			}
+		}
+		return null;
 	}
 	
 	@Override
@@ -47,10 +60,13 @@ public class GameManager extends AbstractGame {
 				i--;
 			}
 		}
+		
+		camara.update(gc, this, dt);
 	}
 	
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
+		camara.render(renderer);
 		
 		for(int y=0; y<levelHeight; y++) {
 			for(int x=0; x<levelWidth; x++) {

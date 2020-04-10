@@ -19,8 +19,8 @@ public class Player extends GameObject{
 	private float offsetX, offsetY;
 	
 	private float speed = 100;
-	private float fallSpeed = 1;
-	private float jump = -1f;
+	private float fallSpeed = 5;
+	private float jump = -3.5f;
 	private boolean ground = false;
 	//Image image = new Image("/test.png");//prueba1
 	

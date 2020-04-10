@@ -27,6 +27,7 @@ public class Renderer {
 	private int zDepth = 0;
 	private boolean processing = false;
 	private int ambientColor = 0xff232323;
+	private int camaraX, camaraY;
 
 	public Renderer(GameContainer gc) {
 		pixelW = gc.getWidth();
@@ -94,6 +95,7 @@ public class Renderer {
 	
 	public void setPixel(int x, int y, int value) {
 		int alpha = ((value >> 24) & 0xff);
+
 		if((x<0 || x>=pixelW || y<0 || y >= pixelH)|| alpha == 0) { //esto es el color que no va a dibujar
 			return;
 		}
@@ -118,7 +120,7 @@ public class Renderer {
 	}
 	
 	public void setLightMap(int x, int y, int value) {
-		
+
 		if(x<0 || x>=pixelW || y<0 || y >= pixelH) {
 			return;
 		}
@@ -134,7 +136,7 @@ public class Renderer {
 	}
 	
 	public void setLightBlock(int x, int y, int value) {
-		
+
 		if(x<0 || x>=pixelW || y<0 || y >= pixelH) {
 			return;
 		}
@@ -146,7 +148,8 @@ public class Renderer {
 	}
 	
 	public void drawText(String text, int offsetX, int offsetY, int color) {
-		
+		offsetX -= camaraX;
+		offsetY -= camaraY;
 
 		int offset = 0;
 
@@ -169,6 +172,8 @@ public class Renderer {
 	}
 	
 	public void drawImage(Image image, int offsetX, int offsetY) {
+		offsetX -= camaraX;
+		offsetY -= camaraY;
 		
 		if(image.isAlpha() && !processing) {	
 			imageRequest.add(new ImageRequest(image, zDepth, offsetX, offsetY));
@@ -206,6 +211,8 @@ public class Renderer {
 	}
 	
 	public void drawImageTile(ImageTile image, int offsetX, int offsetY, int tileX, int tileY) {
+		offsetX -= camaraX;
+		offsetY -= camaraY;
 		
 		if(image.isAlpha() && !processing) {	
 			imageRequest.add(new ImageRequest(image.getTileImage(tileX, tileY), zDepth, offsetX, offsetY));
@@ -243,6 +250,8 @@ public class Renderer {
 	}
 	
 	public void drawRect(int offsetX, int offsetY, int width, int height, int color) {
+		offsetX -= camaraX;
+		offsetY -= camaraY;
 		
 		for(int y = 0; y <= height; y++) {
 			setPixel(offsetX, y + offsetY, color);
@@ -256,6 +265,9 @@ public class Renderer {
 	}
 	
 	public void drawFillRect(int offsetX, int offsetY, int width, int height, int color) {
+		offsetX -= camaraX;
+		offsetY -= camaraY;
+		
 		//no renderiza 
 		if(offsetX < -width) return;
 		if(offsetY < -height) return; 
@@ -290,6 +302,8 @@ public class Renderer {
 	}
 	
 	private void drawLightRequest(Light light, int offsetX, int offsetY) {
+		offsetX -= camaraX;
+		offsetY -= camaraY;
 		
 		for(int i=0; i <= light.getDiameter(); i++) {
 			drawLightLine(light, light.getRadius(), light.getRadius(), i, 0, offsetX, offsetY);
@@ -360,6 +374,26 @@ public class Renderer {
 
 	public void setAmbientColor(int ambientColor) {
 		this.ambientColor = ambientColor;
+	}
+
+
+	public int getCamaraX() {
+		return camaraX;
+	}
+
+
+	public void setCamaraX(int camaraX) {
+		this.camaraX = camaraX;
+	}
+
+
+	public int getCamaraY() {
+		return camaraY;
+	}
+
+
+	public void setCamaraY(int camaraY) {
+		this.camaraY = camaraY;
 	}
 }
 
