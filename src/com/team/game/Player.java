@@ -16,6 +16,7 @@ import com.team.engine.gfx.ImageTile;
 public class Player extends GameObject{
 	
 	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
+	private int paddingLeft, paddingRight, paddingTop;
 	
 	private int direction = 0;
 	private float animation = 0;
@@ -40,6 +41,9 @@ public class Player extends GameObject{
 		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = GameManager.TILE_SIZE;
 		this.height = GameManager.TILE_SIZE;
+		paddingLeft = -4;
+		paddingRight = 3;
+		paddingTop = -3;
 	}
 
 	@Override
@@ -47,26 +51,18 @@ public class Player extends GameObject{
 		//Left and Right
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)offsetY))) {
-				if(offsetX < 0) {
-					offsetX += dt*speed;
-					if(offsetX > 0)
-						offsetX = 0;
-				}else {
-					offsetX = 0;
-				}
+				offsetX += dt*speed;
+				if(offsetX > paddingRight)
+					offsetX = paddingRight;
 			}else {
 				offsetX += dt*speed;
 			}
 		}
 		if(gc.getInput().isKey(KeyEvent.VK_A)) {
 			if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY + (int)Math.signum((int)offsetY))) {
-				if(offsetX > 0) {
-					offsetX -= dt*speed;
-					if(offsetX < 0)
-						offsetX = 0;
-				}else {
-					offsetX = 0;
-				}
+				offsetX -= dt*speed;
+				if(offsetX < paddingLeft)
+					offsetX = paddingLeft;
 			}else {
 				offsetX -= dt*speed;
 			}
@@ -85,14 +81,14 @@ public class Player extends GameObject{
 		offsetY += fallDistance; 
 		
 		if(fallDistance < 0) {
-			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)offsetX), tileY-1)) && offsetY < 0) {
+			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < paddingTop) {
 				fallDistance = 0;
-				offsetY = 0;
+				offsetY = paddingTop;
 			}
 		}
 		
 		if(fallDistance > 0) {
-			if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)offsetX), tileY+1)) && offsetY > 0) {
+			if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
 				fallDistance = 0;
 				offsetY = 0;
 				ground = true;
