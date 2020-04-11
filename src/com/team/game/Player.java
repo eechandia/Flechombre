@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
-import com.team.engine.gfx.Image;
 import com.team.engine.gfx.ImageTile;
 
 /**
