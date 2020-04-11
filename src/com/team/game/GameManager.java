@@ -17,6 +17,8 @@ import com.team.engine.gfx.Image;
 public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 16;
+	private Image levelImage = new Image("/level2Image.png");
+	private Image background = new Image("/background0.png");
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 	private Camara camara;
@@ -28,7 +30,7 @@ public class GameManager extends AbstractGame {
 	public GameManager() {
 
 		objects.add(new Player(1, 5));
-		loadLevel("/level1.png");
+		loadLevel("/level2.png");
 		camara = new Camara("player");
 	}
 	
@@ -68,15 +70,8 @@ public class GameManager extends AbstractGame {
 	public void render(GameContainer gc, Renderer renderer) {
 		camara.render(renderer);
 		
-		for(int y=0; y<levelHeight; y++) {
-			for(int x=0; x<levelWidth; x++) {
-				if(collision[x+y*levelWidth]) {
-					renderer.drawFillRect(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, 0xff0f0f0f);
-				}else {
-					renderer.drawFillRect(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, 0xfff9f9f9);
-				}
-			}
-		}
+		renderer.drawImage(background, 0, 0);
+		renderer.drawImage(levelImage, 0, 0);
 		
 		for(GameObject object : objects) {
 			object.render(gc, renderer);
@@ -114,5 +109,13 @@ public class GameManager extends AbstractGame {
 		gc.setHeight(240);
 		gc.setScale(3f); 
 		gc.start();
+	}
+
+	public int getLevelWidth() {
+		return levelWidth;
+	}
+
+	public int getLevelHeight() {
+		return levelHeight;
 	}
 }

@@ -32,8 +32,15 @@ public class Camara {
 		float targetX = (target.getPosX()+target.getWidth()/2) - gc.getWidth()/2;
 		float targetY = (target.getPosY()+target.getHeight()/2) - gc.getHeight()/2;
 			
-		offsetX -= dt*(offsetX-targetX)*10;
-		offsetY -= dt*(offsetY-targetY)*10;
+//		offsetX -= (int)(dt*(offsetX-targetX)*20);
+//		offsetY -= (int)(dt*(offsetY-targetY)*20);
+		offsetX = targetX;
+		offsetY = targetY;
+		
+		if(offsetX<0) offsetX = 0;
+		if(offsetY<0) offsetY = 0;
+		if(offsetX+gc.getWidth() > gm.getLevelWidth()*GameManager.TILE_SIZE) offsetX = gm.getLevelWidth()*GameManager.TILE_SIZE-gc.getWidth();
+		if(offsetY+gc.getHeight() > gm.getLevelHeight()*GameManager.TILE_SIZE) offsetY = gm.getLevelHeight()*GameManager.TILE_SIZE-gc.getHeight();
 	}
 	
 	public void render(Renderer renderer)  {

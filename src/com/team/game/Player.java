@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
+import com.team.engine.gfx.ImageTile;
 
 /**
  * @author Pedro
@@ -15,14 +16,18 @@ import com.team.engine.gfx.Image;
  */
 public class Player extends GameObject{
 	
+	private ImageTile playerImage = new ImageTile("/player0.png", 16, 16);
+	
+	private int direction = 0;
+	private float animation = 0;
 	private int tileX, tileY;
 	private float offsetX, offsetY;
 	
 	private float speed = 100;
-	private float fallSpeed = 5;
-	private float jump = -3.5f;
+	private float fallSpeed = 10;
+	private float jump = -4f;
 	private boolean ground = false;
-	//Image image = new Image("/test.png");//prueba1
+	private boolean groundLast = false;
 	
 	private float fallDistance = 0;
 	
@@ -133,14 +138,34 @@ public class Player extends GameObject{
 			gm.addObject(new Flecha(tileX, tileY, offsetX+ width/2, offsetY + height/2, 3));
 		}
 
+		if(gc.getInput().isKey(KeyEvent.VK_D)) {
+			direction = 0;
+			animation += dt*7;
+			if(animation>=4)
+				animation = 0;
+		}
+		else if(gc.getInput().isKey(KeyEvent.VK_A)) {
+			direction = 1;
+			animation += dt*7;
+			if(animation>=4)
+				animation = 0;
+		}
+		else
+			animation = 0;
 		
+		if(!ground)
+			animation = 1;
+		
+		if(ground && !groundLast) {
+			animation = 2;
+		} 
+		groundLast = ground;
 	}
 
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		
-		//renderer.drawImage(image, (int)posX, (int)posY);
-		renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);
+		//renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);
+		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 	}
 
 }
