@@ -16,7 +16,7 @@ import com.team.engine.gfx.ImageTile;
  */
 public class Player extends GameObject{
 	
-	private ImageTile playerImage = new ImageTile("/player0.png", 16, 16);
+	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
 	
 	private int direction = 0;
 	private float animation = 0;
@@ -140,14 +140,14 @@ public class Player extends GameObject{
 
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			direction = 0;
-			animation += dt*7;
-			if(animation>=4)
+			animation += dt*10;
+			if(animation>=2)
 				animation = 0;
 		}
 		else if(gc.getInput().isKey(KeyEvent.VK_A)) {
 			direction = 1;
-			animation += dt*7;
-			if(animation>=4)
+			animation += dt*10;
+			if(animation>=2)
 				animation = 0;
 		}
 		else
@@ -157,7 +157,7 @@ public class Player extends GameObject{
 			animation = 1;
 		
 		if(ground && !groundLast) {
-			animation = 2;
+			animation = 0;
 		} 
 		groundLast = ground;
 	}
