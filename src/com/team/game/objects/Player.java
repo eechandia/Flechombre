@@ -1,13 +1,15 @@
 /**
  * 
  */
-package com.team.game;
+package com.team.game.objects;
 
 import java.awt.event.KeyEvent;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.ImageTile;
+import com.team.game.GameManager;
+import com.team.game.components.AABBComponent;
 
 /**
  * @author Pedro
@@ -16,7 +18,6 @@ import com.team.engine.gfx.ImageTile;
 public class Player extends GameObject{
 	
 	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
-	private int paddingLeft, paddingRight, paddingTop;
 	
 	private int direction = 0;
 	private float animation = 0;
@@ -41,9 +42,11 @@ public class Player extends GameObject{
 		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = GameManager.TILE_SIZE;
 		this.height = GameManager.TILE_SIZE;
-		paddingLeft = -4;
+		paddingLeft = 4;
 		paddingRight = 3;
-		paddingTop = -3;
+		paddingTop = 3;
+		
+		this.addComponent(new AABBComponent(this));
 	}
 
 	@Override
@@ -61,8 +64,8 @@ public class Player extends GameObject{
 		if(gc.getInput().isKey(KeyEvent.VK_A)) {
 			if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY + (int)Math.signum((int)offsetY))) {
 				offsetX -= dt*speed;
-				if(offsetX < paddingLeft)
-					offsetX = paddingLeft;
+				if(offsetX < -paddingLeft)
+					offsetX = -paddingLeft;
 			}else {
 				offsetX -= dt*speed;
 			}
@@ -81,14 +84,14 @@ public class Player extends GameObject{
 		offsetY += fallDistance; 
 		
 		if(fallDistance < 0) {
-			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < paddingTop) {
+			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
 				fallDistance = 0;
-				offsetY = paddingTop;
+				offsetY = -paddingTop;
 			}
 		}
 		
 		if(fallDistance > 0) {
-			if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
+			if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
 				fallDistance = 0;
 				offsetY = 0;
 				ground = true;
@@ -155,12 +158,19 @@ public class Player extends GameObject{
 			animation = 0;
 		} 
 		groundLast = ground;
+		
+		this.updateComponents(gc, gm, dt);
 	}
 
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
 		//renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
+		this.renderComponents(gc, renderer);
+	}
+
+	@Override
+	public void collision(GameObject other) {
 	}
 
 }

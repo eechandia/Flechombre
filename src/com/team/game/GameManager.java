@@ -9,6 +9,9 @@ import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
+import com.team.game.objects.GameObject;
+import com.team.game.objects.Platform;
+import com.team.game.objects.Player;
 
 /**
  * @author Pedro
@@ -30,6 +33,7 @@ public class GameManager extends AbstractGame {
 	public GameManager() {
 
 		objects.add(new Player(1, 5));
+		objects.add(new Platform());
 		loadLevel("/level2.png");
 		camara = new Camara("player");
 	}
@@ -62,6 +66,8 @@ public class GameManager extends AbstractGame {
 				i--;
 			}
 		}
+		
+		Physics.update();
 		
 		camara.update(gc, this, dt);
 	}

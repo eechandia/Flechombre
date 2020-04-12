@@ -12,7 +12,7 @@ public class GameContainer implements Runnable {
 	private final double UPDATE_CAP = 1.0 / 60.0;
 	private int width = 320, height = 200;
 	private float scale = 3f;
-	private String title = "PruebaEngine v1.0";
+	private String title = "Flechombre v1.0";
 
 	public GameContainer(AbstractGame game) {
 		this.game = game;

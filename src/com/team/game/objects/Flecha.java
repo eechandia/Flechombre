@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.team.game;
+package com.team.game.objects;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.game.GameManager;
 
 /**
  * @author Esteban
@@ -20,13 +21,15 @@ public class Flecha extends GameObject{
 	
 	public Flecha(int tileX, int tileY, float offsetX, float offsetY,  int direction) {
 		this.direction = direction;
-	
 		this.tileX = tileX;
 		this.tileY = tileY;
-		
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		
+		this.paddingLeft = 0;
+		this.paddingTop = 0;
+		this.paddingTop = 0;
+		this.width = 4;
+		this.height = 4;
 	}
 
 	@Override
@@ -76,8 +79,11 @@ public class Flecha extends GameObject{
 	
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		// TODO Auto-generated method stub
-		renderer.drawFillRect((int)posX-2, (int)posY-2, 4, 4, 0xffff0000);
+		renderer.drawFillRect((int)posX, (int)posY, width, height, 0xffff0000);
+	}
+
+	@Override
+	public void collision(GameObject other) {
 	}
 	
 	
