@@ -76,13 +76,6 @@ public class Player extends GameObject{
 		//Beginning of Jump and Gravity
 		fallDistance += dt*fallSpeed-0.005;
 		
-		if(gc.getInput().isKeyDown(KeyEvent.VK_W) && ground){
-			fallDistance = jump;
-			ground = false;
-		}
-		
-		offsetY += fallDistance; 
-		
 		if(fallDistance < 0) {
 			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
 				fallDistance = 0;
@@ -97,6 +90,13 @@ public class Player extends GameObject{
 				ground = true;
 			}
 		}
+		
+		if(gc.getInput().isKeyDown(KeyEvent.VK_W) && ground){
+			fallDistance = jump;
+			ground = false;
+		}
+		
+		offsetY += fallDistance; 
 		//End of Jump and Gravity
 		
 		//Final Position
@@ -151,8 +151,10 @@ public class Player extends GameObject{
 		else
 			animation = 0;
 		
-		if(!ground)
+		if((int)fallDistance != 0) {
 			animation = 1;
+			ground = false;
+		}
 		
 		if(ground && !groundLast) {
 			animation = 0;
@@ -171,6 +173,18 @@ public class Player extends GameObject{
 
 	@Override
 	public void collision(GameObject other) {
+		if(other.getTag().equalsIgnoreCase("platform")) {
+			AABBComponent myComponent = (AABBComponent) this.findComponent("aabb");
+			AABBComponent otherComponent = (AABBComponent) other.findComponent("aabb");
+			if(myComponent.getCenterY() < otherComponent.getCenterY()) {
+				int distance = (myComponent.getHalfHeight()+otherComponent.getHalfHeight()) - (otherComponent.getCenterY() - myComponent.getCenterY());
+				offsetY -= distance;
+				posY -= distance;
+				myComponent.setCenterY(myComponent.getCenterY()-distance);
+				fallDistance = 0;
+				ground = true;
+			}
+		}
 	}
 
 }
