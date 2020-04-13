@@ -39,7 +39,7 @@ public class AABBComponent extends Component{
 
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		renderer.drawRect(centerX-halfWidth, centerY-halfHeight, halfWidth*2, halfHeight*2, 0xff000000);
+		//renderer.drawRect(centerX-halfWidth, centerY-halfHeight, halfWidth*2, halfHeight*2, 0xff000000);
 	}
 
 	public int getCenterX() {

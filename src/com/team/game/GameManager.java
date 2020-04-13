@@ -84,7 +84,7 @@ public class GameManager extends AbstractGame {
 		
 		
 		//RESETEO DEL PERSONAJE
-		if(gc.getInput().isKeyUp(KeyEvent.VK_R)) {
+		if(gc.getInput().isKeyDown(KeyEvent.VK_R)) {
 			
 			if(playerCounter == 0) {
 				objects.add(new Player(1,5));
