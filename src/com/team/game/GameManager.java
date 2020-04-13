@@ -3,6 +3,7 @@
  */
 package com.team.game;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.team.engine.AbstractGame;
@@ -41,6 +42,8 @@ public class GameManager extends AbstractGame {
 		objects.add(new Saw(1*TILE_SIZE, 23*TILE_SIZE));
 		loadLevel("/level2.png");
 		camara = new Camara("player");
+		
+		
 	}
 	
 	public void addObject(GameObject object) {
@@ -70,6 +73,23 @@ public class GameManager extends AbstractGame {
 				objects.remove(i);
 				i--;
 			}
+		}
+		
+		
+		//RESETEO DEL PERSONAJE
+		if(gc.getInput().isKeyUp(KeyEvent.VK_R)) {
+			int playerCounter = 0;
+			for(GameObject o : objects) {
+				if(o.getTag()=="player") {
+					playerCounter+=1;
+				}
+			}
+			if(playerCounter == 0) {
+				objects.add(new Player(1,5));
+				camara = new Camara("player");
+				playerCounter+=1;
+			}
+			
 		}
 		
 		Physics.update();

@@ -78,6 +78,13 @@ public class Player extends GameObject{
 		
 		//End of Left and Right
 		
+		//Reset
+		if(gc.getInput().isKey(KeyEvent.VK_R)) {
+			this.dead = false;
+			this.posX = posX*GameManager.TILE_SIZE;
+			this.posY = posY*GameManager.TILE_SIZE;
+		}
+		
 		//Beginning of Jump and Gravity
 		fallDistance += dt*fallSpeed-0.005;
 		
