@@ -1,6 +1,18 @@
 package com.team.engine;
 
+import com.team.Menu;
+
 public class GameContainer implements Runnable {
+	
+	/// principio MENU
+	public enum STATE{
+		MENU,
+		GAME
+	};
+	
+	private STATE state = STATE.MENU; //el pibe los puso public static
+	
+	///fin MENU
 
 	private Thread thread;
 	private Window window;
@@ -13,6 +25,8 @@ public class GameContainer implements Runnable {
 	private int width = 320, height = 200;
 	private float scale = 3f;
 	private String title = "Flechombre v1.0";
+	
+	private Menu menu;
 
 	public GameContainer(AbstractGame game) {
 		this.game = game;
@@ -22,6 +36,8 @@ public class GameContainer implements Runnable {
 		window = new Window(this);
 		renderer = new Renderer(this);
 		input = new Input(this);
+		
+		menu = new Menu();
 
 		thread = new Thread(this);
 		thread.run(); // .run para ser la main thread// .start para q sea secundaria (side thread)
@@ -65,7 +81,8 @@ public class GameContainer implements Runnable {
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
 
-				game.update(this, (float) UPDATE_CAP);
+				if(state == STATE.GAME)
+					game.update(this, (float) UPDATE_CAP);
 
 				input.update();
 				// =
@@ -80,13 +97,17 @@ public class GameContainer implements Runnable {
 
 			if (render) {
 				renderer.clear();
-				game.render(this, renderer);
-				renderer.process();
-				renderer.setCamaraX(0);
-				renderer.setCamaraY(0);
-				renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
+				if(state == STATE.GAME) {
+					game.render(this, renderer);
+					renderer.process();
+					renderer.setCamaraX(0);
+					renderer.setCamaraY(0);
+					renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
+				}else if(state == STATE.MENU){
+					renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
+					menu.render(this, renderer);
+				}
 				window.update();
-
 				// =
 				frames++;
 				// =
@@ -150,5 +171,13 @@ public class GameContainer implements Runnable {
 
 	public Renderer getRenderer() {
 		return renderer;
+	}
+
+	public STATE getState() {
+		return state;
+	}
+
+	public void setState(STATE state) {
+		this.state = state;
 	}
 }

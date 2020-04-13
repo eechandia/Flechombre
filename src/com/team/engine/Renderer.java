@@ -165,7 +165,7 @@ public class Renderer {
 				}
 			}
 			
-			offsetX = 0;
+//			offsetX = 0;
 			offset += font.getWidths()[unicode];
 			
 		}
