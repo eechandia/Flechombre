@@ -15,8 +15,8 @@ import com.team.engine.gfx.Image;
 public class Levels {
 	private Image levelImage = new Image("/level2Image.png");
 	private int mouseX, mouseY;
-	private int level;
 	private int levelSeleccionado;
+	
 	
 	public void render(GameContainer gc, Renderer renderer) {
 		renderer.drawImage(levelImage, 0, 0);
@@ -33,9 +33,15 @@ public class Levels {
 		if(gc.getInput().isButton(1) && (mouseX>=76 && mouseX<=220) && (mouseY>=20 && mouseY<=180)) {
 			mouseX = (gc.getInput().getMouseX()-60)/16;
 			mouseY = (gc.getInput().getMouseY()-20)/16;
-			level = mouseX+mouseY*10;
+			levelSeleccionado = mouseX+mouseY*10;
 			//GameManager.setLevel(level);
 			gc.setState(State.GAME);
 		}
 	}
+	
+	
+	public int getLevelSeleccionado() {
+		return levelSeleccionado;
+	}
+	
 }

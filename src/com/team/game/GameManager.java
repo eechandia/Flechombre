@@ -34,6 +34,7 @@ public class GameManager extends AbstractGame {
 	private int playerCounter = 1;
 	private int level;
 	
+	
 
 	public GameManager() {
 
@@ -72,6 +73,14 @@ public class GameManager extends AbstractGame {
 	@Override
 	public void update(GameContainer gc, float dt) {
 		
+//		switch (gc.getLevelSeleccionado()) {
+//			case 1:
+//				break;
+//			case 2:
+//				cargamos lvl2;
+//				break;
+//		};
+//		
 		for(int i=0; i<objects.size(); i++) {
 			objects.get(i).update(gc, this, dt);
 			if(objects.get(i).isDead()) {
