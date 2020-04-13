@@ -15,7 +15,7 @@ import com.team.game.components.AABBComponent;
  */
 public class Saw extends GameObject{
 	
-	private ImageTile sawSprite = new ImageTile("/saw.png", 64, 64);
+	private ImageTile sawSprite = new ImageTile("/miniSaw.png", 32, 32);
 	private float animacion;
 	private int asesino;
 
@@ -23,11 +23,12 @@ public class Saw extends GameObject{
 		this.tag = "saw";
 		this.posX = posX;
 		this.posY = posY;
-		this.width = 64;
-		this.height = 64;
-		this.paddingRight = 0;
-		this.paddingLeft = 0;
-		this.paddingTop = 0;
+		this.width = 32;
+		this.height = 32;
+		this.paddingRight = 5;
+		this.paddingLeft = 4;
+		this.paddingTop = 5;
+		this.paddingBot = 4;
 		animacion = 0;
 		asesino = 0;
 		
@@ -36,8 +37,8 @@ public class Saw extends GameObject{
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
-		animacion += dt*4;
-		if(animacion >= 2)
+		animacion += dt*3;
+		if(animacion >= 4)
 			animacion = 0;
 		
 		this.updateComponents(gc, gm, dt);
