@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.team;
+package com.team.game;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
@@ -17,14 +17,14 @@ public class Menu {
 	
 	private int mouseX, mouseY;
 	
-	public ImageTile startButton = new ImageTile("/Menu/startButton.png", 48, 16);
+	//public ImageTile startButton = new ImageTile("/Menu/startButton.png", 48, 16);
 	private int startX, startY;
-	private int startClickeado = 0;
-	public ImageTile levelsButton;
+	//private int startClickeado = 0;
+	//public ImageTile levelsButton;
 	private int levelsX, levelsY;
-	public ImageTile helpButton;
+	//public ImageTile helpButton;
 	private int helpX, helpY;
-	public ImageTile quitButton;
+	//public ImageTile quitButton;
 	private int quitX, quitY;
 	
 	public void render(GameContainer gc, Renderer renderer) {
@@ -42,18 +42,24 @@ public class Menu {
 		quitY =  gc.getHeight()/4+120;
 		
 		renderer.drawText("FLECHOMBRE", gc.getWidth()/3+5, gc.getHeight()/4, 0xffff0000);
-		
+		/*
 		if(gc.getInput().isButton(1) && (mouseX>=startX && mouseX<=startX+48) && (mouseY>=startY && mouseY<=startY+16)) {
 			startClickeado = 1;
 			gc.setState(GameContainer.STATE.GAME);
 		}else
 			startClickeado =0;
 		renderer.drawImageTile(startButton, startX, startY, 0, startClickeado);
+		*/
+		renderer.drawRect(startX,startY, 48, 16, 0xffff0000);
+		renderer.drawText("Start", startX+10, startY+3, 0xffff0000);
+		if(gc.getInput().isButton(1) && (mouseX>=startX && mouseX<=startX+48) && (mouseY>=startY && mouseY<=startY+16)) {
+			gc.setState(GameContainer.STATE.GAME);
+		}
 		
 		renderer.drawRect(levelsX,levelsY, 48, 16, 0xffff0000);
 		renderer.drawText("Levels", levelsX+7, levelsY+3, 0xffff0000);
 		if(gc.getInput().isButton(1) && (mouseX>=levelsX && mouseX<=levelsX+48) && (mouseY>=levelsY && mouseY<=levelsY+16)) {
-			System.out.println("levels");
+			gc.setState(GameContainer.STATE.LEVELS);
 		}
 		
 		renderer.drawRect(helpX, helpY, 48, 16, 0xffff0000);

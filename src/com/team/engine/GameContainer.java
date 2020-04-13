@@ -1,13 +1,15 @@
 package com.team.engine;
 
-import com.team.Menu;
+import com.team.game.Levels;
+import com.team.game.Menu;
 
 public class GameContainer implements Runnable {
 	
 	/// principio MENU
 	public enum STATE{
 		MENU,
-		GAME
+		GAME,
+		LEVELS
 	};
 	
 	private STATE state = STATE.MENU; //el pibe los puso public static
@@ -27,6 +29,7 @@ public class GameContainer implements Runnable {
 	private String title = "Flechombre v1.0";
 	
 	private Menu menu;
+	private Levels levels;
 
 	public GameContainer(AbstractGame game) {
 		this.game = game;
@@ -38,6 +41,7 @@ public class GameContainer implements Runnable {
 		input = new Input(this);
 		
 		menu = new Menu();
+		levels = new Levels();
 
 		thread = new Thread(this);
 		thread.run(); // .run para ser la main thread// .start para q sea secundaria (side thread)
@@ -102,11 +106,12 @@ public class GameContainer implements Runnable {
 					renderer.process();
 					renderer.setCamaraX(0);
 					renderer.setCamaraY(0);
-					renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
 				}else if(state == STATE.MENU){
-					renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
 					menu.render(this, renderer);
+				}else if(state == STATE.LEVELS) {
+					levels.render(this, renderer);
 				}
+				renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
 				window.update();
 				// =
 				frames++;
