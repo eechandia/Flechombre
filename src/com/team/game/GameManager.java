@@ -12,6 +12,7 @@ import com.team.engine.gfx.Image;
 import com.team.game.objects.GameObject;
 import com.team.game.objects.Platform;
 import com.team.game.objects.Player;
+import com.team.game.objects.Saw;
 
 /**
  * @author Pedro
@@ -37,6 +38,7 @@ public class GameManager extends AbstractGame {
 		objects.add(new Platform(29*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(32*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(35*TILE_SIZE, 7*TILE_SIZE));
+		objects.add(new Saw(1*TILE_SIZE, 23*TILE_SIZE));
 		loadLevel("/level2.png");
 		camara = new Camara("player");
 	}

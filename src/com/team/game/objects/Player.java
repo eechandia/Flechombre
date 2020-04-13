@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.ImageTile;
 import com.team.game.GameManager;
 import com.team.game.components.AABBComponent;
@@ -18,6 +19,7 @@ import com.team.game.components.AABBComponent;
 public class Player extends GameObject{
 	
 	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
+	private SoundClip sonidoDanio;
 	
 	private int direction = 0;
 	private float animation = 0;
@@ -45,6 +47,9 @@ public class Player extends GameObject{
 		paddingLeft = 4;
 		paddingRight = 3;
 		paddingTop = 3;
+		
+		sonidoDanio = new SoundClip("/Audio/ouch.wav");
+		sonidoDanio.setVolume(-30);
 		
 		this.addComponent(new AABBComponent(this));
 	}
@@ -208,6 +213,13 @@ public class Player extends GameObject{
 				}
 			}
 		}
+		
+		//Empieza colision con sierras
+		if(other.getTag().equalsIgnoreCase("saw")) {
+			sonidoDanio.start();
+			this.dead = true;
+		}
+		//Termina colision con sierras
 	}
 
 }
