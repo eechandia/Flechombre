@@ -176,13 +176,36 @@ public class Player extends GameObject{
 		if(other.getTag().equalsIgnoreCase("platform")) {
 			AABBComponent myComponent = (AABBComponent) this.findComponent("aabb");
 			AABBComponent otherComponent = (AABBComponent) other.findComponent("aabb");
-			if(myComponent.getCenterY() < otherComponent.getCenterY()) {
-				int distance = (myComponent.getHalfHeight()+otherComponent.getHalfHeight()) - (otherComponent.getCenterY() - myComponent.getCenterY());
-				offsetY -= distance;
-				posY -= distance;
-				myComponent.setCenterY(myComponent.getCenterY()-distance);
-				fallDistance = 0;
-				ground = true;
+			
+			if(Math.abs(myComponent.getLastCenterX()-otherComponent.getLastCenterX()) < myComponent.getHalfWidth()+otherComponent.getHalfWidth()) {
+				if(myComponent.getCenterY() < otherComponent.getCenterY()) {
+					int distance = (myComponent.getHalfHeight()+otherComponent.getHalfHeight()) - (otherComponent.getCenterY() - myComponent.getCenterY());
+					offsetY -= distance;
+					posY -= distance;
+					myComponent.setCenterY(myComponent.getCenterY()-distance);
+					fallDistance = 0;
+					ground = true;
+				}
+				if(myComponent.getCenterY() > otherComponent.getCenterY()) {
+					int distance = (myComponent.getHalfHeight()+otherComponent.getHalfHeight()) - (myComponent.getCenterY() - otherComponent.getCenterY());
+					offsetY += distance;
+					posY += distance;
+					myComponent.setCenterY(myComponent.getCenterY()+distance);
+					fallDistance = 0;
+				}
+			}else {
+				if(myComponent.getCenterX() < otherComponent.getCenterX()) {
+					int distance = (myComponent.getHalfWidth()+otherComponent.getHalfWidth()) - (otherComponent.getCenterX() - myComponent.getCenterX());
+					offsetX -= distance;
+					posX -= distance;
+					myComponent.setCenterX(myComponent.getCenterX()-distance);
+				}
+				if(myComponent.getCenterX() > otherComponent.getCenterX()) {
+					int distance = (myComponent.getHalfWidth()+otherComponent.getHalfWidth()) - (myComponent.getCenterX() - otherComponent.getCenterX());
+					offsetX += distance;
+					posX += distance;
+					myComponent.setCenterX(myComponent.getCenterX()+distance);
+				}
 			}
 		}
 	}

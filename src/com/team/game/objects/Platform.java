@@ -15,15 +15,15 @@ import com.team.game.components.AABBComponent;
 public class Platform extends GameObject{
 	private int color = 0xff0000ff;
 	
-	public Platform() {
+	public Platform(int x, int y) {
 		this.tag = "Platform";
 		this.width = 32;
 		this.height = 16;
 		this.paddingRight = 0;
 		this.paddingLeft = 0;
 		this.paddingTop = 0;
-		this.posX = 176;
-		this.posY = 160;
+		this.posX = x;
+		this.posY = y;
 		
 		this.addComponent(new AABBComponent(this));
 	}

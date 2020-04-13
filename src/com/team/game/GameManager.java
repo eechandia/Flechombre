@@ -33,7 +33,10 @@ public class GameManager extends AbstractGame {
 	public GameManager() {
 
 		objects.add(new Player(1, 5));
-		objects.add(new Platform());
+		objects.add(new Platform(26*TILE_SIZE, 7*TILE_SIZE));
+		objects.add(new Platform(29*TILE_SIZE, 7*TILE_SIZE));
+		objects.add(new Platform(32*TILE_SIZE, 7*TILE_SIZE));
+		objects.add(new Platform(35*TILE_SIZE, 7*TILE_SIZE));
 		loadLevel("/level2.png");
 		camara = new Camara("player");
 	}
