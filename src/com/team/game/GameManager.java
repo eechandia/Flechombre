@@ -32,6 +32,7 @@ public class GameManager extends AbstractGame {
 	private boolean[] collision;
 	private int levelWidth, levelHeight;
 	private int playerCounter = 1;
+	private int level;
 	
 
 	public GameManager() {
@@ -41,7 +42,7 @@ public class GameManager extends AbstractGame {
 		objects.add(new Platform(29*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(32*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(35*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Saw(1*TILE_SIZE, 26*TILE_SIZE));
+		objects.add(new Saw(1, 26));
 		objects.add(new Spikes(18, 19, 13, false));
 		objects.add(new Spikes(1, 5, 15, true));
 		loadLevel("/level2.png");
@@ -157,5 +158,13 @@ public class GameManager extends AbstractGame {
 
 	public int getLevelHeight() {
 		return levelHeight;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }
