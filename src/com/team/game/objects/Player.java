@@ -110,7 +110,11 @@ public class Player extends GameObject{
 		}
 		
 		offsetY += fallDistance; 
-		//End of Jump and Gravity
+		//End of Jump and Gravity 
+		
+		
+		
+		
 		
 		//Final Position
 		if(offsetY > GameManager.TILE_SIZE/2) {
@@ -148,7 +152,7 @@ public class Player extends GameObject{
 		if(gc.getInput().isKeyDown(KeyEvent.VK_LEFT)) {
 			gm.addObject(new Flecha(tileX, tileY, offsetX+ width/2, offsetY + height/2, 3));
 		}
-
+			
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			direction = 0;
 			animation += dt*10;
@@ -177,6 +181,9 @@ public class Player extends GameObject{
 		this.updateComponents(gc, gm, dt);
 	}
 
+	
+	
+	
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
 		//renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);

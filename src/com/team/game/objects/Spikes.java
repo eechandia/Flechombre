@@ -18,7 +18,7 @@ public class Spikes extends GameObject{
 	private int posFinalX;
 	private int pisoTecho;
 	private int asesino;
-	private int playerMatados;
+	private static int playerMatados;
 	
 	public Spikes(int fromX, int toX, int posY, boolean estaInvertido) { // toX > fromX
 		this.tag = "spikes";
@@ -54,7 +54,7 @@ public class Spikes extends GameObject{
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
 		for(int i=(int) posX; i<=posFinalX; i+=GameManager.TILE_SIZE) {
-			renderer.drawImageTile(spikesSprite, i, (int)posY, pisoTecho, asesino);
+			renderer.drawImageTile(spikesSprite, i, (int)posY, asesino, pisoTecho);
 			this.renderComponents(gc, renderer);
 		}
 	}
@@ -66,5 +66,11 @@ public class Spikes extends GameObject{
 			playerMatados += 1;
 		}
 	}
+
+	public static int getPlayerMatados() {
+		return playerMatados;
+	}
+	
+	
 
 }
