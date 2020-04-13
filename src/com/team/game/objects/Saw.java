@@ -18,6 +18,7 @@ public class Saw extends GameObject{
 	private ImageTile sawSprite = new ImageTile("/miniSaw.png", 32, 32);
 	private float animacion;
 	private int asesino;
+	private int playerMatados;
 
 	public Saw(int posX, int posY) {
 		this.tag = "saw";
@@ -31,6 +32,7 @@ public class Saw extends GameObject{
 		this.paddingBot = 4;
 		animacion = 0;
 		asesino = 0;
+		playerMatados = 0;
 		
 		this.addComponent(new AABBComponent(this));
 	}
@@ -55,6 +57,7 @@ public class Saw extends GameObject{
 	public void collision(GameObject other) {
 		if(other.getTag().equalsIgnoreCase("player")) {
 			asesino = 1;
+			playerMatados+=1;
 		}
 	}
 	

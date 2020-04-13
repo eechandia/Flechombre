@@ -18,6 +18,7 @@ public class Spikes extends GameObject{
 	private int posFinalX;
 	private int pisoTecho;
 	private int asesino;
+	private int playerMatados;
 	
 	public Spikes(int fromX, int toX, int posY, boolean estaInvertido) { // toX > fromX
 		this.tag = "spikes";
@@ -29,7 +30,8 @@ public class Spikes extends GameObject{
 		this.dead = false;
 		this.paddingRight = 0;
 		this.paddingLeft = 0;
-		asesino = 0;
+		this.asesino = 0;
+		this.playerMatados=0;
 		
 		if(estaInvertido) {
 			pisoTecho = 1;
@@ -61,6 +63,7 @@ public class Spikes extends GameObject{
 	public void collision(GameObject other) {
 		if(other.getTag().equalsIgnoreCase("player")){
 			asesino = 1;
+			playerMatados += 1;
 		}
 	}
 
