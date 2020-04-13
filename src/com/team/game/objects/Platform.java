@@ -22,6 +22,7 @@ public class Platform extends GameObject{
 		this.paddingRight = 0;
 		this.paddingLeft = 0;
 		this.paddingTop = 0;
+		this.paddingBot = 0;
 		this.posX = x;
 		this.posY = y;
 		

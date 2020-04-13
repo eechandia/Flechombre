@@ -47,6 +47,7 @@ public class Player extends GameObject{
 		paddingLeft = 4;
 		paddingRight = 3;
 		paddingTop = 3;
+		paddingBot = 0;
 		
 		sonidoDanio = new SoundClip("/Audio/ouch.wav");
 		sonidoDanio.setVolume(-30);
@@ -227,6 +228,11 @@ public class Player extends GameObject{
 			this.dead = true;
 		}
 		//Termina colision con sierras
+		
+		if(other.getTag().equalsIgnoreCase("spikes")){
+			sonidoDanio.start();
+			this.dead = true;
+		}
 	}
 
 }

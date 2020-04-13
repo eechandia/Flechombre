@@ -30,16 +30,16 @@ public class AABBComponent extends Component{
 		lastCenterY = centerY;
 		
 		centerX = (int) (parent.getPosX() + parent.getWidth()/2);
-		centerY = (int) (parent.getPosY() + parent.getHeight()/2 + parent.getPaddingTop()/2);
+		centerY = (int) (parent.getPosY() + parent.getHeight()/2 + parent.getPaddingTop()/2 - parent.getPaddingBot()/2);
 		halfWidth = (parent.getWidth() - ((parent.getPaddingRight()+parent.getPaddingLeft())))/2;
-		halfHeight = (parent.getHeight() - parent.getPaddingTop())/2;
+		halfHeight = (parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBot())/2;
 		
 		Physics.addAABBComponent(this);
 	}
 
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		//renderer.drawRect(centerX-halfWidth, centerY-halfHeight, halfWidth*2, halfHeight*2, 0xff000000);
+		renderer.drawRect(centerX-halfWidth, centerY-halfHeight, halfWidth*2, halfHeight*2, 0xff000000);
 	}
 
 	public int getCenterX() {

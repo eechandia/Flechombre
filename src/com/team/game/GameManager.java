@@ -14,6 +14,7 @@ import com.team.game.objects.GameObject;
 import com.team.game.objects.Platform;
 import com.team.game.objects.Player;
 import com.team.game.objects.Saw;
+import com.team.game.objects.Spikes;
 
 /**
  * @author Pedro
@@ -39,7 +40,9 @@ public class GameManager extends AbstractGame {
 		objects.add(new Platform(29*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(32*TILE_SIZE, 7*TILE_SIZE));
 		objects.add(new Platform(35*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Saw(1*TILE_SIZE, 23*TILE_SIZE));
+		objects.add(new Saw(1*TILE_SIZE, 26*TILE_SIZE));
+		objects.add(new Spikes(18, 19, 13, false));
+		objects.add(new Spikes(1, 5, 15, true));
 		loadLevel("/level2.png");
 		camara = new Camara("player");
 		

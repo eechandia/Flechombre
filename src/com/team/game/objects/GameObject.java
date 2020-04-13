@@ -18,7 +18,7 @@ public abstract class GameObject {
 	protected String tag;
 	protected float posX, posY;
 	protected int width, height;
-	protected int paddingLeft, paddingRight, paddingTop;
+	protected int paddingLeft, paddingRight, paddingTop, paddingBot;
 	protected boolean dead = false;
 	
 	protected ArrayList<Component> components = new ArrayList<Component>();
@@ -118,5 +118,17 @@ public abstract class GameObject {
 	}
 	public void setPaddingTop(int paddingTop) {
 		this.paddingTop = paddingTop;
+	}
+	/**
+	 * @return the paddingBot
+	 */
+	public int getPaddingBot() {
+		return paddingBot;
+	}
+	/**
+	 * @param paddingBot the paddingBot to set
+	 */
+	public void setPaddingBot(int paddingBot) {
+		this.paddingBot = paddingBot;
 	}
 }
