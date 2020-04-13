@@ -31,6 +31,7 @@ public class GameManager extends AbstractGame {
 	
 	private boolean[] collision;
 	private int levelWidth, levelHeight;
+	private int playerCounter = 1;
 	
 
 	public GameManager() {
@@ -73,6 +74,9 @@ public class GameManager extends AbstractGame {
 		for(int i=0; i<objects.size(); i++) {
 			objects.get(i).update(gc, this, dt);
 			if(objects.get(i).isDead()) {
+				if(objects.get(i).getTag()=="player") {
+					playerCounter-=1;
+				}
 				objects.remove(i);
 				i--;
 			}
@@ -81,12 +85,7 @@ public class GameManager extends AbstractGame {
 		
 		//RESETEO DEL PERSONAJE
 		if(gc.getInput().isKeyUp(KeyEvent.VK_R)) {
-			int playerCounter = 0;
-			for(GameObject o : objects) {
-				if(o.getTag()=="player") {
-					playerCounter+=1;
-				}
-			}
+			
 			if(playerCounter == 0) {
 				objects.add(new Player(1,5));
 				camara = new Camara("player");
