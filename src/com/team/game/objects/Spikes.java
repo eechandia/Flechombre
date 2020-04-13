@@ -54,7 +54,7 @@ public class Spikes extends GameObject{
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
 		for(int i=(int) posX; i<=posFinalX; i+=GameManager.TILE_SIZE) {
-			renderer.drawImageTile(spikesSprite, i, (int)posY, asesino, pisoTecho);
+			renderer.drawImageTile(spikesSprite, i, (int)posY, pisoTecho, asesino);
 			this.renderComponents(gc, renderer);
 		}
 	}
