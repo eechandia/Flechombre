@@ -5,14 +5,9 @@ import com.team.game.Menu;
 
 public class GameContainer implements Runnable {
 	
-	/// principio MENU
-	public enum STATE{
-		MENU,
-		GAME,
-		LEVELS
-	};
+
 	
-	private STATE state = STATE.MENU; //el pibe los puso public static
+	private State state = State.MENU; //el pibe los puso public static
 	
 	///fin MENU
 
@@ -85,7 +80,7 @@ public class GameContainer implements Runnable {
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
 
-				if(state == STATE.GAME)
+				if(state == State.GAME)
 					game.update(this, (float) UPDATE_CAP);
 
 				input.update();
@@ -101,16 +96,23 @@ public class GameContainer implements Runnable {
 
 			if (render) {
 				renderer.clear();
-				if(state == STATE.GAME) {
+				
+				switch(state) {
+				case GAME:
 					game.render(this, renderer);
 					renderer.process();
 					renderer.setCamaraX(0);
 					renderer.setCamaraY(0);
-				}else if(state == STATE.MENU){
+					break;
+				case MENU:
 					menu.render(this, renderer);
-				}else if(state == STATE.LEVELS) {
+					break;
+				case LEVELS:
 					levels.render(this, renderer);
+					break;		
 				}
+			
+		
 				renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
 				window.update();
 				// =
@@ -178,11 +180,11 @@ public class GameContainer implements Runnable {
 		return renderer;
 	}
 
-	public STATE getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(STATE state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 }

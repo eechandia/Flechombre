@@ -4,6 +4,7 @@
 package com.team.game;
 
 import com.team.engine.GameContainer;
+import com.team.engine.State;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
 import com.team.engine.gfx.ImageTile;
@@ -53,13 +54,13 @@ public class Menu {
 		renderer.drawRect(startX,startY, 48, 16, 0xffff0000);
 		renderer.drawText("Start", startX+10, startY+3, 0xffff0000);
 		if(gc.getInput().isButton(1) && (mouseX>=startX && mouseX<=startX+48) && (mouseY>=startY && mouseY<=startY+16)) {
-			gc.setState(GameContainer.STATE.GAME);
+			gc.setState(State.GAME);
 		}
 		
 		renderer.drawRect(levelsX,levelsY, 48, 16, 0xffff0000);
 		renderer.drawText("Levels", levelsX+7, levelsY+3, 0xffff0000);
 		if(gc.getInput().isButton(1) && (mouseX>=levelsX && mouseX<=levelsX+48) && (mouseY>=levelsY && mouseY<=levelsY+16)) {
-			gc.setState(GameContainer.STATE.LEVELS);
+			gc.setState(State.LEVELS);
 		}
 		
 		renderer.drawRect(helpX, helpY, 48, 16, 0xffff0000);

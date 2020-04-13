@@ -4,6 +4,7 @@
 package com.team.game;
 
 import com.team.engine.GameContainer;
+import com.team.engine.State;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
 
@@ -32,8 +33,8 @@ public class Levels {
 			mouseX = (gc.getInput().getMouseX()-60)/16;
 			mouseY = (gc.getInput().getMouseY()-20)/16;
 			level = mouseX+mouseY*10;
-			GameManager.setLevel(level);
-			gc.setState(GameContainer.STATE.GAME);
+			//GameManager.setLevel(level);
+			gc.setState(State.GAME);
 		}
 	}
 }
