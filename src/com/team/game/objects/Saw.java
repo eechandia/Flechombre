@@ -22,8 +22,8 @@ public class Saw extends GameObject{
 
 	public Saw(int posX, int posY) {
 		this.tag = "saw";
-		this.posX = posX;
-		this.posY = posY;
+		this.posX = posX*GameManager.TILE_SIZE;
+		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = 32;
 		this.height = 32;
 		this.paddingRight = 5;
