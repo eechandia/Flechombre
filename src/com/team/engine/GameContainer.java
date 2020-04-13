@@ -187,4 +187,8 @@ public class GameContainer implements Runnable {
 	public void setState(State state) {
 		this.state = state;
 	}
+	
+	public int getLevelSeleccionado() {
+		return levels.getLevelSeleccionado();
+	}
 }

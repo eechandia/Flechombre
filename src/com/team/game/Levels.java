@@ -16,6 +16,7 @@ public class Levels {
 	private Image levelImage = new Image("/level2Image.png");
 	private int mouseX, mouseY;
 	private int level;
+	private int levelSeleccionado;
 	
 	public void render(GameContainer gc, Renderer renderer) {
 		renderer.drawImage(levelImage, 0, 0);
