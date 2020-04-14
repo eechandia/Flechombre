@@ -78,6 +78,8 @@ public class Player extends GameObject{
 			}
 		}
 		
+	
+		
 		//End of Left and Right
 		
 		//Reset

@@ -10,6 +10,7 @@ import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
+import com.team.game.objects.Diana;
 import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
 import com.team.game.objects.Platform;
@@ -74,6 +75,8 @@ public class GameManager extends AbstractGame {
 				objects.add(new Spikes(1, 5, 15, true));
 				objects.add(new Flag(20, 19));
 				objects.add(new Flag(3, 17));
+				objects.add(new Diana(32,28));
+				
 				loadLevel("/level2.png");
 				camara = new Camara("player");
 				
