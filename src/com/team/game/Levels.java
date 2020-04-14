@@ -18,6 +18,17 @@ public class Levels {
 	private int levelSeleccionado;
 	
 	
+	public void update(GameContainer gc) {
+		mouseX = gc.getInput().getMouseX();
+		mouseY = gc.getInput().getMouseY();
+		if(gc.getInput().isButtonUp(1) && (mouseX>=76 && mouseX<=220) && (mouseY>=20 && mouseY<=180)) {
+			mouseX = (gc.getInput().getMouseX()-60)/16;
+			mouseY = (gc.getInput().getMouseY()-20)/16;
+			levelSeleccionado = mouseX+mouseY*10;
+			gc.setState(State.GAME);
+		}
+	}
+	
 	public void render(GameContainer gc, Renderer renderer) {
 		renderer.drawImage(levelImage, 0, 0);
 		
@@ -30,13 +41,12 @@ public class Levels {
 		}
 		mouseX = gc.getInput().getMouseX();
 		mouseY = gc.getInput().getMouseY();
-		if(gc.getInput().isButton(1) && (mouseX>=76 && mouseX<=220) && (mouseY>=20 && mouseY<=180)) {
-			mouseX = (gc.getInput().getMouseX()-60)/16;
-			mouseY = (gc.getInput().getMouseY()-20)/16;
-			levelSeleccionado = mouseX+mouseY*10;
-			//GameManager.setLevel(level);
-			gc.setState(State.GAME);
-		}
+//		if(gc.getInput().isButton(1) && (mouseX>=76 && mouseX<=220) && (mouseY>=20 && mouseY<=180)) {
+//			mouseX = (gc.getInput().getMouseX()-60)/16;
+//			mouseY = (gc.getInput().getMouseY()-20)/16;
+//			levelSeleccionado = mouseX+mouseY*10;
+//			gc.setState(State.GAME);
+//		}
 	}
 	
 	

@@ -32,24 +32,11 @@ public class GameManager extends AbstractGame {
 	private boolean[] collision;
 	private int levelWidth, levelHeight;
 	private int playerCounter = 1;
-	private int level;
+	private boolean levelCreado = false;
 	
 	
 
 	public GameManager() {
-
-		objects.add(new Player(1, 5));
-		objects.add(new Platform(26*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Platform(29*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Platform(32*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Platform(35*TILE_SIZE, 7*TILE_SIZE));
-		objects.add(new Saw(1, 26));
-		objects.add(new Spikes(18, 19, 13, false));
-		objects.add(new Spikes(1, 5, 15, true));
-		loadLevel("/level2.png");
-		camara = new Camara("player");
-		
-		
 	}
 	
 	public void addObject(GameObject object) {
@@ -72,15 +59,42 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void update(GameContainer gc, float dt) {
+		if(!levelCreado) {
+			switch (gc.getLevelSeleccionado()) {
+			case 1:
+				objects.add(new Player(1, 5));
+				objects.add(new Platform(26, 7));
+				objects.add(new Platform(29, 7));
+				objects.add(new Platform(32, 7));
+				objects.add(new Platform(35, 7));
+				objects.add(new Saw(1, 26));
+				objects.add(new Spikes(18, 19, 13, false));
+				objects.add(new Spikes(1, 5, 15, true));
+				loadLevel("/level2.png");
+				camara = new Camara("player");
+				
+				levelCreado = true;
+				break;
+			case 2:
+				//cargamos lvl2;
+				break;
+			default:
+				objects.add(new Player(1, 5));
+				objects.add(new Platform(26, 7));
+				objects.add(new Platform(29, 7));
+				objects.add(new Platform(32, 7));
+				objects.add(new Platform(35, 7));
+				objects.add(new Saw(1, 26));
+				objects.add(new Spikes(18, 19, 13, false));
+				objects.add(new Spikes(1, 5, 15, true));
+				loadLevel("/level2.png");
+				camara = new Camara("player");
+				
+				levelCreado = true;
+				break;
+			};
+		}
 		
-//		switch (gc.getLevelSeleccionado()) {
-//			case 1:
-//				break;
-//			case 2:
-//				cargamos lvl2;
-//				break;
-//		};
-//		
 		for(int i=0; i<objects.size(); i++) {
 			objects.get(i).update(gc, this, dt);
 			if(objects.get(i).isDead()) {
@@ -102,13 +116,11 @@ public class GameManager extends AbstractGame {
 					playerCounter-=1;
 				}
 			}
-			
 			if(playerCounter == 0) {
 				objects.add(new Player(1,5));
 				camara = new Camara("player");
 				playerCounter+=1;
 			}
-			
 		}
 		
 		Physics.update();
@@ -120,8 +132,19 @@ public class GameManager extends AbstractGame {
 	public void render(GameContainer gc, Renderer renderer) {
 		camara.render(renderer);
 		
-		renderer.drawImage(background, 0, 0);
-		renderer.drawImage(levelImage, 0, 0);
+		switch (gc.getLevelSeleccionado()) {
+		case 1:
+			renderer.drawImage(background, 0, 0);
+			renderer.drawImage(levelImage, 0, 0);
+			break;
+		case 2:
+			//cargamos lvl2;
+			break;
+		default:
+			renderer.drawImage(background, 0, 0);
+			renderer.drawImage(levelImage, 0, 0);
+			break;
+		};
 		
 		for(GameObject object : objects) {
 			object.render(gc, renderer);
@@ -167,13 +190,5 @@ public class GameManager extends AbstractGame {
 
 	public int getLevelHeight() {
 		return levelHeight;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
 	}
 }

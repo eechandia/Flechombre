@@ -7,9 +7,9 @@ public class GameContainer implements Runnable {
 	
 
 	
-	private State state = State.MENU; //el pibe los puso public static
+	private State state = State.GAME;
 	
-	///fin MENU
+	private boolean juegoIniciado = false; //variable de mierda mepa, arreglar
 
 	private Thread thread;
 	private Window window;
@@ -32,6 +32,7 @@ public class GameContainer implements Runnable {
 
 	public void start() {
 		window = new Window(this);
+		window.getCanvas().requestFocus();
 		renderer = new Renderer(this);
 		input = new Input(this);
 		
@@ -54,11 +55,10 @@ public class GameContainer implements Runnable {
 		double lastTime = System.nanoTime() / 1000000000.0;// lo pasamos a ms
 		double passedTime = 0;
 		double unprocessedTime = 0;
-		// =
+
 		double frameTime = 0;
 		int frames = 0;
 		int fps = 0;
-		// =
 		
 		game.init(this);
 		
@@ -71,26 +71,32 @@ public class GameContainer implements Runnable {
 			lastTime = firstTime;
 
 			unprocessedTime += passedTime;
-			// =
 			frameTime += passedTime;
-			// =
-
+			
 			while (unprocessedTime >= UPDATE_CAP) {
 
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
 
-				if(state == State.GAME)
+				switch(state) {
+				case GAME:
 					game.update(this, (float) UPDATE_CAP);
+					juegoIniciado = true;
+					break;
+				case MENU:
+					menu.update(this);
+					break;
+				case LEVELS:
+					levels.update(this);
+					break;
+				};
 
 				input.update();
-				// =
+				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
 					fps = frames;
 					frames = 0;
-					//System.out.println("Fps: " + fps);
-					// =
 				}
 			}
 
@@ -99,10 +105,12 @@ public class GameContainer implements Runnable {
 				
 				switch(state) {
 				case GAME:
-					game.render(this, renderer);
-					renderer.process();
-					renderer.setCamaraX(0);
-					renderer.setCamaraY(0);
+					if(juegoIniciado) {
+						game.render(this, renderer);
+						renderer.process();
+						renderer.setCamaraX(0);
+						renderer.setCamaraY(0);
+					}
 					break;
 				case MENU:
 					menu.render(this, renderer);
@@ -115,9 +123,8 @@ public class GameContainer implements Runnable {
 		
 				renderer.drawText("Fps: "+ fps, 0, 0, 0xffff0000);
 				window.update();
-				// =
+
 				frames++;
-				// =
 			} else {
 				try {
 					Thread.sleep(1);

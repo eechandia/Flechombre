@@ -119,15 +119,9 @@ public abstract class GameObject {
 	public void setPaddingTop(int paddingTop) {
 		this.paddingTop = paddingTop;
 	}
-	/**
-	 * @return the paddingBot
-	 */
 	public int getPaddingBot() {
 		return paddingBot;
 	}
-	/**
-	 * @param paddingBot the paddingBot to set
-	 */
 	public void setPaddingBot(int paddingBot) {
 		this.paddingBot = paddingBot;
 	}

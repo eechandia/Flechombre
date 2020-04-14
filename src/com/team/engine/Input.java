@@ -46,7 +46,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		for (int i = 0; i < NUM_BUTTONS; i++) {
 			buttonsLast[i] = buttons[i];
 		}
-
 	}
 
 	public boolean isKey(int keyCode) {
@@ -69,7 +68,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		return !buttons[button] && buttonsLast[button];
 	}
 
-	public boolean isButtonsDown(int button) {
+	public boolean isButtonDown(int button) {
 		return buttons[button] && !buttonsLast[button];
 	}
 

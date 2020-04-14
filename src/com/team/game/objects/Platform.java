@@ -23,8 +23,8 @@ public class Platform extends GameObject{
 		this.paddingLeft = 0;
 		this.paddingTop = 0;
 		this.paddingBot = 0;
-		this.posX = x;
-		this.posY = y;
+		this.posX = x*GameManager.TILE_SIZE;
+		this.posY = y*GameManager.TILE_SIZE;
 		
 		this.addComponent(new AABBComponent(this));
 	}
