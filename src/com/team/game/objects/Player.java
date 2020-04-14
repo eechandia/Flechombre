@@ -4,6 +4,7 @@
 package com.team.game.objects;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
@@ -27,6 +28,7 @@ public class Player extends GameObject{
 	private float offsetX, offsetY;
 	private boolean reachedCheckpoint = false;
 	private int revivirX, revivirY;
+	float pressX = 0, pressY = 0;
 	
 	private float speed = 100;
 	private float fallSpeed = 10;
@@ -115,7 +117,7 @@ public class Player extends GameObject{
 		offsetY += fallDistance; 
 		//End of Jump and Gravity 
 		
-		
+		//Salto Especial
 		
 		
 		
@@ -180,6 +182,31 @@ public class Player extends GameObject{
 			animation = 0;
 		} 
 		groundLast = ground;
+		
+		if(true/*gc.getInput().mouseDragged(e)*/) {
+			float fuerza = 0; float angulo = 0;
+			//fuerza = this.calcularFuerza();
+			
+			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
+				pressX = gc.getInput().getMouseX();
+				pressY = gc.getInput().getMouseY();
+			}
+			
+			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
+				angulo = (float) Math.atan((gc.getInput().getMouseY()-pressY)/(gc.getInput().getMouseX()-pressX));
+				if(angulo > 0)
+					angulo += Math.PI;
+
+				System.out.println("Y="+(gc.getInput().getMouseY()-pressY));// a borrar
+				System.out.println("X="+(gc.getInput().getMouseX()-pressX));
+				System.out.println("alfa="+angulo);
+				
+			}
+			//posX = (float)(fuerza*Math.cos(angulo)*dt);
+			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
+			
+		
+		}
 		
 		this.updateComponents(gc, gm, dt);
 	}
