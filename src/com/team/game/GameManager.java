@@ -75,7 +75,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Spikes(1, 5, 15, true));
 				objects.add(new Flag(20, 19));
 				objects.add(new Flag(3, 17));
-				objects.add(new Diana(32,28));
+				objects.add(new Diana(31,27,0));
 				
 				loadLevel("/level2.png");
 				camara = new Camara("player");
@@ -96,6 +96,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Spikes(1, 5, 15, true));
 				objects.add(new Flag(20, 19));
 				objects.add(new Flag(3, 17));
+				objects.add(new Diana(31,27,1));
 				loadLevel("/level2.png");
 				camara = new Camara("player");
 				

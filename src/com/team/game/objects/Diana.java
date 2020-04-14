@@ -14,13 +14,12 @@ import com.team.game.components.AABBComponent;
  *
  */
 public class Diana extends GameObject{
-	
-	private ImageTile checkpoint = new ImageTile("/diana.png", 32, 32);
+	private ImageTile checkpoint;
 	
 	private float animacion;
 	private boolean animar;
 	
-	public Diana(int x, int y) {
+	public Diana(int x, int y, int facing) {
 		this.tag = "diana";
 		this.posX = x*GameManager.TILE_SIZE;
 		this.posY = y*GameManager.TILE_SIZE;
@@ -28,10 +27,19 @@ public class Diana extends GameObject{
 		this.width = 32;
 		this.paddingRight = 6;
 		this.paddingLeft = 8;
-		this.paddingBot = 6;
+		this.paddingBot = 0;
 		this.paddingTop = 7;
 		animacion = 0;
 		animar = false;
+		
+		switch(facing) {
+		case 0:
+			this.checkpoint = new ImageTile("/dianaFacingLeft.png", 32, 32);
+			break;
+		case 1:
+			this.checkpoint = new ImageTile("/dianaFacingRight.png", 32, 32);
+			break;
+	}
 		
 		this.addComponent(new AABBComponent(this));
 	}
