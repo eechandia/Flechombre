@@ -80,8 +80,8 @@ public class GameContainer implements Runnable {
 
 				switch(state) {
 				case GAME:
-					game.update(this, (float) UPDATE_CAP);
 					juegoIniciado = true;
+					game.update(this, (float) UPDATE_CAP);
 					break;
 				case MENU:
 					menu.update(this);

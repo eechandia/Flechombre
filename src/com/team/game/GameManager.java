@@ -10,6 +10,7 @@ import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.gfx.Image;
+import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
 import com.team.game.objects.Platform;
 import com.team.game.objects.Player;
@@ -33,6 +34,7 @@ public class GameManager extends AbstractGame {
 	private int levelWidth, levelHeight;
 	private int playerCounter = 1;
 	private boolean levelCreado = false;
+	private int posPlayerX, posPlayerY;
 	
 	
 
@@ -70,6 +72,8 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(1, 26));
 				objects.add(new Spikes(18, 19, 13, false));
 				objects.add(new Spikes(1, 5, 15, true));
+				objects.add(new Flag(20, 19));
+				objects.add(new Flag(3, 17));
 				loadLevel("/level2.png");
 				camara = new Camara("player");
 				
@@ -87,6 +91,8 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(1, 26));
 				objects.add(new Spikes(18, 19, 13, false));
 				objects.add(new Spikes(1, 5, 15, true));
+				objects.add(new Flag(20, 19));
+				objects.add(new Flag(3, 17));
 				loadLevel("/level2.png");
 				camara = new Camara("player");
 				
@@ -105,7 +111,7 @@ public class GameManager extends AbstractGame {
 				i--;
 			}
 		}
-		
+	
 		
 		//RESETEO DEL PERSONAJE
 		if(gc.getInput().isKey(KeyEvent.VK_R)) {
@@ -117,9 +123,18 @@ public class GameManager extends AbstractGame {
 				}
 			}
 			if(playerCounter == 0) {
-				objects.add(new Player(1,5));
+				objects.add(new Player(posPlayerX, posPlayerY));
 				camara = new Camara("player");
 				playerCounter+=1;
+			}
+		}
+		
+		//ACTUALIZAR CHECKPOINT
+		if(playerCounter>0) {
+			if(((Player) this.getObject("player")).isReachedCheckpoint()) {
+				posPlayerX = ((Player) this.getObject("player")).getRevivirX();
+				posPlayerY = ((Player) this.getObject("player")).getRevivirY();
+				((Player) this.getObject("player")).setReachedCheckpoint(false);
 			}
 		}
 		

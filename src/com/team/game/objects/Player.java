@@ -19,12 +19,14 @@ import com.team.game.components.AABBComponent;
 public class Player extends GameObject{
 	
 	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
-	private SoundClip sonidoDanio;
+	private SoundClip sonidoDanio = new SoundClip("/Audio/ouch.wav");;
 	
 	private int direction = 0;
 	private float animation = 0;
 	private int tileX, tileY;
 	private float offsetX, offsetY;
+	private boolean reachedCheckpoint = false;
+	private int revivirX, revivirY;
 	
 	private float speed = 100;
 	private float fallSpeed = 10;
@@ -48,8 +50,7 @@ public class Player extends GameObject{
 		paddingRight = 3;
 		paddingTop = 3;
 		paddingBot = 0;
-		
-		sonidoDanio = new SoundClip("/Audio/ouch.wav");
+
 		sonidoDanio.setVolume(-30);
 		
 		this.addComponent(new AABBComponent(this));
@@ -180,9 +181,6 @@ public class Player extends GameObject{
 		
 		this.updateComponents(gc, gm, dt);
 	}
-
-	
-	
 	
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
@@ -236,10 +234,44 @@ public class Player extends GameObject{
 		}
 		//Termina colision con sierras
 		
+		//Colision con spikes/pinches
 		if(other.getTag().equalsIgnoreCase("spikes")){
 			sonidoDanio.start();
 			this.dead = true;
 		}
+		
+		//Colison con flag/checkpoint
+		if(other.getTag().equalsIgnoreCase("flag")) {
+			reachedCheckpoint = true;
+			AABBComponent otherComponent = (AABBComponent) other.findComponent("aabb");
+			revivirX = otherComponent.getCenterX()/GameManager.TILE_SIZE;
+			revivirY = otherComponent.getCenterY()/GameManager.TILE_SIZE;
+			}
 	}
+
+	public boolean isReachedCheckpoint() {
+		return reachedCheckpoint;
+	}
+
+	public void setReachedCheckpoint(boolean reachedCheckpoint) {
+		this.reachedCheckpoint = reachedCheckpoint;
+	}
+
+	public int getRevivirX() {
+		return revivirX;
+	}
+
+	public void setRevivirX(int revivirX) {
+		this.revivirX = revivirX;
+	}
+
+	public int getRevivirY() {
+		return revivirY;
+	}
+
+	public void setRevivirY(int revivirY) {
+		this.revivirY = revivirY;
+	}
+
 
 }
