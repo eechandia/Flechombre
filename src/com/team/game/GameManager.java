@@ -25,7 +25,7 @@ import com.team.game.objects.Spikes;
 public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 16;
-	private Image levelImage = new Image("/Niveles/Nivel1/lvl1.png");
+	private Image levelImage;
 	private Image background = new Image("/background0.png");
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -36,6 +36,7 @@ public class GameManager extends AbstractGame {
 	private int playerCounter = 1;
 	private boolean levelCreado = false;
 	private int posPlayerX, posPlayerY;
+	private int levelActual, levelPasados=0;
 	
 	
 
@@ -62,9 +63,13 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void update(GameContainer gc, float dt) {
+		
+		levelActual = gc.getLevelSeleccionado() + levelPasados;
+		
 		if(!levelCreado) {
-			switch (gc.getLevelSeleccionado()) {
+			switch (levelActual) {
 			case 1:
+				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				objects.add(new Player(5, 25));
 				//objects.add(new Platform(26, 7));
 				//objects.add(new Platform(29, 7));
@@ -83,24 +88,17 @@ public class GameManager extends AbstractGame {
 				break;
 				
 			case 2:
-				//cargamos lvl2;
+				
+				levelImage = new Image("/level2Image.png");
+				objects.add(new Player(1, 5));
+				objects.add(new Diana(4,10,0));
+				loadLevel("/level2.png");
+				camara = new Camara("player");
+				levelCreado = true;
+				System.out.println("llegue al lvl2");
 				break;
 			default:
-				objects.add(new Player(5, 25));
-				//objects.add(new Platform(26, 7));
-				//objects.add(new Platform(29, 7));
-				//objects.add(new Platform(32, 7));
-				//objects.add(new Platform(35, 7));
-				objects.add(new Saw(10, 16));
-//				objects.add(new Spikes(18, 19, 13, false));
-//				objects.add(new Spikes(1, 5, 15, true));
-				objects.add(new Flag(36, 19));
-				objects.add(new Flag(8,12));
-				objects.add(new Diana(34,6,0));
-				loadLevel("/Niveles/Nivel1/colision1.png");
-				camara = new Camara("player");
-				
-				levelCreado = true;
+				levelActual = 1;
 				break;
 			};
 		}
@@ -140,6 +138,16 @@ public class GameManager extends AbstractGame {
 				posPlayerY = ((Player) this.getObject("player")).getRevivirY();
 				((Player) this.getObject("player")).setReachedCheckpoint(false);
 			}
+		}
+		
+		//Actualizar Diana
+		if(((Diana) this.getObject("diana")).isActivado()) {
+			for(int i = 0; i<objects.size();i++){
+				objects.remove(i);
+			}
+			levelCreado=false;
+			levelPasados+=1;
+			
 		}
 		
 		Physics.update();
