@@ -54,5 +54,9 @@ public class Levels {
 		return levelSeleccionado;
 	}
 	
+	public void setLevelSeleccionado(int lvl) {
+		this.levelSeleccionado=lvl;
+	}
+	
 	
 }

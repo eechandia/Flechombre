@@ -198,4 +198,8 @@ public class GameContainer implements Runnable {
 	public int getLevelSeleccionado() {
 		return levels.getLevelSeleccionado();
 	}
+	public void setLevelSeleccionado(int lvl) {
+		levels.setLevelSeleccionado(lvl);
+	}
+	
 }

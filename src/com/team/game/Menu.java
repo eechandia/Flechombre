@@ -37,6 +37,7 @@ public class Menu {
 
 		if(gc.getInput().isButtonUp(1) && (mouseX>=startX && mouseX<=startX+48) && (mouseY>=startY && mouseY<=startY+16)) {
 			gc.setState(State.GAME);
+			gc.setLevelSeleccionado(1);
 		}
 		
 		if(gc.getInput().isButtonUp(1) && ((mouseX>=levelsX && mouseX<=levelsX+48) && (mouseY>=levelsY && mouseY<=levelsY+16))) {
