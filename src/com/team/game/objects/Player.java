@@ -28,7 +28,15 @@ public class Player extends GameObject{
 	private float offsetX, offsetY;
 	private boolean reachedCheckpoint = false;
 	private int revivirX, revivirY;
+	
+	//megaSalto
 	float pressX = 0, pressY = 0;
+	float distX = 0, distY = 0;
+	float fuerza = 0;
+	float angulo = 0;	
+	boolean megaSaltando = false;
+	float tiempo = 0;
+	//
 	
 	private float speed = 100;
 	private float fallSpeed = 10;
@@ -60,6 +68,66 @@ public class Player extends GameObject{
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
+		
+		if(megaSaltando) {
+			tiempo += dt*2;
+			
+			if((fuerza*Math.cos(angulo)*tiempo) > 0) {
+				if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2))))) {
+					offsetX +=  dt*speed;
+					if(offsetX > paddingRight)
+						offsetX = paddingRight;
+					megaSaltando = false;
+					tiempo = 0;
+				}else {
+					//offsetX += (float)(fuerza*Math.cos(angulo)*dt);
+					//offsetY += (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
+				}
+			}
+			
+			if((fuerza*Math.cos(angulo)*tiempo) < 0) {
+				if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY + (int)Math.signum((int)((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2))))) {
+					offsetX -=  dt*speed;
+					if(offsetX < -paddingLeft)
+						offsetX = -paddingLeft;
+					megaSaltando = false;
+					tiempo = 0;
+				}else {
+					//offsetX -= (float)(fuerza*Math.cos(angulo)*dt);
+					//offsetY += (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
+				}
+			}
+			
+			if(((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2) < 0)) {
+				if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
+					fallDistance = 0;
+					offsetY = -paddingTop;
+					megaSaltando = false;
+					tiempo = 0;
+				}else {
+					//offsetX += (float)(fuerza*Math.cos(angulo)*dt);
+					//offsetY += (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
+				}
+			}
+			
+		}else {
+			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
+				pressX = gc.getInput().getMouseX();
+				pressY = gc.getInput().getMouseY();
+			}
+			
+			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
+				distX = gc.getInput().getMouseX()-pressX;
+				distY = gc.getInput().getMouseY()-pressY;
+				angulo = (float) Math.atan(distY/distX);
+				fuerza = (float) Math.hypot(distX, distY);
+				if(angulo > 0)
+					angulo += Math.PI;
+				megaSaltando = true;
+			}
+			//posX = (float)(fuerza*Math.cos(angulo)*dt);
+			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
+		
 		//Left and Right
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)offsetY))) {
@@ -78,17 +146,6 @@ public class Player extends GameObject{
 			}else {
 				offsetX -= dt*speed;
 			}
-		}
-		
-	
-		
-		//End of Left and Right
-		
-		//Reset
-		if(gc.getInput().isKey(KeyEvent.VK_R)) {
-			this.dead = false;
-			this.posX = posX*GameManager.TILE_SIZE;
-			this.posY = posY*GameManager.TILE_SIZE;
 		}
 		
 		//Beginning of Jump and Gravity
@@ -117,9 +174,7 @@ public class Player extends GameObject{
 		offsetY += fallDistance; 
 		//End of Jump and Gravity 
 		
-		//Salto Especial
-		
-		
+		}
 		
 		//Final Position
 		if(offsetY > GameManager.TILE_SIZE/2) {
@@ -141,8 +196,15 @@ public class Player extends GameObject{
 			offsetX += GameManager.TILE_SIZE;
 		}
 		
-		posX = tileX*GameManager.TILE_SIZE + offsetX;
-		posY = tileY*GameManager.TILE_SIZE + offsetY;
+		if(megaSaltando) {
+			posX = tileX*GameManager.TILE_SIZE + (float)(fuerza*Math.cos(angulo)*tiempo);
+			posY = tileY*GameManager.TILE_SIZE + (float)((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2));
+			System.out.println((fuerza*Math.cos(angulo)*tiempo));
+			//System.out.println((float)((fuerza*Math.sin(angulo)*tiempo) - (fallSpeed*Math.pow(tiempo, 2)/2)));
+		}else {
+			posX = tileX*GameManager.TILE_SIZE + offsetX;
+			posY = tileY*GameManager.TILE_SIZE + offsetY;
+		}
 		
 		//Disparando
 		if(gc.getInput().isKeyDown(KeyEvent.VK_UP)) {
@@ -182,31 +244,6 @@ public class Player extends GameObject{
 			animation = 0;
 		} 
 		groundLast = ground;
-		
-		if(true/*gc.getInput().mouseDragged(e)*/) {
-			float fuerza = 0; float angulo = 0;
-			//fuerza = this.calcularFuerza();
-			
-			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
-				pressX = gc.getInput().getMouseX();
-				pressY = gc.getInput().getMouseY();
-			}
-			
-			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
-				angulo = (float) Math.atan((gc.getInput().getMouseY()-pressY)/(gc.getInput().getMouseX()-pressX));
-				if(angulo > 0)
-					angulo += Math.PI;
-
-				System.out.println("Y="+(gc.getInput().getMouseY()-pressY));// a borrar
-				System.out.println("X="+(gc.getInput().getMouseX()-pressX));
-				System.out.println("alfa="+angulo);
-				
-			}
-			//posX = (float)(fuerza*Math.cos(angulo)*dt);
-			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
-			
-		
-		}
 		
 		this.updateComponents(gc, gm, dt);
 	}

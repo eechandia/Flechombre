@@ -7,7 +7,7 @@ public class GameContainer implements Runnable {
 	
 
 	
-	private State state = State.GAME;
+	private State state = State.MENU;
 	
 	private boolean juegoIniciado = false; //variable de mierda mepa, arreglar
 

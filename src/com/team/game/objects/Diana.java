@@ -5,6 +5,7 @@ package com.team.game.objects;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.State;
 import com.team.engine.gfx.ImageTile;
 import com.team.game.GameManager;
 import com.team.game.components.AABBComponent;
@@ -47,6 +48,16 @@ public class Diana extends GameObject{
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
+		if(animacion>3) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			gc.setState(State.LEVELS);
+		}
+			
 		if(animar && animacion<3) {
 			animacion += dt*5;
 		}
