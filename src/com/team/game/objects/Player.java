@@ -109,11 +109,21 @@ public class Player extends GameObject{
 					//offsetY += (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
 				}
 			}
+			if(fallDistance > 0) {
+				if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
+					fallDistance = 0;
+					offsetY = 0;
+					ground = true;
+				}
+			}
+			
 			
 		}else {
 			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
 				pressX = gc.getInput().getMouseX();
 				pressY = gc.getInput().getMouseY();
+				
+				
 			}
 			
 			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
@@ -124,6 +134,9 @@ public class Player extends GameObject{
 				if(angulo > 0)
 					angulo += Math.PI;
 				megaSaltando = true;
+				
+				
+				
 			}
 			//posX = (float)(fuerza*Math.cos(angulo)*dt);
 			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
