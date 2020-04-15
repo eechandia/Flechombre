@@ -25,7 +25,7 @@ import com.team.game.objects.Spikes;
 public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 16;
-	private Image levelImage = new Image("/Niveles/lvl1.png");
+	private Image levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 	private Image background = new Image("/background0.png");
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -66,22 +66,22 @@ public class GameManager extends AbstractGame {
 			switch (gc.getLevelSeleccionado()) {
 			case 1:
 				objects.add(new Player(5, 25));
-//				objects.add(new Platform(26, 7));
-//				objects.add(new Platform(29, 7));
-//				objects.add(new Platform(32, 7));
-//				objects.add(new Platform(35, 7));
-//				objects.add(new Saw(1, 26));
+				//objects.add(new Platform(26, 7));
+				//objects.add(new Platform(29, 7));
+				//objects.add(new Platform(32, 7));
+				//objects.add(new Platform(35, 7));
+				objects.add(new Saw(9, 17));
 //				objects.add(new Spikes(18, 19, 13, false));
 //				objects.add(new Spikes(1, 5, 15, true));
-//				objects.add(new Flag(20, 19));
-//				objects.add(new Flag(3, 17));
-//				objects.add(new Diana(31,27,0));
-				
-				loadLevel("/Niveles/colision1.png");
+				objects.add(new Flag(36, 19));
+				objects.add(new Flag(8,12));
+				objects.add(new Diana(34,6,0));
+				loadLevel("/Niveles/Nivel1/colision1.png");
 				camara = new Camara("player");
 				
 				levelCreado = true;
 				break;
+				
 			case 2:
 				//cargamos lvl2;
 				break;
@@ -91,13 +91,13 @@ public class GameManager extends AbstractGame {
 				//objects.add(new Platform(29, 7));
 				//objects.add(new Platform(32, 7));
 				//objects.add(new Platform(35, 7));
-//				objects.add(new Saw(1, 26));
+				objects.add(new Saw(10, 16));
 //				objects.add(new Spikes(18, 19, 13, false));
 //				objects.add(new Spikes(1, 5, 15, true));
-//				objects.add(new Flag(20, 19));
-//				objects.add(new Flag(3, 17));
-//				objects.add(new Diana(31,27,1));
-				loadLevel("/Niveles/colision1.png");
+				objects.add(new Flag(36, 19));
+				objects.add(new Flag(8,12));
+				objects.add(new Diana(34,6,0));
+				loadLevel("/Niveles/Nivel1/colision1.png");
 				camara = new Camara("player");
 				
 				levelCreado = true;
