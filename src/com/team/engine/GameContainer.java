@@ -23,6 +23,8 @@ public class GameContainer implements Runnable {
 	private float scale = 3f;
 	private String title = "Flechombre v1.0";
 	
+	private int levelSeleccionado;
+	
 	private Menu menu;
 	private Levels levels;
 
@@ -196,10 +198,10 @@ public class GameContainer implements Runnable {
 	}
 	
 	public int getLevelSeleccionado() {
-		return levels.getLevelSeleccionado();
+		return levelSeleccionado;
 	}
 	public void setLevelSeleccionado(int lvl) {
-		levels.setLevelSeleccionado(lvl);
+		levelSeleccionado = lvl;
 	}
 	
 }

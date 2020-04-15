@@ -19,7 +19,6 @@ public class Diana extends GameObject{
 	
 	private float animacion;
 	private boolean animar;
-	private boolean activado;
 	
 	public Diana(int x, int y, int facing) {
 		this.tag = "diana";
@@ -33,7 +32,6 @@ public class Diana extends GameObject{
 		this.paddingTop = 7;
 		animacion = 0;
 		animar = false;
-		activado = false;
 		
 		switch(facing) {
 		case 0:
@@ -50,14 +48,15 @@ public class Diana extends GameObject{
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
-		if(animacion>3) {
+		if(animacion>3 && !gm.isLevelTerminado()) {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			activado = true;
+			gm.setLevelTerminado(true);
+			gc.setLevelSeleccionado(gc.getLevelSeleccionado()+1);
 		}
 			
 		if(animar && animacion<3) {
@@ -77,13 +76,8 @@ public class Diana extends GameObject{
 	public void collision(GameObject other) {
 		if(other.getTag().equalsIgnoreCase("player")) {
 			animar = true;
-		}
-		
+		}	
 	
 	}
 
-
-	public boolean isActivado() {
-		return activado;
-	}
 }
