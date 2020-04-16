@@ -133,8 +133,8 @@ public class Player extends GameObject{
 				distY = gc.getInput().getMouseY()-pressY;
 				angulo = (float) Math.atan(distY/distX);
 				fuerza = (float) Math.hypot(distX, distY)/5;
-				if(fuerza > 5)
-					fuerza = 5;
+				if(fuerza > 7)
+					fuerza = 7;
 				if(angulo > 0)
 					angulo += Math.PI;
 				megaSaltando = true;
@@ -266,13 +266,13 @@ public class Player extends GameObject{
 			distY2 = gc.getInput().getMouseY()-pressY;
 			angulo2 = (float) Math.atan(distY2/distX2);
 			fuerza2 = (float) Math.hypot(distX2, distY2)/5;
-			if(fuerza2 > 5)
-				fuerza2 = 5;
+			if(fuerza2 > 7)
+				fuerza2 = 7;
 			if(angulo2 > 0)
 				angulo2 += Math.PI;
 			for(float T=(float) 0.5; T<1.5; T+=0.033) {
-				posX2 +=  (fuerza2*Math.cos(angulo2));
-				posY2 += (fuerza2*Math.sin(angulo2)*2 + ((fallSpeed*T)));
+				posX2 +=  (fuerza2*Math.cos(angulo2))*1.2;
+				posY2 += (fuerza2*Math.sin(angulo2)*2 + ((fallSpeed*T))*1.3);
 				renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
 			}
 		}
