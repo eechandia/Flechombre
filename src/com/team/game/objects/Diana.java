@@ -64,7 +64,7 @@ public class Diana extends GameObject{
 			
 			gm.setLevelTerminado(true);
 			gc.setLevelSeleccionado(gc.getLevelSeleccionado()+1);
-		}a
+		}
 			
 		if(animar && animacion<3) {
 			animacion += dt*5;
