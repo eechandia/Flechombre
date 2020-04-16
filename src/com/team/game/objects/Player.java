@@ -30,10 +30,12 @@ public class Player extends GameObject{
 	private int revivirX, revivirY;
 	
 	//megaSalto
+	float posX2 = 0, posY2 = 0;
 	float pressX = 0, pressY = 0;
 	float distX = 0, distY = 0;
-	float fuerza = 0;
-	float angulo = 0;	
+	float distX2 = 0, distY2 = 0;
+	float fuerza = 0, fuerza2 = 0;
+	float angulo = 0, angulo2 = 0;
 	boolean megaSaltando = false;
 	float tiempo = 0;
 	//
@@ -73,35 +75,34 @@ public class Player extends GameObject{
 		if(megaSaltando) {
 			tiempo += dt*2;
 			
-			if((fuerza*Math.cos(angulo)*tiempo) > 0) {
+			if((fuerza*Math.cos(angulo)) > 0) {
 				if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)offsetY))) {
-					offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
+					offsetX += (fuerza*Math.cos(angulo));
 					if(offsetX > paddingRight) {
 						offsetX = paddingRight;
 						megaSaltando = false;
 					}
 				}else
-					offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
-			}
-			
-			if((fuerza*Math.cos(angulo)*tiempo) < 0) {
+					offsetX += (fuerza*Math.cos(angulo));
+			}else if((fuerza*Math.cos(angulo)) < 0) {
 				if(gm.getCollision(tileX-1, tileY)|| gm.getCollision(tileX-1, tileY + (int)Math.signum((int)offsetY))) {
-					offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
+					offsetX += (fuerza*Math.cos(angulo));
 					if(offsetX < -paddingLeft) {
 						offsetX = -paddingLeft;
 						megaSaltando = false;
 					}
 				}else
-					offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
+					offsetX += (fuerza*Math.cos(angulo)); //offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
 			}
 			
-			if(((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2) < 0)) {
+			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)) {
 				if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
 					fallDistance = 0;
 					offsetY = -paddingTop;
 					megaSaltando = false;
 				}
 			}
+			/*
 			if(fallDistance > 0) {
 				if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
 					fallDistance = 0;
@@ -109,9 +110,9 @@ public class Player extends GameObject{
 					ground = true;
 				}
 			}
+			*/
 			
-			
-			if(((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2) > 0)) {
+			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)) {
 				if(gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1) && offsetY > 0) {
 					fallDistance = 0;
 					offsetY = 0;
@@ -119,17 +120,12 @@ public class Player extends GameObject{
 					megaSaltando = false;
 				}
 			}
-			//offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
-			offsetY += (float)((fuerza*Math.sin(angulo)*tiempo) + (fallSpeed*Math.pow(tiempo, 2)/2));
-			if(offsetY > 8)
-				System.out.println(offsetY);
+			offsetY += ((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo));//*Math.pow(tiempo, 2)/2
 		}else {
 			
 			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
 				pressX = gc.getInput().getMouseX();
 				pressY = gc.getInput().getMouseY();
-				
-				
 			}
 			
 			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
@@ -137,14 +133,11 @@ public class Player extends GameObject{
 				distY = gc.getInput().getMouseY()-pressY;
 				angulo = (float) Math.atan(distY/distX);
 				fuerza = (float) Math.hypot(distX, distY)/5;
-				if(fuerza > 7)
-					fuerza = 7;
+				if(fuerza > 5)
+					fuerza = 5;
 				if(angulo > 0)
 					angulo += Math.PI;
 				megaSaltando = true;
-				
-				
-				
 			}
 			//posX = (float)(fuerza*Math.cos(angulo)*dt);
 			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
@@ -214,6 +207,7 @@ public class Player extends GameObject{
 			tileX--;
 			offsetX += GameManager.TILE_SIZE;
 		}
+		
 		posX = tileX*GameManager.TILE_SIZE + offsetX;
 		posY = tileY*GameManager.TILE_SIZE + offsetY;
 		
@@ -263,6 +257,26 @@ public class Player extends GameObject{
 	public void render(GameContainer gc, Renderer renderer) {
 		//renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
+		
+		if(gc.getInput().isButton(MouseEvent.BUTTON1) && ((gc.getInput().getMouseY()-pressY) > 0)) {
+			posX2 = posX+width-paddingLeft-paddingRight;
+			posY2 = posY+height-(2*paddingTop);
+			
+			distX2 = gc.getInput().getMouseX()-pressX;
+			distY2 = gc.getInput().getMouseY()-pressY;
+			angulo2 = (float) Math.atan(distY2/distX2);
+			fuerza2 = (float) Math.hypot(distX2, distY2)/5;
+			if(fuerza2 > 5)
+				fuerza2 = 5;
+			if(angulo2 > 0)
+				angulo2 += Math.PI;
+			for(float T=(float) 0.5; T<1.5; T+=0.033) {
+				posX2 +=  (fuerza2*Math.cos(angulo2));
+				posY2 += (fuerza2*Math.sin(angulo2)*2 + ((fallSpeed*T)));
+				renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
+			}
+		}
+		
 		this.renderComponents(gc, renderer);
 	}
 
