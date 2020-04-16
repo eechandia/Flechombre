@@ -35,10 +35,10 @@ public class Diana extends GameObject{
 		
 		switch(facing) {
 		case 0:
-			this.checkpoint = new ImageTile("/dianaFacingLeft.png", 32, 32);
+			this.checkpoint = new ImageTile("/Objetos/dianaFacingLeft.png", 32, 32);
 			break;
 		case 1:
-			this.checkpoint = new ImageTile("/dianaFacingRight.png", 32, 32);
+			this.checkpoint = new ImageTile("/Objetos/dianaFacingRight.png", 32, 32);
 			break;
 	}
 		

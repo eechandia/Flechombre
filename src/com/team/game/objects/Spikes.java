@@ -14,7 +14,7 @@ import com.team.game.components.AABBComponent;
  *
  */
 public class Spikes extends GameObject{
-	private ImageTile spikesSprite = new ImageTile("/spikes.png", 16, 16);
+	private ImageTile spikesSprite = new ImageTile("/Objetos/picnhes0000.png", 16, 16);
 	private int posFinalX;
 	private int pisoTecho;
 	private int asesino;
@@ -36,10 +36,10 @@ public class Spikes extends GameObject{
 		if(estaInvertido) {
 			pisoTecho = 1;
 			this.paddingTop = 0;
-			this.paddingBot = 12;
+			this.paddingBot = 6;
 		}else {
 			pisoTecho = 0;
-			this.paddingTop = 12;
+			this.paddingTop = 6;
 			this.paddingBot = 0;
 		}
 	

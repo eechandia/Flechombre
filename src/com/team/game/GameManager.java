@@ -71,8 +71,6 @@ public class GameManager extends AbstractGame {
 				objects.remove(i);
 				i--;
 			}
-			camara.setOffsetX(0);
-			camara.setOffsetY(0);
 			levelCreado = false;
 			levelTerminado = false;
 		}
@@ -88,6 +86,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(36, 19));
 				objects.add(new Flag(8,12));
 				objects.add(new Diana(34,6,0));
+				objects.add(new Spikes(4, 7, 17, false));
 				loadLevel("/Niveles/Nivel1/colision1.png");
 				camara.setTarget(this.getObject("player"));
 				
@@ -113,10 +112,31 @@ public class GameManager extends AbstractGame {
 				
 				levelCreado = true;
 				break;
+			
+			case 3:
+				//levelImage = new Image("/Niveles/.png");
+				objects.add(new Player(6, 22));
+				posPlayerX = 6;
+				posPlayerY = 22;
+				objects.add(new Spikes(12, 20, 26, false));
+				objects.add(new Spikes(10, 23, 5, false));
+				objects.add(new Spikes(10, 23, 1, true));//hasta 25 de largo es el numero magico creo, llegue una vez
+				objects.add(new Diana(35, 4,0));
+				objects.add(new Saw(20, 13));
+				objects.add(new Saw(17, 13));
+				objects.add(new Saw(14, 13));
+				objects.add(new Saw(11, 13));
+				objects.add(new Flag(3, 11));
+				objects.add(new Flag(7, 4));
+				loadLevel("/Niveles/colisionLevel3.png");
+				camara.setTarget(this.getObject("player"));
+				
+				levelCreado = true;
+				break;
 				
 			default:
-				System.out.println("fail");
 				gc.setLevelSeleccionado(1);
+				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				break;
 			};
 		}
@@ -175,6 +195,18 @@ public class GameManager extends AbstractGame {
 		case 2:
 			renderer.drawImage(background, 0, 0);
 			renderer.drawImage(levelImage, 0, 0);
+			break;
+		case 3:
+			for(int y=0; y<levelHeight; y++) {
+				for(int x=0; x<levelWidth; x++) {
+					if(collision[x+y*levelWidth] == false)
+						renderer.drawFillRect(x*16, y*16, 16, 16, 0xffffffff);
+					else
+						renderer.drawFillRect(x*16, y*16, 16, 16, 0);
+				}
+			}
+			break;
+		case 4:
 			break;
 		default:
 			renderer.drawImage(background, 0, 0);

@@ -14,7 +14,7 @@ import com.team.game.components.AABBComponent;
  *
  */
 public class Flag extends GameObject{
-	private ImageTile flag = new ImageTile("/flag.png", 32, 32);
+	private ImageTile flag = new ImageTile("/Objetos/flag.png", 32, 32);
 	
 	private float animacion;
 	private boolean animar;

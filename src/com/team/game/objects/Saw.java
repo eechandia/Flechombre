@@ -15,7 +15,7 @@ import com.team.game.components.AABBComponent;
  */
 public class Saw extends GameObject{
 	
-	private ImageTile sawSprite = new ImageTile("/miniSaw.png", 32, 32);
+	private ImageTile sawSprite = new ImageTile("/Objetos/miniSaw.png", 32, 32);
 	private float animacion;
 	private int asesino;
 	private int playerMatados;
