@@ -5,6 +5,7 @@ package com.team.game.objects;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.audio.SoundClip;
 import com.team.game.GameManager;
 
 /**
@@ -15,6 +16,7 @@ public class Flecha extends GameObject{
 	
 	private int tileX, tileY;
 	private float offsetX, offsetY;
+
 	
 	private float speed = 200;
 	private int direction;

@@ -13,13 +13,13 @@ import com.team.engine.gfx.ImageTile;
 import com.team.game.GameManager;
 import com.team.game.components.AABBComponent;
 
-/**
+/**a
  * @author Pedro
  *
  */
 public class Player extends GameObject{
 	
-	private ImageTile playerImage = new ImageTile("/player1.png", 16, 16);
+	private ImageTile playerImage = new ImageTile("/player4.png", 16, 16);
 	private SoundClip sonidoDanio = new SoundClip("/Audio/ouch.wav");;
 	
 	private int direction = 0;
@@ -58,9 +58,9 @@ public class Player extends GameObject{
 		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = GameManager.TILE_SIZE;
 		this.height = GameManager.TILE_SIZE;
-		paddingLeft = 4;
-		paddingRight = 3;
-		paddingTop = 3;
+		paddingLeft = 1;
+		paddingRight = 2;
+		paddingTop = 0;
 		paddingBot = 0;
 
 		sonidoDanio.setVolume(-30);
@@ -128,13 +128,14 @@ public class Player extends GameObject{
 				pressY = gc.getInput().getMouseY();
 			}
 			
+			
 			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
 				distX = gc.getInput().getMouseX()-pressX;
 				distY = gc.getInput().getMouseY()-pressY;
 				angulo = (float) Math.atan(distY/distX);
 				fuerza = (float) Math.hypot(distX, distY)/5;
-				if(fuerza > 7)
-					fuerza = 7;
+				if(fuerza > 7.5f)
+					fuerza = 7.5f;
 				if(angulo > 0)
 					angulo += Math.PI;
 				megaSaltando = true;
@@ -266,13 +267,13 @@ public class Player extends GameObject{
 			distY2 = gc.getInput().getMouseY()-pressY;
 			angulo2 = (float) Math.atan(distY2/distX2);
 			fuerza2 = (float) Math.hypot(distX2, distY2)/5;
-			if(fuerza2 > 7)
-				fuerza2 = 7;
+			if(fuerza2 > 7.5f)
+				fuerza2 = 7.5f;
 			if(angulo2 > 0)
 				angulo2 += Math.PI;
 			for(float T=(float) 0.5; T<1.5; T+=0.033) {
-				posX2 +=  (fuerza2*Math.cos(angulo2))*1.2;
-				posY2 += (fuerza2*Math.sin(angulo2)*2 + ((fallSpeed*T))*1.3);
+				posX2 +=  (fuerza2*Math.cos(angulo2));
+				posY2 += (fuerza2*Math.sin(angulo2)*1.7 + ((fallSpeed*T)*0.9));
 				renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
 			}
 		}

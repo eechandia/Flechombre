@@ -5,6 +5,7 @@ package com.team.game.objects;
 
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.ImageTile;
 import com.team.game.GameManager;
 import com.team.game.components.AABBComponent;
@@ -15,6 +16,7 @@ import com.team.game.components.AABBComponent;
  */
 public class Flag extends GameObject{
 	private ImageTile flag = new ImageTile("/Objetos/flag.png", 32, 32);
+	private SoundClip sonidoFlag = new SoundClip("/Audio/Mario-coin-sound.wav");;
 	
 	private float animacion;
 	private boolean animar;
@@ -31,7 +33,7 @@ public class Flag extends GameObject{
 		this.paddingTop = 20;
 		animacion = 0;
 		animar = false;
-		
+		sonidoFlag.setVolume(-30);
 		this.addComponent(new AABBComponent(this));
 	}
 
@@ -40,6 +42,7 @@ public class Flag extends GameObject{
 		if(animar && animacion<3) {
 			animacion += dt*5;
 			paddingTop = 4;
+			sonidoFlag.start();
 		}
 		
 		this.updateComponents(gc, gm, dt);
@@ -55,6 +58,7 @@ public class Flag extends GameObject{
 	public void collision(GameObject other) {
 		if(other.getTag().equalsIgnoreCase("player")) {
 			animar = true;
+			
 		}
 		
 	}

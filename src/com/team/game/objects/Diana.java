@@ -6,6 +6,7 @@ package com.team.game.objects;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.State;
+import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.ImageTile;
 import com.team.game.GameManager;
 import com.team.game.components.AABBComponent;
@@ -20,6 +21,9 @@ public class Diana extends GameObject{
 	private float animacion;
 	private boolean animar;
 	
+	private SoundClip sonidoDiana = new SoundClip("/Audio/Mario-coin-sound.wav");;
+	
+	
 	public Diana(int x, int y, int facing) {
 		this.tag = "diana";
 		this.posX = x*GameManager.TILE_SIZE;
@@ -32,6 +36,7 @@ public class Diana extends GameObject{
 		this.paddingTop = 7;
 		animacion = 0;
 		animar = false;
+		sonidoDiana.setVolume(-30);
 		
 		switch(facing) {
 		case 0:
@@ -50,11 +55,13 @@ public class Diana extends GameObject{
 	public void update(GameContainer gc, GameManager gm, float dt) {
 		if(animacion>3 && !gm.isLevelTerminado()) {
 			try {
+				sonidoDiana.start();
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			gm.setLevelTerminado(true);
 			gc.setLevelSeleccionado(gc.getLevelSeleccionado()+1);
 		}
@@ -76,6 +83,7 @@ public class Diana extends GameObject{
 	public void collision(GameObject other) {
 		if(other.getTag().equalsIgnoreCase("player")) {
 			animar = true;
+			
 		}	
 	
 	}
