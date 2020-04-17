@@ -124,7 +124,7 @@ public class GameManager extends AbstractGame {
 				break;
 			
 			case 3:
-				//levelImage = new Image("/Niveles/.png");
+				levelImage = new Image("/Niveles/Nivel3/level3.png");
 				objects.add(new Player(6, 22));
 				posPlayerX = 6;
 				posPlayerY = 22;
@@ -138,7 +138,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(11, 13));
 				objects.add(new Flag(3, 11));
 				objects.add(new Flag(7, 4));
-				loadLevel("/Niveles/colisionLevel3.png");
+				loadLevel("/Niveles/Nivel3/colisionLevel3.png");
 				camara.setTarget(this.getObject("player"));
 				
 				sonidoLevel.setVolume(-40);
@@ -211,14 +211,8 @@ public class GameManager extends AbstractGame {
 			renderer.drawImage(levelImage, 0, 0);
 			break;
 		case 3:
-			for(int y=0; y<levelHeight; y++) {
-				for(int x=0; x<levelWidth; x++) {
-					if(collision[x+y*levelWidth] == false)
-						renderer.drawFillRect(x*16, y*16, 16, 16, 0xffffffff);
-					else
-						renderer.drawFillRect(x*16, y*16, 16, 16, 0);
-				}
-			}
+			renderer.drawImage(background, 0, 0);
+			renderer.drawImage(levelImage, 0, 0);
 			break;
 		case 4:
 			break;
