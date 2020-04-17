@@ -4,7 +4,6 @@
 package com.team.game;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import com.team.engine.AbstractGame;
@@ -12,6 +11,7 @@ import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
 import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.Image;
+import com.team.engine.gfx.Light;
 import com.team.game.objects.Diana;
 import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
@@ -28,6 +28,7 @@ public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 16;
 	private Image levelImage;
+	private Light light = new Light(150, 0xffffffff);
 	private Image background = new Image("/background0.png");
 	private SoundClip sonidoLevel = new SoundClip("/Audio/Level.wav");
 	
@@ -81,6 +82,7 @@ public class GameManager extends AbstractGame {
 		if(!levelCreado) {
 			switch (levelActual) {
 			case 1:
+				gc.getRenderer().setAmbientColor(-1);
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				objects.add(new Player(5, 25));
 				posPlayerX = 5;
@@ -100,6 +102,7 @@ public class GameManager extends AbstractGame {
 				break;
 				
 			case 2:
+				gc.getRenderer().setAmbientColor(-1);
 				levelImage = new Image("/level2Image.png");
 				objects.add(new Player(1, 5));
 				posPlayerX = 1;
@@ -124,7 +127,9 @@ public class GameManager extends AbstractGame {
 				break;
 			
 			case 3:
+				gc.getRenderer().setAmbientColor(0xff232323);
 				levelImage = new Image("/Niveles/Nivel3/level3.png");
+				background = new Image("/Niveles/Nivel3/background30000.png");
 				objects.add(new Player(6, 22));
 				posPlayerX = 6;
 				posPlayerY = 22;
@@ -213,6 +218,9 @@ public class GameManager extends AbstractGame {
 		case 3:
 			renderer.drawImage(background, 0, 0);
 			renderer.drawImage(levelImage, 0, 0);
+			if(playerCounter > 0)
+				renderer.drawLight(light, (int) this.getObject("player").getPosX(), (int) this.getObject("player").getPosY());
+			renderer.drawLight(light, 15*TILE_SIZE, 20*TILE_SIZE);
 			break;
 		case 4:
 			break;
