@@ -79,8 +79,9 @@ public class GameManager extends AbstractGame {
 		}
 		
 		if(!levelCreado) {
-			switch (levelActual) {
+			switch (levelActual+1) {
 			case 1:
+			
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				objects.add(new Player(5, 25));
 				posPlayerX = 5;
@@ -100,20 +101,16 @@ public class GameManager extends AbstractGame {
 				break;
 				
 			case 2:
-				levelImage = new Image("/level2Image.png");
-				objects.add(new Player(1, 5));
-				posPlayerX = 1;
-				posPlayerY = 5;
-				objects.add(new Platform(26, 7));
-				objects.add(new Platform(29, 7));
-				objects.add(new Platform(32, 7));
-				objects.add(new Platform(35, 7));
-				objects.add(new Flag(3, 17));
-				objects.add(new Flag(20, 19));
-				objects.add(new Spikes(18, 19, 13, false));
-				objects.add(new Spikes(1, 5, 15, true));
-				objects.add(new Diana(16,8,0));
-				loadLevel("/level2.png");
+				levelImage = new Image("/Niveles/Nivel2/lvl2.png");
+				objects.add(new Player(4, 26));
+				posPlayerX = 4;
+				posPlayerY = 26;
+				objects.add(new Flag(24, 27));
+				
+				objects.add(new Spikes(14, 21, 27, false));
+				
+				objects.add(new Diana(2,1,1));
+				loadLevel("/Niveles/Nivel2/colisionlvl2.png");
 				camara.setTarget(this.getObject("player"));
 				
 				sonidoLevel.setVolume(-40);
