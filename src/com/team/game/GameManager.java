@@ -43,6 +43,8 @@ public class GameManager extends AbstractGame {
 	private int levelActual;
 	private boolean levelTerminado = false;
 	
+	private boolean musicaSonando = false;
+	
 
 	public GameManager() {
 	}
@@ -69,6 +71,15 @@ public class GameManager extends AbstractGame {
 	public void update(GameContainer gc, float dt) {
 		levelActual = gc.getLevelSeleccionado();
 		
+		
+		if(!musicaSonando) {
+			sonidoLevel.setVolume(-20);
+			sonidoLevel.start();
+			musicaSonando = true;
+		}
+		
+		
+		
 		if(levelTerminado) {
 			for(int i = 0; i<objects.size();i++){
 				objects.get(i).removeComponent("aabb");
@@ -80,13 +91,11 @@ public class GameManager extends AbstractGame {
 		}
 		
 		if(!levelCreado) {
-			switch (levelActual+1) {
+			switch (levelActual) {
 			case 1:
-<<<<<<< HEAD
-			
-=======
+
 				gc.getRenderer().setAmbientColor(-1);
->>>>>>> baef4f0083f7b895e8a2f68501fb7178ecc07d00
+
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				objects.add(new Player(5, 25));
 				posPlayerX = 5;
@@ -99,14 +108,13 @@ public class GameManager extends AbstractGame {
 				loadLevel("/Niveles/Nivel1/colision1.png");
 				camara.setTarget(this.getObject("player"));
 				
-				sonidoLevel.setVolume(-10);
-				sonidoLevel.loop();
-				
+			
+			
 				levelCreado = true;
 				break;
 				
 			case 2:
-<<<<<<< HEAD
+
 				levelImage = new Image("/Niveles/Nivel2/lvl2.png");
 				objects.add(new Player(4, 26));
 				posPlayerX = 4;
@@ -117,27 +125,9 @@ public class GameManager extends AbstractGame {
 				
 				objects.add(new Diana(2,1,1));
 				loadLevel("/Niveles/Nivel2/colisionlvl2.png");
-=======
-				gc.getRenderer().setAmbientColor(-1);
-				levelImage = new Image("/level2Image.png");
-				objects.add(new Player(1, 5));
-				posPlayerX = 1;
-				posPlayerY = 5;
-				objects.add(new Platform(26, 7));
-				objects.add(new Platform(29, 7));
-				objects.add(new Platform(32, 7));
-				objects.add(new Platform(35, 7));
-				objects.add(new Flag(3, 17));
-				objects.add(new Flag(20, 19));
-				objects.add(new Spikes(18, 19, 13, false));
-				objects.add(new Spikes(1, 5, 15, true));
-				objects.add(new Diana(16,8,0));
-				loadLevel("/level2.png");
->>>>>>> baef4f0083f7b895e8a2f68501fb7178ecc07d00
 				camara.setTarget(this.getObject("player"));
 				
-				sonidoLevel.setVolume(-40);
-				sonidoLevel.start();
+		
 				
 				
 				levelCreado = true;
@@ -162,9 +152,6 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(7, 4));
 				loadLevel("/Niveles/Nivel3/colisionLevel3.png");
 				camara.setTarget(this.getObject("player"));
-				
-				sonidoLevel.setVolume(-40);
-				sonidoLevel.start();
 				
 				
 				levelCreado = true;

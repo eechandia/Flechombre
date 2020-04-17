@@ -58,15 +58,12 @@ public class Player extends GameObject{
 		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = GameManager.TILE_SIZE;
 		this.height = GameManager.TILE_SIZE;
-<<<<<<< HEAD
+
+
 		paddingLeft = 3;
 		paddingRight = 4;
 		paddingTop = 1;
-=======
-		paddingLeft = 2;
-		paddingRight = 4;
-		paddingTop = 0;
->>>>>>> baef4f0083f7b895e8a2f68501fb7178ecc07d00
+
 		paddingBot = 0;
 
 		sonidoDanio.setVolume(-30);
