@@ -58,9 +58,15 @@ public class Player extends GameObject{
 		this.posY = posY*GameManager.TILE_SIZE;
 		this.width = GameManager.TILE_SIZE;
 		this.height = GameManager.TILE_SIZE;
+<<<<<<< HEAD
 		paddingLeft = 3;
 		paddingRight = 4;
 		paddingTop = 1;
+=======
+		paddingLeft = 2;
+		paddingRight = 4;
+		paddingTop = 0;
+>>>>>>> baef4f0083f7b895e8a2f68501fb7178ecc07d00
 		paddingBot = 0;
 
 		sonidoDanio.setVolume(-30);
@@ -260,8 +266,8 @@ public class Player extends GameObject{
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 		
 		if(gc.getInput().isButton(MouseEvent.BUTTON1) && ((gc.getInput().getMouseY()-pressY) > 0)) {
-			posX2 = posX+width-paddingLeft-paddingRight;
-			posY2 = posY+height-(2*paddingTop);
+			posX2 = posX+width/2;
+			posY2 = posY+height/2;
 			
 			distX2 = gc.getInput().getMouseX()-pressX;
 			distY2 = gc.getInput().getMouseY()-pressY;
@@ -272,8 +278,8 @@ public class Player extends GameObject{
 			if(angulo2 > 0)
 				angulo2 += Math.PI;
 			for(float T=(float) 0.5; T<1.5; T+=0.033) {
-				posX2 +=  (fuerza2*Math.cos(angulo2));
-				posY2 += (fuerza2*Math.sin(angulo2)*1.7 + ((fallSpeed*T)*0.9));
+				posX2 +=  (fuerza2*Math.cos(angulo2)*1.3);
+				posY2 += (fuerza2*Math.sin(angulo2)*1.5 + ((fallSpeed*T)*0.9));
 				renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
 			}
 		}
