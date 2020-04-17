@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.Image;
 import com.team.game.objects.Diana;
 import com.team.game.objects.Flag;
@@ -28,6 +29,7 @@ public class GameManager extends AbstractGame {
 	public static final int TILE_SIZE = 16;
 	private Image levelImage;
 	private Image background = new Image("/background0.png");
+	private SoundClip sonidoLevel = new SoundClip("/Audio/Level.wav");
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 	private Camara camara = new Camara("");
@@ -91,6 +93,9 @@ public class GameManager extends AbstractGame {
 				loadLevel("/Niveles/Nivel1/colision1.png");
 				camara.setTarget(this.getObject("player"));
 				
+				sonidoLevel.setVolume(-10);
+				sonidoLevel.loop();
+				
 				levelCreado = true;
 				break;
 				
@@ -110,6 +115,10 @@ public class GameManager extends AbstractGame {
 				objects.add(new Diana(16,8,0));
 				loadLevel("/level2.png");
 				camara.setTarget(this.getObject("player"));
+				
+				sonidoLevel.setVolume(-40);
+				sonidoLevel.start();
+				
 				
 				levelCreado = true;
 				break;
@@ -131,6 +140,10 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(7, 4));
 				loadLevel("/Niveles/colisionLevel3.png");
 				camara.setTarget(this.getObject("player"));
+				
+				sonidoLevel.setVolume(-40);
+				sonidoLevel.start();
+				
 				
 				levelCreado = true;
 				break;

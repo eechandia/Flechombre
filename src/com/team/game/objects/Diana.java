@@ -21,7 +21,7 @@ public class Diana extends GameObject{
 	private float animacion;
 	private boolean animar;
 	
-	private SoundClip sonidoDiana = new SoundClip("/Audio/Mario-coin-sound.wav");;
+	private SoundClip sonidoDiana = new SoundClip("/Audio/Mario-coin-sound.wav");
 	
 	
 	public Diana(int x, int y, int facing) {
