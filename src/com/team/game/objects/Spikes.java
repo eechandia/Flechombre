@@ -14,7 +14,7 @@ import com.team.game.components.AABBComponent;
  *
  */
 public class Spikes extends GameObject{
-	private ImageTile spikesSprite = new ImageTile("/Objetos/picnhes0000.png", 16, 16);
+	private ImageTile spikesSprite = new ImageTile("/Objetos/pinches.png", 16, 16);
 	private int posFinalX;
 	private int pisoTecho;
 	private int asesino;

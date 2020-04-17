@@ -19,7 +19,7 @@ import com.team.game.components.AABBComponent;
  */
 public class Player extends GameObject{
 	
-	private ImageTile playerImage = new ImageTile("/player4.png", 16, 16);
+	private ImageTile playerImage = new ImageTile("/Objetos/player.png", 16, 16);
 	private SoundClip sonidoDanio = new SoundClip("/Audio/ouch.wav");;
 	
 	private int direction = 0;
@@ -98,6 +98,9 @@ public class Player extends GameObject{
 					offsetX += (fuerza*Math.cos(angulo)); //offsetX += (float)(fuerza*Math.cos(angulo)*tiempo);
 			}
 			
+			
+			offsetY += ((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo));
+			
 			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)) {
 				if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
 					fallDistance = 0;
@@ -105,15 +108,6 @@ public class Player extends GameObject{
 					megaSaltando = false;
 				}
 			}
-			/*
-			if(fallDistance > 0) {
-				if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
-					fallDistance = 0;
-					offsetY = 0;
-					ground = true;
-				}
-			}
-			*/
 			
 			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)) {
 				if(gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1) && offsetY > 0) {
@@ -123,7 +117,27 @@ public class Player extends GameObject{
 					megaSaltando = false;
 				}
 			}
-			offsetY += ((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo));//*Math.pow(tiempo, 2)/2
+			
+			//Animacion durante el mega salto
+			if((fuerza*Math.cos(angulo)) > 0) {
+				direction = 0;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+					animation = 4;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
+					animation = 2;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+					animation = 3;
+			}else if((fuerza*Math.cos(angulo)) < 0) {
+				direction = 1;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+					animation = 4;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
+					animation = 2;
+				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+					animation = 3;
+			}
+			//Fin de animacion durante el mega salto
+			
 		}else {
 			
 			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
@@ -133,6 +147,7 @@ public class Player extends GameObject{
 			
 			
 			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
+				fallDistance = 0;
 				distX = gc.getInput().getMouseX()-pressX;
 				distY = gc.getInput().getMouseY()-pressY;
 				angulo = (float) Math.atan(distY/distX);
@@ -228,7 +243,8 @@ public class Player extends GameObject{
 		if(gc.getInput().isKeyDown(KeyEvent.VK_LEFT)) {
 			gm.addObject(new Flecha(tileX, tileY, offsetX+ width/2, offsetY + height/2, 3));
 		}
-			
+		
+		if(!megaSaltando) {
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			direction = 0;
 			animation += dt*10;
@@ -248,18 +264,18 @@ public class Player extends GameObject{
 			animation = 1;
 			ground = false;
 		}
-		
+			
 		if(ground && !groundLast) {
 			animation = 0;
 		} 
 		groundLast = ground;
+		}
 		
 		this.updateComponents(gc, gm, dt);
 	}
 	
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		//renderer.drawFillRect((int)posX, (int)posY, GameManager.TILE_SIZE, GameManager.TILE_SIZE, 0xff107a2a);
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 		
 		if(gc.getInput().isButton(MouseEvent.BUTTON1) && ((gc.getInput().getMouseY()-pressY) > 0)) {

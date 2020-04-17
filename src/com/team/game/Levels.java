@@ -13,7 +13,7 @@ import com.team.engine.gfx.Image;
  *
  */
 public class Levels {
-	private Image levelImage = new Image("/level2Image.png");
+	//private Image levelImage = new Image("/.png");
 	private int mouseX, mouseY;
 	
 	public void update(GameContainer gc) {
@@ -28,7 +28,7 @@ public class Levels {
 	}
 	
 	public void render(GameContainer gc, Renderer renderer) {
-		renderer.drawImage(levelImage, 0, 0);
+		//renderer.drawImage(levelImage, 0, 0);
 		
 		renderer.drawText("LEVELS", 125, 9, 0xffff0000);
 		for(int i=1; i<10; i++) {

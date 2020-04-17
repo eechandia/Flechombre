@@ -14,7 +14,7 @@ import com.team.engine.gfx.ImageTile;
  *
  */
 public class Menu {
-	private Image levelImage = new Image("/level2Image.png");
+	//private Image levelImage = new Image("/level2Image.png");
 	
 	private int mouseX, mouseY;
 	private int startX, startY;
@@ -54,7 +54,7 @@ public class Menu {
 	}
 	
 	public void render(GameContainer gc, Renderer renderer) {
-		renderer.drawImage(levelImage, 0, 0);
+		//renderer.drawImage(levelImage, 0, 0);
 		
 		startX = gc.getWidth()/3+20;
 		startY = gc.getHeight()/4+25;

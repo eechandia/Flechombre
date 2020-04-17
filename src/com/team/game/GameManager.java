@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.team.engine.AbstractGame;
 import com.team.engine.GameContainer;
 import com.team.engine.Renderer;
+import com.team.engine.State;
 import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.Image;
 import com.team.engine.gfx.Light;
@@ -29,7 +30,7 @@ public class GameManager extends AbstractGame {
 	public static final int TILE_SIZE = 16;
 	private Image levelImage;
 	private Light light = new Light(150, 0xffffffff);
-	private Image background = new Image("/background0.png");
+	private Image background;
 	private SoundClip sonidoLevel = new SoundClip("/Audio/Level.wav");
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -44,6 +45,8 @@ public class GameManager extends AbstractGame {
 	private boolean levelTerminado = false;
 	
 	private boolean musicaSonando = false;
+	
+	private Image decoracion1;
 	
 
 	public GameManager() {
@@ -97,6 +100,7 @@ public class GameManager extends AbstractGame {
 				gc.getRenderer().setAmbientColor(-1);
 
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
+				background = new Image("/background0.png");
 				objects.add(new Player(5, 25));
 				posPlayerX = 5;
 				posPlayerY = 25;
@@ -114,6 +118,8 @@ public class GameManager extends AbstractGame {
 				break;
 				
 			case 2:
+				
+				gc.getRenderer().setAmbientColor(-1);
 
 				levelImage = new Image("/Niveles/Nivel2/lvl2.png");
 				objects.add(new Player(4, 26));
@@ -127,16 +133,14 @@ public class GameManager extends AbstractGame {
 				loadLevel("/Niveles/Nivel2/colisionlvl2.png");
 				camara.setTarget(this.getObject("player"));
 				
-		
-				
 				
 				levelCreado = true;
 				break;
 			
 			case 3:
 				gc.getRenderer().setAmbientColor(0xff232323);
-				levelImage = new Image("/Niveles/Nivel3/level3.png");
-				background = new Image("/Niveles/Nivel3/background30000.png");
+				levelImage = new Image("/Niveles/Nivel3/level0001.png");
+				background = new Image("/Niveles/Nivel3/background.png");
 				objects.add(new Player(6, 22));
 				posPlayerX = 6;
 				posPlayerY = 22;
@@ -150,7 +154,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(11, 13));
 				objects.add(new Flag(3, 11));
 				objects.add(new Flag(7, 4));
-				loadLevel("/Niveles/Nivel3/colisionLevel3.png");
+				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
 				
 				
@@ -158,8 +162,7 @@ public class GameManager extends AbstractGame {
 				break;
 				
 			default:
-				gc.setLevelSeleccionado(1);
-				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
+				gc.setState(State.LEVELS);
 				break;
 			};
 		}
@@ -210,29 +213,25 @@ public class GameManager extends AbstractGame {
 	public void render(GameContainer gc, Renderer renderer) {
 		camara.render(renderer);
 		
-		switch (gc.getLevelSeleccionado()) {
-		case 1:
-			renderer.drawImage(background, 0, 0);
-			renderer.drawImage(levelImage, 0, 0);
-			break;
-		case 2:
-			renderer.drawImage(background, 0, 0);
-			renderer.drawImage(levelImage, 0, 0);
-			break;
-		case 3:
-			renderer.drawImage(background, 0, 0);
-			renderer.drawImage(levelImage, 0, 0);
-			if(playerCounter > 0)
-				renderer.drawLight(light, (int) this.getObject("player").getPosX(), (int) this.getObject("player").getPosY());
-			renderer.drawLight(light, 15*TILE_SIZE, 20*TILE_SIZE);
-			break;
-		case 4:
-			break;
-		default:
-			renderer.drawImage(background, 0, 0);
-			renderer.drawImage(levelImage, 0, 0);
-			break;
-		};
+		if(levelCreado)
+			switch (gc.getLevelSeleccionado()) {
+			case 1:
+				renderer.drawImage(background, 0, 0);
+				renderer.drawImage(levelImage, 0, 0);
+				break;
+			case 2:
+				renderer.drawImage(levelImage, 0, 0);
+				break;
+			case 3:
+				renderer.drawImage(background, 0, 0);
+				renderer.drawImage(levelImage, 0, 0);
+				if(playerCounter > 0)
+					renderer.drawLight(light, (int) this.getObject("player").getPosX(), (int) this.getObject("player").getPosY());
+				renderer.drawLight(light, 15*TILE_SIZE, 20*TILE_SIZE);
+				break;
+			default:
+				break;
+			};
 		
 		for(GameObject object : objects) {
 			object.render(gc, renderer);
