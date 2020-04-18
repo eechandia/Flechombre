@@ -153,7 +153,7 @@ public class Player extends GameObject{
 			}
 			
 			
-			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1) && (gc.getInput().getMouseY()-pressY) > 0) {
+			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1)) {
 				fallDistance = 0;
 				distX = gc.getInput().getMouseX()-pressX;
 				distY = gc.getInput().getMouseY()-pressY;
@@ -161,8 +161,9 @@ public class Player extends GameObject{
 				fuerza = (float) Math.hypot(distX, distY)/5;
 				if(fuerza > 7.5f)
 					fuerza = 7.5f;
-				if(angulo > 0)
+				if(distX>0)
 					angulo += Math.PI;
+				System.out.println(angulo);
 				megaSaltando = true;
 			}
 			//posX = (float)(fuerza*Math.cos(angulo)*dt);
@@ -293,7 +294,7 @@ public class Player extends GameObject{
 	public void render(GameContainer gc, Renderer renderer) {
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 		
-		if(gc.getInput().isButton(MouseEvent.BUTTON1) && ((gc.getInput().getMouseY()-pressY) > 0)) {
+		if(gc.getInput().isButton(MouseEvent.BUTTON1)) {
 			posX2 = posX+width/2;
 			posY2 = posY+height/2;
 			
@@ -303,8 +304,8 @@ public class Player extends GameObject{
 			fuerza2 = (float) Math.hypot(distX2, distY2)/5;
 			if(fuerza2 > 7.5f)
 				fuerza2 = 7.5f;
-			if(angulo2 > 0)
-				angulo2 += Math.PI;
+			if(distX2>0)
+				angulo2 += Math.PI;	
 			for(float T=(float) 0.5; T<1.5; T+=0.033) {
 				posX2 +=  (fuerza2*Math.cos(angulo2)*1.3);
 				posY2 += (fuerza2*Math.sin(angulo2)*1.5 + ((fallSpeed*T)*0.9));
