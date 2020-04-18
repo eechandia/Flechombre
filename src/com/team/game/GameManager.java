@@ -100,18 +100,18 @@ public class GameManager extends AbstractGame {
 
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				background = new Image("/background0.png");
-				objects.add(new Player(5, 25));
-				posPlayerX = 5;
-				posPlayerY = 25;
-				objects.add(new Saw(9, 17));
-				objects.add(new Flag(36, 19));
-				objects.add(new Flag(8,12));
-				objects.add(new Diana(34,6,0));
-				objects.add(new Spikes(4, 7, 17, false));
-				loadLevel("/Niveles/Nivel1/colision1.png");
+				objects.add(new Player(10, 45));
+				posPlayerX = 10;
+				posPlayerY = 45;
+				objects.add(new Saw(18, 34));
+				objects.add(new Flag(72, 38));
+				objects.add(new Flag(16,24));
+				objects.add(new Diana(73,12,0));
+				objects.add(new Spikes(7, 14, 34, false));
+				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
 				
-			
+				
 			
 				levelCreado = true;
 				break;
@@ -124,6 +124,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new Player(8, 54));
 				posPlayerX = 8;
 				posPlayerY = 54;
+				
 				objects.add(new Flag(48, 54));
 				
 				//objects.add(new Spikes(28, 42, 54, false));
