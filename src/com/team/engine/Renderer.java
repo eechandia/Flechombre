@@ -71,6 +71,11 @@ public class Renderer {
 			drawImage(ir.image, ir.offsetX, ir.offsetY);	
 		}
 		
+		
+		//Dibujar colisiones
+		
+		
+		
 		//dibujar ilumiaciom
 		
 		for(int i = 0; i < lightRequest.size(); i++) {

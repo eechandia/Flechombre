@@ -27,7 +27,7 @@ import com.team.game.objects.Spikes;
  */
 public class GameManager extends AbstractGame {
 	
-	public static final int TILE_SIZE = 16;
+	public static final int TILE_SIZE = 8;
 	private Image levelImage;
 	private Light light = new Light(150, 0xffffffff);
 	private Image background;
@@ -122,15 +122,15 @@ public class GameManager extends AbstractGame {
 				gc.getRenderer().setAmbientColor(-1);
 
 				levelImage = new Image("/Niveles/Nivel2/lvl2.png");
-				objects.add(new Player(4, 26));
-				posPlayerX = 4;
-				posPlayerY = 26;
-				objects.add(new Flag(24, 27));
+				objects.add(new Player(8, 54));
+				posPlayerX = 8;
+				posPlayerY = 54;
+				objects.add(new Flag(48, 54));
 				
-				objects.add(new Spikes(14, 21, 27, false));
+				//objects.add(new Spikes(28, 42, 54, false));
 				
-				objects.add(new Diana(2,1,1));
-				loadLevel("/Niveles/Nivel2/colisionlvl2.png");
+				objects.add(new Diana(4,2,1));
+				loadLevel("/Niveles/Nivel2/new.png");
 				camara.setTarget(this.getObject("player"));
 				
 				
@@ -221,6 +221,14 @@ public class GameManager extends AbstractGame {
 				break;
 			case 2:
 				renderer.drawImage(levelImage, 0, 0);
+				for(int y=0; y<levelHeight; y++) {
+					for(int x=0; x<levelWidth; x++) {
+						if(collision[x+y*levelWidth] == false)
+							renderer.drawFillRect(x*8, y*8, 8, 8, 0xffffffff);
+						else
+							renderer.drawFillRect(x*8, y*8, 8, 8, 0);
+					}
+				}
 				break;
 			case 3:
 				renderer.drawImage(background, 0, 0);
@@ -236,6 +244,8 @@ public class GameManager extends AbstractGame {
 		for(GameObject object : objects) {
 			object.render(gc, renderer);
 		}
+		
+		
 	}
 	
 	public void loadLevel(String path) {
