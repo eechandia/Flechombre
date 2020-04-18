@@ -15,7 +15,7 @@ import com.team.game.components.AABBComponent;
  */
 public class Saw extends GameObject{
 	
-	private ImageTile sawSprite = new ImageTile("/Objetos/miniSaw.png", 32, 32);
+	private ImageTile sawSprite = new ImageTile("/Objetos/Saw2v2.png", 32, 32);
 	private float animacion;
 	private int asesino;
 	private int playerMatados;
@@ -39,8 +39,8 @@ public class Saw extends GameObject{
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
-		animacion += dt*3;
-		if(animacion >= 4)
+		animacion += dt*50;
+		if(animacion >= 8)
 			animacion = 0;
 		
 		this.updateComponents(gc, gm, dt);
