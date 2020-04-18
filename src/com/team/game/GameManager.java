@@ -29,7 +29,7 @@ public class GameManager extends AbstractGame {
 	
 	public static final int TILE_SIZE = 8;
 	private Image levelImage;
-	private Light light = new Light(150, 0xffffffff);
+	private Light light = new Light(200, 0xffffffff);
 	private Image background;
 	private SoundClip sonidoLevel = new SoundClip("/Audio/Level.wav");
 	
@@ -95,12 +95,20 @@ public class GameManager extends AbstractGame {
 		
 		if(!levelCreado) {
 			switch (levelActual) {
-			case 1:
-
+			case 0:
 				gc.getRenderer().setAmbientColor(-1);
-
-				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
-				background = new Image("/background0.png");
+				objects.add(new Player(6, 20));
+				posPlayerX = 6;
+				posPlayerY = 20;
+				objects.add(new Spikes(53, 76, 23, false));
+				objects.add(new Diana(142, 18,0));
+				objects.add(new Flag(43, 18));
+				
+				loadLevel("/Niveles/Tutorial/levelColision.png");
+				camara.setTarget(this.getObject("player"));
+				levelCreado = true;
+				break;
+			case 1:		
 				objects.add(new Player(5, 45));
 				posPlayerX = 10;
 				posPlayerY = 45;
@@ -109,9 +117,12 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(16,24));
 				objects.add(new Diana(73,12,0));
 				objects.add(new Spikes(8, 15, 35, false));
+				
+				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
+				background = new Image("/background0.png");
 				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
-			
+				gc.getRenderer().setAmbientColor(-1);
 				levelCreado = true;
 				break;
 				
@@ -214,8 +225,18 @@ public class GameManager extends AbstractGame {
 	public void render(GameContainer gc, Renderer renderer) {
 		camara.render(renderer);
 		
-		if(levelCreado)
+		if(levelCreado && !levelTerminado)
 			switch (gc.getLevelSeleccionado()) {
+			case 0:
+				for(int y=0; y<levelHeight; y++) {
+					for(int x=0; x<levelWidth; x++) {
+						if(collision[x+y*levelWidth] == false)
+							renderer.drawFillRect(x*8, y*8, 8, 8, 0xffffffff);
+						else
+							renderer.drawFillRect(x*8, y*8, 8, 8, 0);
+					}
+				}
+				break;
 			case 1:
 				renderer.drawImage(background, 0, 0);
 				renderer.drawImage(levelImage, 0, 0);
