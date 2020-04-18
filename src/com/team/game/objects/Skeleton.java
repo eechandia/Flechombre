@@ -17,31 +17,38 @@ import com.team.game.components.AABBComponent;
  */
 public class Skeleton extends GameObject {
 	
-	private ImageTile skeletonImage = new ImageTile("/Objetos/Enemigos/Skeleton.png", 16, 16);
+	private ImageTile skeletonImage = new ImageTile("/Objetos/Enemigos/Skeleton.png", 32, 32);
 	
-	private int direccion = 0;
+	private int direction = 0;
 	private int animacion = 0;
 	
 	private int playerMatados;
-	private int desdeX = 0, hastaX = 0;
-	private int offsetX, offsetY;
+	private int desdeTileX;
+	private int hastaTileX;
 	
-	private float speed = 75;
-	private int direction;
+	private int offsetX, offsetY;
+	private int tileX, tileY;
+	
+	private float speed = 65;
+
 	private float animation;
 	
-	public Skeleton(int posX, int posY,int desdeX, int hastaX) {
-		this.tag = "Skeleton";
+	private boolean reboto = false;
+	
+	public Skeleton(int posX, int posY,int desdeTileX, int hastaTileX) {
+		this.tag = "skeleton";
 		this.posX = posX*GameManager.TILE_SIZE;
 		this.posY = posY*GameManager.TILE_SIZE;
-		this.width = 16;
-		this.height = 16;
+		this.width = 25;
+		this.height = 32;
+		this.tileX = posX;
+		this.tileY = posY;
 		this.paddingRight = 5;
 		this.paddingLeft = 9;
 		this.paddingTop = 3;
 		this.paddingBot = 0;
-		this.desdeX = desdeX;
-		this.hastaX=hastaX;
+		this.desdeTileX = desdeTileX;
+		this.hastaTileX = hastaTileX;
 		this.offsetX=0;
 		this.offsetY=0;
 		
@@ -55,28 +62,53 @@ public class Skeleton extends GameObject {
 
 	@Override
 	public void update(GameContainer gc, GameManager gm, float dt) {
-		// TODO Auto-generated method stub
-		
-			
-			if(posX<hastaX) {
-				offsetX += dt*speed;
-				if(offsetX > paddingRight)
-					offsetX = paddingRight;
-					direction = 0;
-					animation += dt*10;
-			}else {
-				offsetX += dt*speed;
+
+			if(!reboto) {
+				if(gm.getCollision(tileX+2, tileY) || gm.getCollision(tileX+2, tileY+1) || gm.getCollision(tileX+2, tileY)) {
+					offsetX += dt*speed;
+					if(offsetX > paddingRight) {
+						offsetX = paddingRight;
+					}
+				}else {
+					offsetX += dt*speed;
+				}
+				direction = 0;
+				animation += dt*3;
+				if(animation>=2)
+					animation = 0;
+				if(tileX > hastaTileX)	reboto = true;
 			}
-		
-			if(posX<desdeX) {
-				offsetX -= dt*speed;
-				if(offsetX < -paddingLeft)
-					offsetX = -paddingLeft;
+			
+			if(reboto) {
+				if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY+1) || gm.getCollision(tileX-1, tileY)) {
+					offsetX -= dt*3;
+					if(offsetX < -paddingLeft)
+						offsetX = -paddingLeft;
+				}else {
+					offsetX -= dt*speed;
+				}
 				direction = 1;
 				animation += dt*10;
-			}else {
-				offsetX -= dt*speed;
+				if(animation>=2)
+					animation = 0;
+				if(tileX < desdeTileX)	reboto = false;
 			}
+			
+			if(offsetX > GameManager.TILE_SIZE/2) {
+				tileX++;
+				offsetX -= GameManager.TILE_SIZE;
+			}
+
+			if(offsetX < -GameManager.TILE_SIZE/2) {
+				tileX--;
+				offsetX += GameManager.TILE_SIZE;
+			}
+		
+			posX = tileX*GameManager.TILE_SIZE + offsetX;
+			posY = tileY*GameManager.TILE_SIZE + offsetY;
+			
+			
+			this.updateComponents(gc, gm, dt);
 
 	}
 

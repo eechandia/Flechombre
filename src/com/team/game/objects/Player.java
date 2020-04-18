@@ -300,6 +300,7 @@ public class Player extends GameObject{
 	public void render(GameContainer gc, Renderer renderer) {
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 		
+		if(!megaSaltando) {
 		if(gc.getInput().isButton(MouseEvent.BUTTON1)) {
 			if(!cancelarSalto) {
 				posX2 = posX+width/2;
@@ -321,6 +322,7 @@ public class Player extends GameObject{
 					renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
 				}
 			}
+		}
 		}
 		
 		this.renderComponents(gc, renderer);
@@ -387,8 +389,8 @@ public class Player extends GameObject{
 			}
 		
 
-		//Colision con spikes/pinches
-				if(other.getTag().equalsIgnoreCase("skeleton")){
+		//Colision con esqueleto
+				if(other.getTag().equalsIgnoreCase("Skeleton")){
 					sonidoDanio.start();
 					this.dead = true;
 				}

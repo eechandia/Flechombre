@@ -114,8 +114,9 @@ public class GameManager extends AbstractGame {
 
 				objects.add(new Spikes(8, 15, 35, false));
 
-				objects.add(new Skeleton(12,27,12, 23));
-
+				objects.add(new Skeleton(25,52,25, 45));
+				objects.add(new Skeleton(27,32,27, 30));
+				
 				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
 			
