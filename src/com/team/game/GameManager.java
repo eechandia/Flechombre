@@ -138,7 +138,7 @@ public class GameManager extends AbstractGame {
 			
 			case 3:
 				gc.getRenderer().setAmbientColor(0xff232323);
-				levelImage = new Image("/Niveles/Nivel3/level0012.png");
+				levelImage = new Image("/Niveles/Nivel3/level0014.png");
 				background = new Image("/Niveles/Nivel3/background.png");
 				objects.add(new Player(6, 22));
 				posPlayerX = 6;
@@ -242,6 +242,7 @@ public class GameManager extends AbstractGame {
 		
 		Image levelImage = new Image(path);
 		levelWidth = levelImage.getWidth();
+		System.out.println(levelWidth);
 		levelHeight = levelImage.getHeight();
 		collision = new boolean[levelWidth * levelHeight];
 		
