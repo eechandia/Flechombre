@@ -38,6 +38,7 @@ public class Player extends GameObject{
 	float angulo = 0, angulo2 = 0;
 	boolean megaSaltando = false;
 	float tiempo = 0;
+	boolean cancelarSalto = false;
 	//
 	
 	private float speed = 100;
@@ -75,7 +76,7 @@ public class Player extends GameObject{
 	public void update(GameContainer gc, GameManager gm, float dt) {
 		if(!megaSaltando)
 			tiempo = 0;
-		if(megaSaltando) {
+		if(megaSaltando && (distX!=0)) {
 			tiempo += dt*2;
 			
 			int plusY =  (int)Math.signum((int)offsetY);
@@ -130,17 +131,17 @@ public class Player extends GameObject{
 				direction = 0;
 				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
 					animation = 4;
-				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
+				else if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
 					animation = 2;
-				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+				else if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) == 0)
 					animation = 3;
 			}else if((fuerza*Math.cos(angulo)) < 0) {
 				direction = 1;
 				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
 					animation = 4;
-				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
+				else if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)
 					animation = 2;
-				if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)
+				else if((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) == 0)
 					animation = 3;
 			}
 			//Fin de animacion durante el mega salto
@@ -150,22 +151,27 @@ public class Player extends GameObject{
 			if(gc.getInput().isButtonDown(MouseEvent.BUTTON1)) {
 				pressX = gc.getInput().getMouseX();
 				pressY = gc.getInput().getMouseY();
+				cancelarSalto = false;
 			}
 			
+			if(gc.getInput().isButton(MouseEvent.BUTTON3))
+				cancelarSalto = true;
 			
-			if(gc.getInput().isButtonUp(MouseEvent.BUTTON1)) {
-				fallDistance = 0;
-				distX = gc.getInput().getMouseX()-pressX;
-				distY = gc.getInput().getMouseY()-pressY;
-				angulo = (float) Math.atan(distY/distX);
-				fuerza = (float) Math.hypot(distX, distY)/5;
-				if(fuerza > 7.5f)
-					fuerza = 7.5f;
-				if(distX>0)
-					angulo += Math.PI;
-				System.out.println(angulo);
-				megaSaltando = true;
-			}
+			if(!cancelarSalto)
+				if(gc.getInput().isButtonUp(MouseEvent.BUTTON1)) {
+					fallDistance = 0;
+					distX = gc.getInput().getMouseX()-pressX;
+					distY = gc.getInput().getMouseY()-pressY;
+					angulo = (float) Math.atan(distY/distX);
+					fuerza = (float) Math.hypot(distX, distY)/5;
+					if(fuerza > 7.5f)
+						fuerza = 7.5f;
+					if(distY<0)
+						fuerza = 3;
+					if(distX>0)
+						angulo += Math.PI;
+					megaSaltando = true;
+				}
 			//posX = (float)(fuerza*Math.cos(angulo)*dt);
 			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
 		
@@ -295,21 +301,25 @@ public class Player extends GameObject{
 		renderer.drawImageTile(playerImage, (int)posX, (int)posY, (int)animation, direction);
 		
 		if(gc.getInput().isButton(MouseEvent.BUTTON1)) {
-			posX2 = posX+width/2;
-			posY2 = posY+height/2;
-			
-			distX2 = gc.getInput().getMouseX()-pressX;
-			distY2 = gc.getInput().getMouseY()-pressY;
-			angulo2 = (float) Math.atan(distY2/distX2);
-			fuerza2 = (float) Math.hypot(distX2, distY2)/5;
-			if(fuerza2 > 7.5f)
-				fuerza2 = 7.5f;
-			if(distX2>0)
-				angulo2 += Math.PI;	
-			for(float T=(float) 0.5; T<1.5; T+=0.033) {
-				posX2 +=  (fuerza2*Math.cos(angulo2)*1.3);
-				posY2 += (fuerza2*Math.sin(angulo2)*1.5 + ((fallSpeed*T)*0.9));
-				renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
+			if(!cancelarSalto) {
+				posX2 = posX+width/2;
+				posY2 = posY+height/2;
+				
+				distX2 = gc.getInput().getMouseX()-pressX;
+				distY2 = gc.getInput().getMouseY()-pressY;
+				angulo2 = (float) Math.atan(distY2/distX2);
+				fuerza2 = (float) Math.hypot(distX2, distY2)/5;
+				if(fuerza2 > 7.5f)
+					fuerza2 = 7.5f;
+				if(distY<0)
+					fuerza = 3;
+				if(distX2>0)
+					angulo2 += Math.PI;	
+				for(float T=(float) 0.5; T<1.5; T+=0.033) {
+					posX2 +=  (fuerza2*Math.cos(angulo2)*1.3);
+					posY2 += (fuerza2*Math.sin(angulo2)*1.5 + ((fallSpeed*T)*0.9));
+					renderer.drawFillRect( (int)posX2, (int)posY2, 1, 1, 0xff939393);
+				}
 			}
 		}
 		

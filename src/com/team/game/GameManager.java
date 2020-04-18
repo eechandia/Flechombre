@@ -111,8 +111,6 @@ public class GameManager extends AbstractGame {
 				objects.add(new Spikes(8, 15, 35, false));
 				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
-				
-				
 			
 				levelCreado = true;
 				break;
