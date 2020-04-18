@@ -50,19 +50,19 @@ public class Player extends GameObject{
 	
 	public Player(int posX, int posY) {
 		this.tag = "player";
-		this.tileX = posX/2;
+		this.tileX = posX;
 		this.tileY = posY;
 		this.offsetX = 0;
 		this.offsetY = 0;
 		this.posX = posX*GameManager.TILE_SIZE;
 		this.posY = posY*GameManager.TILE_SIZE;
-		this.width = GameManager.TILE_SIZE;
-		this.height = GameManager.TILE_SIZE;
+		this.width = GameManager.TILE_SIZE*2;
+		this.height = GameManager.TILE_SIZE*2;
 
 
 		paddingLeft = 3;
 		paddingRight = 4;
-		paddingTop = 1;
+		paddingTop = 0;
 
 		paddingBot = 0;
 
@@ -78,8 +78,12 @@ public class Player extends GameObject{
 		if(megaSaltando) {
 			tiempo += dt*2;
 			
+			int plusY =  (int)Math.signum((int)offsetY);
+			if(plusY>0)
+				plusY+=1;
+			
 			if((fuerza*Math.cos(angulo)) > 0) {
-				if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)offsetY))) {
+				if(gm.getCollision(tileX+2, tileY) || gm.getCollision(tileX+2, tileY+1) || gm.getCollision(tileX+2, tileY + plusY)) {
 					offsetX += (fuerza*Math.cos(angulo));
 					if(offsetX > paddingRight) {
 						offsetX = paddingRight;
@@ -88,7 +92,7 @@ public class Player extends GameObject{
 				}else
 					offsetX += (fuerza*Math.cos(angulo));
 			}else if((fuerza*Math.cos(angulo)) < 0) {
-				if(gm.getCollision(tileX-1, tileY)|| gm.getCollision(tileX-1, tileY + (int)Math.signum((int)offsetY))) {
+				if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY+1) || gm.getCollision(tileX-1, tileY + plusY)) {
 					offsetX += (fuerza*Math.cos(angulo));
 					if(offsetX < -paddingLeft) {
 						offsetX = -paddingLeft;
@@ -100,9 +104,12 @@ public class Player extends GameObject{
 			
 			
 			offsetY += ((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo));
+			int plusX = (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0));
+			if(plusX>0)
+				plusX+=1;
 			
 			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) < 0)) {
-				if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
+				if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX+1, tileY-1) || gm.getCollision(tileX + plusX, tileY-1)) && offsetY < -paddingTop) {
 					fallDistance = 0;
 					offsetY = -paddingTop;
 					megaSaltando = false;
@@ -110,7 +117,7 @@ public class Player extends GameObject{
 			}
 			
 			if(((fuerza*Math.sin(angulo)) + (fallSpeed*tiempo) > 0)) {
-				if(gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1) && offsetY > 0) {
+				if(gm.getCollision(tileX, tileY+2) || gm.getCollision(tileX+1, tileY+2) || gm.getCollision(tileX + plusX, tileY+2) && offsetY > 0) {
 					fallDistance = 0;
 					offsetY = 0;
 					ground = true;
@@ -162,8 +169,12 @@ public class Player extends GameObject{
 			//posY = (float)(fuerza*Math.sin(angulo)*dt - fallSpeed*dt*dt/2);
 		
 		//Left and Right
+		int plusY =  (int)Math.signum((int)offsetY);
+		if(plusY>0)
+			plusY+=1;
+			
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
-			if(gm.getCollision(tileX+1, tileY) || gm.getCollision(tileX+1, tileY + (int)Math.signum((int)offsetY))) {
+			if(gm.getCollision(tileX+2, tileY) || gm.getCollision(tileX+2, tileY+1) || gm.getCollision(tileX+2, tileY + plusY)) {
 				offsetX += dt*speed;
 				if(offsetX > paddingRight)
 					offsetX = paddingRight;
@@ -172,7 +183,7 @@ public class Player extends GameObject{
 			}
 		}
 		if(gc.getInput().isKey(KeyEvent.VK_A)) {
-			if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY + (int)Math.signum((int)offsetY))) {
+			if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY+1) || gm.getCollision(tileX-1, tileY + plusY)) {
 				offsetX -= dt*speed;
 				if(offsetX < -paddingLeft)
 					offsetX = -paddingLeft;
@@ -184,15 +195,21 @@ public class Player extends GameObject{
 		//Beginning of Jump and Gravity
 		fallDistance += dt*fallSpeed-0.005;
 		
+		offsetY += fallDistance;
+		
+		int plusX = (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0));
+		if(plusX>0)
+			plusX+=1;
+		
 		if(fallDistance < 0) {
-			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY-1)) && offsetY < -paddingTop) {
+			if((gm.getCollision(tileX, tileY-1) || gm.getCollision(tileX+1, tileY-1) || gm.getCollision(tileX + plusX, tileY-1)) && offsetY < -paddingTop) {
 				fallDistance = 0;
 				offsetY = -paddingTop;
 			}
 		}
 		
 		if(fallDistance > 0) {
-			if((gm.getCollision(tileX, tileY+1) || gm.getCollision(tileX + (int)Math.signum((int)((offsetX>paddingRight || offsetX<-paddingLeft) ? offsetX : 0)), tileY+1)) && offsetY > 0) {
+			if((gm.getCollision(tileX, tileY+2) || gm.getCollision(tileX+1, tileY+2) || gm.getCollision(tileX + plusX, tileY+2)) && offsetY > 0) {
 				fallDistance = 0;
 				offsetY = 0;
 				ground = true;
@@ -203,8 +220,6 @@ public class Player extends GameObject{
 			fallDistance = jump;
 			ground = false;
 		}
-		
-		offsetY += fallDistance; 
 		//End of Jump and Gravity 
 		}
 		//Final Position
@@ -226,7 +241,7 @@ public class Player extends GameObject{
 			tileX--;
 			offsetX += GameManager.TILE_SIZE;
 		}
-		
+	
 		posX = tileX*GameManager.TILE_SIZE + offsetX;
 		posY = tileY*GameManager.TILE_SIZE + offsetY;
 		

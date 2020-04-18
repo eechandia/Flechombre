@@ -14,7 +14,7 @@ import com.team.game.components.AABBComponent;
  *
  */
 public class Spikes extends GameObject{
-	private ImageTile spikesSprite = new ImageTile("/Objetos/pinches.png", 16, 16);
+	private ImageTile spikesSprite = new ImageTile("/Objetos/spikes.png", 8, 8);
 	private int posFinalX;
 	private int pisoTecho;
 	private int asesino;
@@ -25,23 +25,20 @@ public class Spikes extends GameObject{
 		this.posX = fromX*GameManager.TILE_SIZE;
 		this.posFinalX = toX*GameManager.TILE_SIZE;
 		this.posY = posY*GameManager.TILE_SIZE;
-		this.height = 16;
-		this.width = 16*(toX-fromX+1);
+		this.height = GameManager.TILE_SIZE;
+		this.width = GameManager.TILE_SIZE*(toX-fromX);
 		this.dead = false;
 		this.paddingRight = 0;
 		this.paddingLeft = 0;
+		this.paddingTop = 0;
+		this.paddingBot = 0;
 		this.asesino = 0;
 		this.playerMatados=0;
 		
-		if(estaInvertido) {
+		if(estaInvertido)
 			pisoTecho = 1;
-			this.paddingTop = 0;
-			this.paddingBot = 6;
-		}else {
+		else
 			pisoTecho = 0;
-			this.paddingTop = 6;
-			this.paddingBot = 0;
-		}
 	
 		this.addComponent(new AABBComponent(this));
 	}
@@ -53,7 +50,7 @@ public class Spikes extends GameObject{
 
 	@Override
 	public void render(GameContainer gc, Renderer renderer) {
-		for(int i=(int) posX; i<=posFinalX; i+=GameManager.TILE_SIZE) {
+		for(int i=(int) posX; i<posFinalX; i+=GameManager.TILE_SIZE) {
 			renderer.drawImageTile(spikesSprite, i, (int)posY, pisoTecho, asesino);
 			this.renderComponents(gc, renderer);
 		}

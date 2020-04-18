@@ -100,7 +100,7 @@ public class GameManager extends AbstractGame {
 
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				background = new Image("/background0.png");
-				objects.add(new Player(10, 45));
+				objects.add(new Player(5, 45));
 				posPlayerX = 10;
 				posPlayerY = 45;
 				objects.add(new Saw(18, 34));
@@ -121,7 +121,7 @@ public class GameManager extends AbstractGame {
 				gc.getRenderer().setAmbientColor(-1);
 
 				levelImage = new Image("/Niveles/Nivel2/lvl2.png");
-				objects.add(new Player(8, 54));
+				objects.add(new Player(4, 54));
 				posPlayerX = 8;
 				posPlayerY = 54;
 				
@@ -141,19 +141,19 @@ public class GameManager extends AbstractGame {
 				gc.getRenderer().setAmbientColor(0xff232323);
 				levelImage = new Image("/Niveles/Nivel3/level0014.png");
 				background = new Image("/Niveles/Nivel3/background.png");
-				objects.add(new Player(6, 22));
-				posPlayerX = 6;
-				posPlayerY = 22;
-				objects.add(new Spikes(12, 20, 26, false));
-				objects.add(new Spikes(10, 23, 5, false));
-				objects.add(new Spikes(10, 23, 1, true));
-				objects.add(new Diana(35, 4,0));
-				objects.add(new Saw(20, 13));
-				objects.add(new Saw(17, 13));
-				objects.add(new Saw(14, 13));
-				objects.add(new Saw(11, 13));
-				objects.add(new Flag(3, 11));
-				objects.add(new Flag(7, 4));
+				objects.add(new Player(3, 44));
+				posPlayerX = 3;
+				posPlayerY = 44;
+				objects.add(new Spikes(24, 40, 53, false));
+				objects.add(new Spikes(20, 46, 11, false));
+				objects.add(new Spikes(20, 46, 3, true));
+				objects.add(new Diana(70, 8,0));
+				objects.add(new Saw(40, 26));
+				objects.add(new Saw(34, 26));
+				objects.add(new Saw(28, 26));
+				objects.add(new Saw(22, 26));
+				objects.add(new Flag(6, 22));
+				objects.add(new Flag(14, 8));
 				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
 				
