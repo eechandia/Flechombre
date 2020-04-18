@@ -18,6 +18,7 @@ import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
 import com.team.game.objects.Player;
 import com.team.game.objects.Saw;
+import com.team.game.objects.Skeleton;
 import com.team.game.objects.Spikes;
 import com.team.game.objects.WallSpikes;
 
@@ -108,7 +109,12 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(72, 38));
 				objects.add(new Flag(16,24));
 				objects.add(new Diana(73,12,0));
+<<<<<<< HEAD
 				objects.add(new Spikes(8, 15, 35, false));
+=======
+				objects.add(new Spikes(7, 14, 34, false));
+				objects.add(new Skeleton(12,27,12, 23));
+>>>>>>> Enemigos
 				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
 			
