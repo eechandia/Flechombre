@@ -20,6 +20,7 @@ import com.team.game.objects.Player;
 import com.team.game.objects.Saw;
 import com.team.game.objects.Skeleton;
 import com.team.game.objects.Spikes;
+import com.team.game.objects.WallSpikes;
 
 /**
  * @author Pedro
@@ -108,12 +109,13 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(72, 38));
 				objects.add(new Flag(16,24));
 				objects.add(new Diana(73,12,0));
-				objects.add(new Spikes(7, 14, 34, false));
+
 				objects.add(new Skeleton(12,27,12, 23));
+
+				objects.add(new Spikes(8, 15, 35, false));
+
 				loadLevel("/Niveles/Nivel1/newColision.png");
 				camara.setTarget(this.getObject("player"));
-				
-				
 			
 				levelCreado = true;
 				break;
@@ -156,6 +158,8 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(22, 26));
 				objects.add(new Flag(6, 22));
 				objects.add(new Flag(14, 8));
+				objects.add(new WallSpikes(2, 2, 25, false));
+				objects.add(new WallSpikes(77, 20, 43, true));
 				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
 				
@@ -223,22 +227,14 @@ public class GameManager extends AbstractGame {
 				break;
 			case 2:
 				renderer.drawImage(levelImage, 0, 0);
-				for(int y=0; y<levelHeight; y++) {
-					for(int x=0; x<levelWidth; x++) {
-						if(collision[x+y*levelWidth] == false)
-							renderer.drawFillRect(x*8, y*8, 8, 8, 0xffffffff);
-						else
-							renderer.drawFillRect(x*8, y*8, 8, 8, 0);
-					}
-				}
 				break;
 			case 3:
 				renderer.drawImage(background, 0, 0);
 				renderer.drawImage(levelImage, 0, 0);
 				if(playerCounter > 0)
 					renderer.drawLight(light, (int) this.getObject("player").getPosX(), (int) this.getObject("player").getPosY());
-				renderer.drawLight(light, 16*TILE_SIZE, 20*TILE_SIZE);
-				renderer.drawLight(light, 16*TILE_SIZE, 10*TILE_SIZE);
+				renderer.drawLight(light, 32*TILE_SIZE, 40*TILE_SIZE);
+				renderer.drawLight(light, 32*TILE_SIZE, 20*TILE_SIZE);
 				break;
 			default:
 				break;
@@ -255,7 +251,6 @@ public class GameManager extends AbstractGame {
 		
 		Image levelImage = new Image(path);
 		levelWidth = levelImage.getWidth();
-		System.out.println(levelWidth);
 		levelHeight = levelImage.getHeight();
 		collision = new boolean[levelWidth * levelHeight];
 		
