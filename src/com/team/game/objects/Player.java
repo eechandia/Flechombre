@@ -374,6 +374,13 @@ public class Player extends GameObject{
 			revivirX = otherComponent.getCenterX()/GameManager.TILE_SIZE;
 			revivirY = otherComponent.getCenterY()/GameManager.TILE_SIZE;
 			}
+		
+
+		//Colision con spikes/pinches
+				if(other.getTag().equalsIgnoreCase("skeleton")){
+					sonidoDanio.start();
+					this.dead = true;
+				}
 	}
 
 	public boolean isReachedCheckpoint() {
