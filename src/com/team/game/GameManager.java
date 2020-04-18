@@ -16,7 +16,6 @@ import com.team.engine.gfx.Light;
 import com.team.game.objects.Diana;
 import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
-import com.team.game.objects.Platform;
 import com.team.game.objects.Player;
 import com.team.game.objects.Saw;
 import com.team.game.objects.Spikes;
@@ -139,14 +138,14 @@ public class GameManager extends AbstractGame {
 			
 			case 3:
 				gc.getRenderer().setAmbientColor(0xff232323);
-				levelImage = new Image("/Niveles/Nivel3/level0001.png");
+				levelImage = new Image("/Niveles/Nivel3/level0012.png");
 				background = new Image("/Niveles/Nivel3/background.png");
 				objects.add(new Player(6, 22));
 				posPlayerX = 6;
 				posPlayerY = 22;
 				objects.add(new Spikes(12, 20, 26, false));
 				objects.add(new Spikes(10, 23, 5, false));
-				objects.add(new Spikes(10, 23, 1, true));//hasta 25 de largo es el numero magico creo, llegue una vez
+				objects.add(new Spikes(10, 23, 1, true));
 				objects.add(new Diana(35, 4,0));
 				objects.add(new Saw(20, 13));
 				objects.add(new Saw(17, 13));
@@ -235,7 +234,8 @@ public class GameManager extends AbstractGame {
 				renderer.drawImage(levelImage, 0, 0);
 				if(playerCounter > 0)
 					renderer.drawLight(light, (int) this.getObject("player").getPosX(), (int) this.getObject("player").getPosY());
-				renderer.drawLight(light, 15*TILE_SIZE, 20*TILE_SIZE);
+				renderer.drawLight(light, 16*TILE_SIZE, 20*TILE_SIZE);
+				renderer.drawLight(light, 16*TILE_SIZE, 10*TILE_SIZE);
 				break;
 			default:
 				break;
