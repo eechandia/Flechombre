@@ -57,8 +57,8 @@ public class Player extends GameObject{
 		this.offsetY = 0;
 		this.posX = posX*GameManager.TILE_SIZE;
 		this.posY = posY*GameManager.TILE_SIZE;
-		this.width = GameManager.TILE_SIZE*2;
-		this.height = GameManager.TILE_SIZE*2;
+		this.width = 16;
+		this.height = 16;
 
 
 		paddingLeft = 3;

@@ -13,6 +13,7 @@ import com.team.engine.State;
 import com.team.engine.audio.SoundClip;
 import com.team.engine.gfx.Image;
 import com.team.engine.gfx.Light;
+import com.team.game.objects.Bat;
 import com.team.game.objects.Diana;
 import com.team.game.objects.Flag;
 import com.team.game.objects.GameObject;
@@ -148,9 +149,9 @@ public class GameManager extends AbstractGame {
 				levelCreado = true;
 				break;
 			
-			case 3:
+			case 3:	
 				gc.getRenderer().setAmbientColor(0xff232323);
-				levelImage = new Image("/Niveles/Nivel3/level0014.png");
+				levelImage = new Image("/Niveles/Nivel3/level.png");
 				background = new Image("/Niveles/Nivel3/background.png");
 				objects.add(new Player(3, 44));
 				posPlayerX = 3;
@@ -165,8 +166,11 @@ public class GameManager extends AbstractGame {
 				objects.add(new Saw(22, 26));
 				objects.add(new Flag(6, 22));
 				objects.add(new Flag(14, 8));
-				objects.add(new WallSpikes(2, 2, 25, false));
+				objects.add(new WallSpikes(2, 2, 12, false));
+				objects.add(new WallSpikes(2, 20, 25, false));
+				objects.add(new WallSpikes(11, 12, 19, true));
 				objects.add(new WallSpikes(77, 20, 43, true));
+				objects.add(new Bat(18, 43));
 				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
 				
