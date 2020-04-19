@@ -20,7 +20,7 @@ public class Skeleton extends GameObject {
 	private ImageTile skeletonImage = new ImageTile("/Objetos/Enemigos/Skeleton.png", 32, 32);
 	
 	private int direction = 0;
-	private int animacion = 0;
+	private float animation = 0;
 	
 	private int playerMatados;
 	private int desdeTileX;
@@ -30,8 +30,6 @@ public class Skeleton extends GameObject {
 	private int tileX, tileY;
 	
 	private float speed = 65;
-
-	private float animation;
 	
 	private boolean reboto = false;
 	
@@ -39,20 +37,18 @@ public class Skeleton extends GameObject {
 		this.tag = "skeleton";
 		this.posX = posX*GameManager.TILE_SIZE;
 		this.posY = posY*GameManager.TILE_SIZE;
-		this.width = 25;
+		this.width = 32;
 		this.height = 32;
 		this.tileX = posX;
 		this.tileY = posY;
-		this.paddingRight = 5;
-		this.paddingLeft = 9;
+		this.paddingRight = 8;
+		this.paddingLeft = 8;
 		this.paddingTop = 3;
 		this.paddingBot = 0;
 		this.desdeTileX = desdeTileX;
 		this.hastaTileX = hastaTileX;
 		this.offsetX=0;
 		this.offsetY=0;
-		
-		animacion = 0;
 		
 		playerMatados = 0;
 		
@@ -64,10 +60,11 @@ public class Skeleton extends GameObject {
 	public void update(GameContainer gc, GameManager gm, float dt) {
 
 			if(!reboto) {
-				if(gm.getCollision(tileX+2, tileY) || gm.getCollision(tileX+2, tileY+1) || gm.getCollision(tileX+2, tileY)) {
+				if(gm.getCollision(tileX+2, tileY) || gm.getCollision(tileX+2, tileY+1)) {
 					offsetX += dt*speed;
 					if(offsetX > paddingRight) {
 						offsetX = paddingRight;
+					reboto = true;
 					}
 				}else {
 					offsetX += dt*speed;
@@ -80,10 +77,11 @@ public class Skeleton extends GameObject {
 			}
 			
 			if(reboto) {
-				if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY+1) || gm.getCollision(tileX-1, tileY)) {
-					offsetX -= dt*3;
+				if(gm.getCollision(tileX-1, tileY) || gm.getCollision(tileX-1, tileY+1)) {
+					offsetX -= dt*speed;
 					if(offsetX < -paddingLeft)
 						offsetX = -paddingLeft;
+					reboto = false;
 				}else {
 					offsetX -= dt*speed;
 				}

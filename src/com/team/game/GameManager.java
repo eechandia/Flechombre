@@ -117,8 +117,8 @@ public class GameManager extends AbstractGame {
 				objects.add(new Flag(16,24));
 				objects.add(new Diana(73,12,0));
 				objects.add(new Spikes(8, 15, 35, false));
-				objects.add(new Skeleton(25,52,25, 45));
-				objects.add(new Skeleton(27,32,27, 30));
+				objects.add(new Skeleton(25,52,23, 45));
+				objects.add(new Skeleton(27,32,25, 30));
 		
 				levelImage = new Image("/Niveles/Nivel1/lvl1.png");
 				background = new Image("/background0.png");
@@ -170,6 +170,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new WallSpikes(2, 20, 25, false));
 				objects.add(new WallSpikes(11, 12, 19, true));
 				objects.add(new WallSpikes(77, 20, 43, true));
+				objects.add(new Skeleton(22, 28, 22, 41));
 				objects.add(new Bat(18, 43));
 				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
