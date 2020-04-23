@@ -171,7 +171,7 @@ public class GameManager extends AbstractGame {
 				objects.add(new WallSpikes(11, 12, 19, true));
 				objects.add(new WallSpikes(77, 20, 43, true));
 				objects.add(new Skeleton(22, 28, 22, 41));
-				objects.add(new Bat(18, 43));
+				objects.add(new Bat(30, 40));
 				loadLevel("/Niveles/Nivel3/levelColision.png");
 				camara.setTarget(this.getObject("player"));
 				
@@ -210,6 +210,9 @@ public class GameManager extends AbstractGame {
 				objects.add(new Player(posPlayerX, posPlayerY));
 				camara.setTarget(this.getObject("player"));
 				playerCounter+=1;
+			}
+			if(levelActual == 3) {
+				((Bat)this.getObject("bat")).reset();
 			}
 		}
 		
@@ -300,6 +303,10 @@ public class GameManager extends AbstractGame {
 		gc.setHeight(240);
 		gc.setScale(3f); 
 		gc.start();
+	}
+	
+	public boolean isPlayerAlive() {
+		return playerCounter > 0;
 	}
 
 	public int getLevelWidth() {

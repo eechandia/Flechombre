@@ -380,6 +380,12 @@ public class Player extends GameObject{
 			this.dead = true;
 		}
 		
+		//Colision con bats
+		if(other.getTag().equalsIgnoreCase("bat")){
+			sonidoDanio.start();
+			this.dead = true;
+		}
+		
 		//Colison con flag/checkpoint
 		if(other.getTag().equalsIgnoreCase("flag")) {
 			reachedCheckpoint = true;
