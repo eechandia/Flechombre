@@ -1,2 +1,2 @@
 # Flechombre
-Intento de motor para un juego en 2d realizado en java
+Juego muy basico en 2d sobre un hombre flecha que va volando por su vida
